@@ -1,0 +1,58 @@
+[
+  {
+    "id": 1,
+    "locKey": "chapter.1.name",
+    "descLocKey": "chapter.1.desc",
+    "unlockCondition": {
+      "type": "eu_per_sec",
+      "value": 32
+    },
+    "taskIds": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "unlocks": {
+      "resourceIds": [
+        "coal",
+        "iron_ore",
+        "copper_ore",
+        "tin_ore",
+        "iron_ingot",
+        "copper_ingot",
+        "tin_ingot",
+        "copper_wire",
+        "iron_plate",
+        "vacuum_tube",
+        "basic_circuit",
+        "wrench"
+      ],
+      "recipeIds": [
+        "smelt_iron",
+        "smelt_copper",
+        "smelt_tin",
+        "make_copper_wire",
+        "make_iron_plate",
+        "make_vacuum_tube",
+        "make_basic_circuit",
+        "mine_iron_ore",
+        "mine_copper_ore",
+        "mine_tin_ore",
+        "mine_coal"
+      ],
+      "machineDefIds": [
+        "furnace",
+        "wire_cutter",
+        "forge_hammer",
+        "assembler",
+        "iron_miner",
+        "copper_miner",
+        "tin_miner",
+        "coal_miner",
+        "steam_boiler"
+      ]
+    }
+  }
+]

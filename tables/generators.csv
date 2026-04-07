@@ -1,0 +1,2 @@
+id,locKey,euPerSec,fuelResourceId,fuelPerSec,buildCost,unlockedByChapter
+steam_boiler,gen.steam_boiler,16,coal,0.5,iron_plate:8|wrench:1,1

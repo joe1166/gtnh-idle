@@ -1,0 +1,6 @@
+chapterId,id,locKey,condition.type,condition.machineDefId,condition.resourceId,condition.amount,reward.resourceId,reward.amount
+1,build_furnace,task.build_furnace,build_machine,furnace,,1,,
+1,make_wire,task.make_wire,produce_total,,copper_wire,10,,
+1,make_circuit,task.make_circuit,have_item,,basic_circuit,4,iron_plate,20
+1,build_boiler,task.build_boiler,build_generator,steam_boiler,,1,,
+1,reach_power,task.reach_power,reach_eu_per_sec,,,32,,

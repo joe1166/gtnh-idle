@@ -1,0 +1,106 @@
+﻿key,zh,en
+btn.build,,
+btn.deploy_miner,,
+btn.needs,,
+btn.research,研究,Research
+btn.start,▶ 开启,▶ Start
+btn.stop,■ 停止,■ Stop
+category.circuit,电路,Circuits
+category.component,零件,Components
+category.fuel,燃料,Fuel
+category.ingot,金属锭,Ingots
+category.ore,矿石,Ores
+chapter.1.desc,用煤炭和蒸汽驱动第一批机器，迈出工业化的第一步。,Power your first machines with coal and steam.
+chapter.1.name,第一章：蒸汽时代,Chapter 1: Steam Age
+empty.no_techs,,
+feature.auto_miner_eu,矿机EU化,Miner EU Mode
+feature.overclock,超频,Overclock
+feature.parallel_2x,并行处理,Parallel Processing
+hint.no_generator,,
+hint.no_machine,,
+hint.no_steam_generator,,
+label.battery,电池,
+label.consume,消耗,
+label.fuel,燃料,
+label.generator,发电机,
+label.name,名字,
+label.net,网络,
+label.output,输出,
+label.status,状态,
+label.steam_generator,蒸汽发电机,
+label.waste,浪费,
+machine.assembler,组装台,Assembler
+machine.coal_miner,煤矿采掘机,Coal Miner
+machine.copper_miner,铜矿采掘机,Copper Miner
+machine.forge_hammer,锻造锤,Forge Hammer
+machine.furnace,冶炼炉,Furnace
+machine.iron_miner,铁矿采掘机,Iron Miner
+machine.steam_boiler,蒸汽锅炉,Steam Boiler
+machine.tin_miner,锡矿采掘机,Tin Miner
+machine.wire_cutter,切线机,Wire Cutter
+nav.chapter,章节,
+nav.crafting,合成,
+nav.inventory,仓库,
+nav.mining,采集,
+nav.playtime,游玩时间,
+nav.steam,蒸汽,
+nav.tech,科技,
+overclock.indicator.normal,,
+panel.crafting.hint,,
+panel.crafting.title,,
+panel.mining.hint,,
+panel.mining.title,,
+panel.power.title,,
+panel.steam.title,,
+panel.tech.hint,,
+panel.tech.title,,
+recipe.make_basic_circuit,合成基础电路板,Assemble Basic Circuit
+recipe.make_copper_wire,制作铜线,Make Copper Wire
+recipe.make_iron_plate,制作铁板,Make Iron Plate
+recipe.make_vacuum_tube,制作真空管,Make Vacuum Tube
+recipe.mine_coal,采掘煤炭,Mine Coal
+recipe.mine_copper_ore,采掘铜矿石,Mine Copper Ore
+recipe.mine_iron_ore,采掘铁矿石,Mine Iron Ore
+recipe.mine_tin_ore,采掘锡矿石,Mine Tin Ore
+recipe.smelt_copper,冶炼铜锭,Smelt Copper Ingot
+recipe.smelt_iron,冶炼铁锭,Smelt Iron Ingot
+recipe.smelt_tin,冶炼锡锭,Smelt Tin Ingot
+res.basic_circuit,基础电路板,Basic Circuit
+res.coal,煤炭,Coal
+res.copper_ingot,铜锭,Copper Ingot
+res.copper_ore,铜矿石,Copper Ore
+res.copper_wire,铜线,Copper Wire
+res.iron_ingot,铁锭,Iron Ingot
+res.iron_ore,铁矿石,Iron Ore
+res.iron_plate,铁板,Iron Plate
+res.tin_ingot,锡锭,Tin Ingot
+res.tin_ore,锡矿石,Tin Ore
+res.vacuum_tube,真空管,Vacuum Tube
+res.wrench,扳手,Wrench
+status.no_fuel,缺少燃料,
+status.running,运行中,
+task.build_boiler,建造蒸汽锅炉,Build a Steam Boiler
+task.build_furnace,建造第一台冶炼炉,Build your first Furnace
+task.make_circuit,合成基础电路板 × 4,Craft Basic Circuit × 4
+task.make_wire,合成铜线 × 10,Craft Copper Wire × 10
+task.reach_power,发电量达到 32 EU/s,Reach 32 EU/s power output
+tech.basic_automation.desc,解锁矿机的 EU 消耗与自动化基础,Unlock EU consumption for miners
+tech.basic_automation.name,基础自动化,Basic Automation
+tech.cost.label,花费,
+tech.machine_overclock.desc,允许机器以 2 倍速运行但消耗 4 倍 EU,Allow machines to run at 2x speed with 4x EU cost
+tech.machine_overclock.name,机器超频,Machine Overclock
+tech.parallel_processing.desc,允许同类机器同时运行 2 个配方,Allow same-type machines to run 2 recipes simultaneously
+tech.parallel_processing.name,并行处理,Parallel Processing
+tech.prereq.label,,
+tech.status.locked,锁定,
+tech.status.researched,已研究,
+tech.unlocks.features,,
+tech.unlocks.label,,
+tech.unlocks.machines,,
+tech.unlocks.recipes,,
+toast.build.fail,,
+toast.build.success,,
+toast.deploy.fail,,
+toast.deploy.success,,
+toast.research.fail,,
+toast.research.success,,

@@ -1,0 +1,121 @@
+[
+  {
+    "id": "furnace",
+    "locKey": "machine.furnace",
+    "category": 1,
+    "role": "furnace",
+    "euPerSec": 8,
+    "allowedRecipeIds": [
+      "smelt_iron",
+      "smelt_copper",
+      "smelt_tin"
+    ],
+    "buildCost": [
+      {
+        "resourceId": "iron_plate",
+        "amount": 4
+      }
+    ],
+    "unlockedByChapter": 1
+  },
+  {
+    "id": "forge_hammer",
+    "locKey": "machine.forge_hammer",
+    "category": 1,
+    "role": "forge_hammer",
+    "euPerSec": 6,
+    "allowedRecipeIds": [
+      "make_iron_plate"
+    ],
+    "buildCost": [
+      {
+        "resourceId": "iron_ingot",
+        "amount": 8
+      }
+    ],
+    "unlockedByChapter": 1
+  },
+  {
+    "id": "wire_cutter",
+    "locKey": "machine.wire_cutter",
+    "category": 1,
+    "role": "wire_cutter",
+    "euPerSec": 6,
+    "allowedRecipeIds": [
+      "make_copper_wire"
+    ],
+    "buildCost": [
+      {
+        "resourceId": "iron_plate",
+        "amount": 4
+      },
+      {
+        "resourceId": "wrench",
+        "amount": 1
+      }
+    ],
+    "unlockedByChapter": 1
+  },
+  {
+    "id": "assembler",
+    "locKey": "machine.assembler",
+    "category": 1,
+    "role": "assembler",
+    "euPerSec": 12,
+    "allowedRecipeIds": [
+      "make_vacuum_tube",
+      "make_basic_circuit"
+    ],
+    "buildCost": [
+      {
+        "resourceId": "iron_plate",
+        "amount": 8
+      },
+      {
+        "resourceId": "copper_wire",
+        "amount": 4
+      }
+    ],
+    "unlockedByChapter": 1
+  },
+  {
+    "id": "basic_miner",
+    "locKey": "machine.basic_miner",
+    "category": 1,
+    "role": "miner",
+    "euPerSec": 8,
+    "allowedRecipeIds": [
+      "mine_iron_ore",
+      "mine_copper_ore",
+      "mine_tin_ore",
+      "mine_coal"
+    ],
+    "buildCost": [
+      {
+        "resourceId": "iron_plate",
+        "amount": 8
+      }
+    ],
+    "unlockedByChapter": 1
+  },
+  {
+    "id": "steam_boiler",
+    "locKey": "machine.steam_boiler",
+    "category": 2,
+    "euPerSec": 16,
+    "allowedRecipeIds": [],
+    "fuelResourceId": "coal",
+    "fuelPerSec": 0.5,
+    "buildCost": [
+      {
+        "resourceId": "iron_plate",
+        "amount": 8
+      },
+      {
+        "resourceId": "wrench",
+        "amount": 1
+      }
+    ],
+    "unlockedByChapter": 1
+  }
+]

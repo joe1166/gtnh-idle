@@ -1,0 +1,6 @@
+id,locKey,type,para1,para2,rewardResourceId,rewardAmount
+1,task.build_furnace,1,furnace,1,,
+2,task.make_wire,2,copper_wire,10,,
+3,task.make_circuit,3,basic_circuit,4,iron_plate,20
+4,task.build_boiler,1,steam_boiler,1,,
+5,task.reach_power,4,32,,,

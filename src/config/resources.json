@@ -1,0 +1,86 @@
+[
+  {
+    "id": "coal",
+    "locKey": "res.coal",
+    "defaultCap": 1000,
+    "category": "fuel",
+    "unlockedByChapter": 1
+  },
+  {
+    "id": "iron_ore",
+    "locKey": "res.iron_ore",
+    "defaultCap": 1000,
+    "category": "ore",
+    "unlockedByChapter": 1
+  },
+  {
+    "id": "copper_ore",
+    "locKey": "res.copper_ore",
+    "defaultCap": 1000,
+    "category": "ore",
+    "unlockedByChapter": 1
+  },
+  {
+    "id": "tin_ore",
+    "locKey": "res.tin_ore",
+    "defaultCap": 1000,
+    "category": "ore",
+    "unlockedByChapter": 1
+  },
+  {
+    "id": "iron_ingot",
+    "locKey": "res.iron_ingot",
+    "defaultCap": 500,
+    "category": "ingot",
+    "unlockedByChapter": 1
+  },
+  {
+    "id": "copper_ingot",
+    "locKey": "res.copper_ingot",
+    "defaultCap": 500,
+    "category": "ingot",
+    "unlockedByChapter": 1
+  },
+  {
+    "id": "tin_ingot",
+    "locKey": "res.tin_ingot",
+    "defaultCap": 500,
+    "category": "ingot",
+    "unlockedByChapter": 1
+  },
+  {
+    "id": "copper_wire",
+    "locKey": "res.copper_wire",
+    "defaultCap": 500,
+    "category": "component",
+    "unlockedByChapter": 1
+  },
+  {
+    "id": "iron_plate",
+    "locKey": "res.iron_plate",
+    "defaultCap": 200,
+    "category": "component",
+    "unlockedByChapter": 1
+  },
+  {
+    "id": "vacuum_tube",
+    "locKey": "res.vacuum_tube",
+    "defaultCap": 100,
+    "category": "component",
+    "unlockedByChapter": 1
+  },
+  {
+    "id": "wrench",
+    "locKey": "res.wrench",
+    "defaultCap": 10,
+    "category": "component",
+    "unlockedByChapter": 1
+  },
+  {
+    "id": "basic_circuit",
+    "locKey": "res.basic_circuit",
+    "defaultCap": 50,
+    "category": "circuit",
+    "unlockedByChapter": 1
+  }
+]

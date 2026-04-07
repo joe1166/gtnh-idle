@@ -1,0 +1,13 @@
+{
+  "root": "array",
+  "output": "src/config/tasks.json",
+  "fields": {
+    "id":               "number",
+    "locKey":           "string",
+    "type":             "number",
+    "para1":            "string",
+    "para2":            "string",
+    "rewardResourceId": "string",
+    "rewardAmount":     "number"
+  }
+}

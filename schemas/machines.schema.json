@@ -1,0 +1,28 @@
+{
+  "root": "array",
+  "output": "src/config/machines.json",
+  "fields": {
+    "id":       "string",
+    "locKey":   "string",
+    "category":   "number",
+    "role":       "string",
+    "euPerSec":   "number",
+    "maxVoltage": "number",
+    "voltage":    "number",
+    "allowedRecipeIds": {
+      "type": "array", "sep": "|", "item": "string"
+    },
+    "fuelResourceId": "string",
+    "fuelPerSec":     "number",
+    "buildCost": {
+      "type": "array", "sep": "|",
+      "item": { "type": "object", "sep": ":",
+        "fields": [
+          {"name": "resourceId", "type": "string"},
+          {"name": "amount",     "type": "number"}
+        ]
+      }
+    },
+    "unlockedByChapter": "number"
+  }
+}

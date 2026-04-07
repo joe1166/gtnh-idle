@@ -1,0 +1,7 @@
+id,locKey,category,role,euPerSec,allowedRecipeIds,fuelResourceId,fuelPerSec,buildCost,unlockedByChapter
+furnace,machine.furnace,1,furnace,8,smelt_iron|smelt_copper|smelt_tin,,,iron_plate:4,1
+forge_hammer,machine.forge_hammer,1,forge_hammer,6,make_iron_plate,,,iron_ingot:8,1
+wire_cutter,machine.wire_cutter,1,wire_cutter,6,make_copper_wire,,,iron_plate:4|wrench:1,1
+assembler,machine.assembler,1,assembler,12,make_vacuum_tube|make_basic_circuit,,,iron_plate:8|copper_wire:4,1
+basic_miner,machine.basic_miner,1,miner,8,mine_iron_ore|mine_copper_ore|mine_tin_ore|mine_coal,,,iron_plate:8,1
+steam_boiler,machine.steam_boiler,2,,16,,coal,0.5,iron_plate:8|wrench:1,1

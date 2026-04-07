@@ -1,0 +1,30 @@
+{
+  "name": "gtnh-idle",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc && vite build",
+    "preview": "vite preview",
+    "type-check": "vue-tsc --noEmit",
+    "csv:resources": "node tools/csv2json-universal.cjs --schema schemas/resources.schema.json --input tables/resources.csv",
+    "csv:recipes":   "node tools/csv2json-universal.cjs --schema schemas/recipes.schema.json   --input tables/recipes.csv",
+    "csv:machines":  "node tools/csv2json-universal.cjs --schema schemas/machines.schema.json  --input tables/machines.csv",
+    "csv:techs":     "node tools/csv2json-universal.cjs --schema schemas/techs.schema.json     --input tables/techs.csv",
+    "csv:chapters":  "node tools/csv2json-universal.cjs --schema schemas/chapters.schema.json  --input tables/chapters.csv",
+    "csv:tasks":     "node tools/csv2json-universal.cjs --schema schemas/tasks.schema.json     --input tables/tasks.csv",
+    "csv:locale":    "node tools/csv2json-universal.cjs --schema schemas/locale.schema.json    --input tables/locale.csv",
+    "csv:all": "npm run csv:resources && npm run csv:recipes && npm run csv:machines && npm run csv:techs && npm run csv:chapters && npm run csv:tasks && npm run csv:locale"
+  },
+  "dependencies": {
+    "vue": "^3.4.0",
+    "pinia": "^2.1.7"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.0",
+    "typescript": "^5.3.0",
+    "vite": "^5.0.0",
+    "vue-tsc": "^2.0.0"
+  }
+}

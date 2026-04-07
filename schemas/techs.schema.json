@@ -1,0 +1,29 @@
+{
+  "root": "array",
+  "output": "src/config/techs.json",
+  "fields": {
+    "id":         "string",
+    "locKey":     "string",
+    "descLocKey": "string",
+    "cost": {
+      "type": "array", "sep": "|",
+      "item": { "type": "object", "sep": ":",
+        "fields": [
+          {"name": "resourceId", "type": "string"},
+          {"name": "amount",     "type": "number"}
+        ]
+      }
+    },
+    "prerequisites": {
+      "type": "array", "sep": "|", "item": "string"
+    },
+    "unlocks": {
+      "type": "object", "sep": ";", "sparse": true,
+      "fields": [
+        {"name": "features",      "type": {"type": "array", "sep": "|", "item": "string"}},
+        {"name": "machineDefIds", "type": {"type": "array", "sep": "|", "item": "string"}},
+        {"name": "recipeIds",     "type": {"type": "array", "sep": "|", "item": "string"}}
+      ]
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "root": "array",
+  "output": "src/config/recipes.json",
+  "fields": {
+    "id":           "string",
+    "locKey":       "string",
+    "inputs": {
+      "type": "array", "sep": "|",
+      "item": { "type": "object", "sep": ":",
+        "fields": [
+          {"name": "resourceId", "type": "string"},
+          {"name": "amount",     "type": "number"}
+        ]
+      }
+    },
+    "outputs": {
+      "type": "array", "sep": "|",
+      "item": { "type": "object", "sep": ":",
+        "fields": [
+          {"name": "resourceId", "type": "string"},
+          {"name": "amount",     "type": "number"}
+        ]
+      }
+    },
+    "durationSec":        "number",
+    "euPerSec":           "number",
+    "voltage":            "number",
+    "overclock":          "number",
+    "requiredRole":       "string",
+    "unlockedByChapter":  "number"
+  }
+}

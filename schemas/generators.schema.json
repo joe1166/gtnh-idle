@@ -1,0 +1,13 @@
+{
+  "root": "array",
+  "output": "src/config/generators.json",
+  "fields": {
+    "id":                 "string",
+    "locKey":             "string",
+    "euPerSec":           "number",
+    "fuelResourceId":     "string",
+    "fuelPerSec":         "number",
+    "buildCost":          "resource[]",
+    "unlockedByChapter":  "number"
+  }
+}

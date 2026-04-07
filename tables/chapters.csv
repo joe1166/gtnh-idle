@@ -1,0 +1,2 @@
+id,locKey,descLocKey,unlockCondition,taskIds,unlocks
+1,chapter.1.name,chapter.1.desc,eu_per_sec:32,1|2|3|4|5,"coal|iron_ore|copper_ore|tin_ore|iron_ingot|copper_ingot|tin_ingot|copper_wire|iron_plate|vacuum_tube|basic_circuit|wrench;smelt_iron|smelt_copper|smelt_tin|make_copper_wire|make_iron_plate|make_vacuum_tube|make_basic_circuit|mine_iron_ore|mine_copper_ore|mine_tin_ore|mine_coal;furnace|wire_cutter|forge_hammer|assembler|iron_miner|copper_miner|tin_miner|coal_miner|steam_boiler"

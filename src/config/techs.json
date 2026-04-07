@@ -1,0 +1,69 @@
+[
+  {
+    "id": "basic_automation",
+    "locKey": "tech.basic_automation.name",
+    "descLocKey": "tech.basic_automation.desc",
+    "cost": [
+      {
+        "resourceId": "iron_plate",
+        "amount": 8
+      },
+      {
+        "resourceId": "copper_wire",
+        "amount": 4
+      }
+    ],
+    "prerequisites": [],
+    "unlocks": {
+      "features": [
+        "auto_miner_eu"
+      ]
+    }
+  },
+  {
+    "id": "machine_overclock",
+    "locKey": "tech.machine_overclock.name",
+    "descLocKey": "tech.machine_overclock.desc",
+    "cost": [
+      {
+        "resourceId": "iron_plate",
+        "amount": 16
+      },
+      {
+        "resourceId": "basic_circuit",
+        "amount": 2
+      }
+    ],
+    "prerequisites": [
+      "basic_automation"
+    ],
+    "unlocks": {
+      "features": [
+        "overclock"
+      ]
+    }
+  },
+  {
+    "id": "parallel_processing",
+    "locKey": "tech.parallel_processing.name",
+    "descLocKey": "tech.parallel_processing.desc",
+    "cost": [
+      {
+        "resourceId": "basic_circuit",
+        "amount": 4
+      },
+      {
+        "resourceId": "vacuum_tube",
+        "amount": 8
+      }
+    ],
+    "prerequisites": [
+      "machine_overclock"
+    ],
+    "unlocks": {
+      "features": [
+        "parallel_2x"
+      ]
+    }
+  }
+]

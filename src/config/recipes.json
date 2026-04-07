@@ -1,0 +1,214 @@
+[
+  {
+    "id": "smelt_iron",
+    "locKey": "recipe.smelt_iron",
+    "inputs": [
+      {
+        "resourceId": "iron_ore",
+        "amount": 2
+      }
+    ],
+    "outputs": [
+      {
+        "resourceId": "iron_ingot",
+        "amount": 1
+      }
+    ],
+    "durationSec": 10,
+    "euPerSec": 8,
+    "requiredRole": "furnace",
+    "unlockedByChapter": 1
+  },
+  {
+    "id": "smelt_copper",
+    "locKey": "recipe.smelt_copper",
+    "inputs": [
+      {
+        "resourceId": "copper_ore",
+        "amount": 2
+      }
+    ],
+    "outputs": [
+      {
+        "resourceId": "copper_ingot",
+        "amount": 1
+      }
+    ],
+    "durationSec": 10,
+    "euPerSec": 8,
+    "requiredRole": "furnace",
+    "unlockedByChapter": 1
+  },
+  {
+    "id": "smelt_tin",
+    "locKey": "recipe.smelt_tin",
+    "inputs": [
+      {
+        "resourceId": "tin_ore",
+        "amount": 2
+      }
+    ],
+    "outputs": [
+      {
+        "resourceId": "tin_ingot",
+        "amount": 1
+      }
+    ],
+    "durationSec": 10,
+    "euPerSec": 8,
+    "requiredRole": "furnace",
+    "unlockedByChapter": 1
+  },
+  {
+    "id": "make_iron_plate",
+    "locKey": "recipe.make_iron_plate",
+    "inputs": [
+      {
+        "resourceId": "iron_ingot",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "resourceId": "iron_plate",
+        "amount": 2
+      }
+    ],
+    "durationSec": 8,
+    "euPerSec": 6,
+    "requiredRole": "forge_hammer",
+    "unlockedByChapter": 1
+  },
+  {
+    "id": "make_copper_wire",
+    "locKey": "recipe.make_copper_wire",
+    "inputs": [
+      {
+        "resourceId": "copper_ingot",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "resourceId": "copper_wire",
+        "amount": 3
+      }
+    ],
+    "durationSec": 8,
+    "euPerSec": 6,
+    "requiredRole": "wire_cutter",
+    "unlockedByChapter": 1
+  },
+  {
+    "id": "make_vacuum_tube",
+    "locKey": "recipe.make_vacuum_tube",
+    "inputs": [
+      {
+        "resourceId": "copper_wire",
+        "amount": 2
+      },
+      {
+        "resourceId": "iron_plate",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "resourceId": "vacuum_tube",
+        "amount": 2
+      }
+    ],
+    "durationSec": 15,
+    "euPerSec": 10,
+    "requiredRole": "assembler",
+    "unlockedByChapter": 1
+  },
+  {
+    "id": "make_basic_circuit",
+    "locKey": "recipe.make_basic_circuit",
+    "inputs": [
+      {
+        "resourceId": "iron_plate",
+        "amount": 2
+      },
+      {
+        "resourceId": "copper_wire",
+        "amount": 4
+      },
+      {
+        "resourceId": "vacuum_tube",
+        "amount": 4
+      }
+    ],
+    "outputs": [
+      {
+        "resourceId": "basic_circuit",
+        "amount": 1
+      }
+    ],
+    "durationSec": 30,
+    "euPerSec": 12,
+    "requiredRole": "assembler",
+    "unlockedByChapter": 1
+  },
+  {
+    "id": "mine_iron_ore",
+    "locKey": "recipe.mine_iron_ore",
+    "inputs": [],
+    "outputs": [
+      {
+        "resourceId": "iron_ore",
+        "amount": 2
+      }
+    ],
+    "durationSec": 5,
+    "euPerSec": 8,
+    "requiredRole": "miner",
+    "unlockedByChapter": 1
+  },
+  {
+    "id": "mine_copper_ore",
+    "locKey": "recipe.mine_copper_ore",
+    "inputs": [],
+    "outputs": [
+      {
+        "resourceId": "copper_ore",
+        "amount": 2
+      }
+    ],
+    "durationSec": 5,
+    "euPerSec": 8,
+    "requiredRole": "miner",
+    "unlockedByChapter": 1
+  },
+  {
+    "id": "mine_tin_ore",
+    "locKey": "recipe.mine_tin_ore",
+    "inputs": [],
+    "outputs": [
+      {
+        "resourceId": "tin_ore",
+        "amount": 2
+      }
+    ],
+    "durationSec": 5,
+    "euPerSec": 8,
+    "requiredRole": "miner",
+    "unlockedByChapter": 1
+  },
+  {
+    "id": "mine_coal",
+    "locKey": "recipe.mine_coal",
+    "inputs": [],
+    "outputs": [
+      {
+        "resourceId": "coal",
+        "amount": 3
+      }
+    ],
+    "durationSec": 5,
+    "euPerSec": 8,
+    "requiredRole": "miner",
+    "unlockedByChapter": 1
+  }
+]

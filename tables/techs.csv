@@ -1,0 +1,4 @@
+id,locKey,descLocKey,cost,prerequisites,unlocks
+basic_automation,tech.basic_automation.name,tech.basic_automation.desc,iron_plate:8|copper_wire:4,,auto_miner_eu;;
+machine_overclock,tech.machine_overclock.name,tech.machine_overclock.desc,iron_plate:16|basic_circuit:2,basic_automation,overclock;;
+parallel_processing,tech.parallel_processing.name,tech.parallel_processing.desc,basic_circuit:4|vacuum_tube:8,machine_overclock,parallel_2x;;

@@ -1,0 +1,11 @@
+{
+  "root": "array",
+  "output": "src/config/resources.json",
+  "fields": {
+    "id":                "string",
+    "locKey":            "string",
+    "defaultCap":        "number",
+    "category":          "string",
+    "unlockedByChapter": "number"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "root": "locale",
+  "keyColumn": "key",
+  "outputs": {
+    "zh": "src/config/locales/zh.json",
+    "en": "src/config/locales/en.json"
+  }
+}

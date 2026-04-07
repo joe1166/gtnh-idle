@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "locKey": "task.build_furnace",
+    "type": 1,
+    "para1": "furnace",
+    "para2": "1"
+  },
+  {
+    "id": 2,
+    "locKey": "task.make_wire",
+    "type": 2,
+    "para1": "copper_wire",
+    "para2": "10"
+  },
+  {
+    "id": 3,
+    "locKey": "task.make_circuit",
+    "type": 3,
+    "para1": "basic_circuit",
+    "para2": "4",
+    "rewardResourceId": "iron_plate",
+    "rewardAmount": 20
+  },
+  {
+    "id": 4,
+    "locKey": "task.build_boiler",
+    "type": 1,
+    "para1": "steam_boiler",
+    "para2": "1"
+  },
+  {
+    "id": 5,
+    "locKey": "task.reach_power",
+    "type": 4,
+    "para1": "32"
+  }
+]
