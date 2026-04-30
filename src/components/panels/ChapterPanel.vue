@@ -1,7 +1,7 @@
 <template>
   <div class="chapter-panel">
     <div v-if="!chapter" class="empty-hint">
-      暂无章节数据。
+      {{ t('chapter.empty') }}
     </div>
 
     <div v-else class="panel-card">
@@ -16,7 +16,7 @@
 
       <!-- 章节解锁目标 -->
       <div v-if="chapter.unlockCondition.type === 'eu_per_sec'" class="unlock-goal">
-        <div class="goal-label">章节目标：发电量达到 {{ chapter.unlockCondition.value }} EU/s</div>
+        <div class="goal-label">{{ t('chapter.goal.eu_per_sec_prefix') }}{{ chapter.unlockCondition.value }} EU/s</div>
         <div class="goal-progress-row">
           <div class="goal-bar-wrap">
             <div
@@ -32,7 +32,7 @@
 
       <!-- 任务清单 -->
       <div class="tasks-section">
-        <div class="tasks-title">任务清单：</div>
+        <div class="tasks-title">{{ t('chapter.tasks.title') }}</div>
         <div class="task-list">
           <div
             v-for="task in currentTasks"
@@ -53,7 +53,7 @@
 
       <!-- 章节已完成 -->
       <div v-if="allTasksDone" class="chapter-complete">
-        <span class="complete-icon">🎉</span> 本章所有任务已完成！
+        <span class="complete-icon">🎉</span> {{ t('chapter.tasks.all_done') }}
       </div>
     </div>
   </div>
@@ -91,7 +91,7 @@ const euProgressPct = computed(() => {
 })
 
 const allTasksDone = computed(() =>
-  currentTasks.value.length > 0 && currentTasks.value.every((t) => t.completed)
+  currentTasks.value.length > 0 && currentTasks.value.every((task: TaskWithStatus) => task.completed)
 )
 
 function getTaskCurrent(task: TaskWithStatus): string | number {
@@ -103,7 +103,7 @@ function getTaskCurrent(task: TaskWithStatus): string | number {
       return Math.floor(inventoryStore.totalProduced[task.para1] ?? 0)
 
     case TaskType.BUILD_MACHINE:
-      return machineStore.instances.filter((m) => m.defId === task.para1).length
+      return machineStore.instances.filter((m: { defId: string }) => m.defId === task.para1).length
 
     case TaskType.REACH_EU_PER_SEC:
       return Math.floor(powerStore.totalGenPerSec)

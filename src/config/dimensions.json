@@ -1,0 +1,28 @@
+[
+  {
+    "id": "overworld",
+    "locKey": "dim.overworld.name",
+    "descLocKey": "dim.overworld.desc",
+    "biomeIds": [
+      "plains",
+      "forest"
+    ],
+    "startBiomeId": "plains",
+    "exploreCost": [
+      {
+        "resourceId": "coarse_rope",
+        "amount": 1
+      }
+    ],
+    "explorePool": [
+      {
+        "biomeId": "plains",
+        "weight": 50
+      },
+      {
+        "biomeId": "forest",
+        "weight": 50
+      }
+    ]
+  }
+]

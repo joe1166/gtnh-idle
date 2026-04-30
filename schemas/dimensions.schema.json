@@ -1,0 +1,30 @@
+{
+  "root": "array",
+  "output": "src/config/dimensions.json",
+  "fields": {
+    "id":               "string",
+    "locKey":           "string",
+    "descLocKey":       "string",
+    "biomeIds":         { "type": "array", "sep": "|", "item": "string" },
+    "startBiomeId":     "string",
+    "unlockCondition":  "string",
+    "exploreCost":     {
+      "type": "array", "sep": "|",
+      "item": { "type": "object", "sep": ":",
+        "fields": [
+          {"name": "resourceId", "type": "string"},
+          {"name": "amount",     "type": "number"}
+        ]
+      }
+    },
+    "explorePool":     {
+      "type": "array", "sep": "|",
+      "item": { "type": "object", "sep": ":",
+        "fields": [
+          {"name": "biomeId", "type": "string"},
+          {"name": "weight",  "type": "number"}
+        ]
+      }
+    }
+  }
+}

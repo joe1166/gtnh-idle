@@ -17,7 +17,9 @@
     "durationSec": 10,
     "euPerSec": 8,
     "requiredRole": "furnace",
-    "unlockedByChapter": 1
+    "requiredLevel": 1,
+    "showCondType": "chapter",
+    "showCondPara": "1"
   },
   {
     "id": "smelt_copper",
@@ -37,7 +39,9 @@
     "durationSec": 10,
     "euPerSec": 8,
     "requiredRole": "furnace",
-    "unlockedByChapter": 1
+    "requiredLevel": 1,
+    "showCondType": "chapter",
+    "showCondPara": "1"
   },
   {
     "id": "smelt_tin",
@@ -57,7 +61,9 @@
     "durationSec": 10,
     "euPerSec": 8,
     "requiredRole": "furnace",
-    "unlockedByChapter": 1
+    "requiredLevel": 1,
+    "showCondType": "chapter",
+    "showCondPara": "1"
   },
   {
     "id": "make_iron_plate",
@@ -77,7 +83,9 @@
     "durationSec": 8,
     "euPerSec": 6,
     "requiredRole": "forge_hammer",
-    "unlockedByChapter": 1
+    "requiredLevel": 1,
+    "showCondType": "chapter",
+    "showCondPara": "1"
   },
   {
     "id": "make_copper_wire",
@@ -97,7 +105,9 @@
     "durationSec": 8,
     "euPerSec": 6,
     "requiredRole": "wire_cutter",
-    "unlockedByChapter": 1
+    "requiredLevel": 1,
+    "showCondType": "chapter",
+    "showCondPara": "1"
   },
   {
     "id": "make_vacuum_tube",
@@ -121,7 +131,9 @@
     "durationSec": 15,
     "euPerSec": 10,
     "requiredRole": "assembler",
-    "unlockedByChapter": 1
+    "requiredLevel": 2,
+    "showCondType": "chapter",
+    "showCondPara": "1"
   },
   {
     "id": "make_basic_circuit",
@@ -149,7 +161,31 @@
     "durationSec": 30,
     "euPerSec": 12,
     "requiredRole": "assembler",
-    "unlockedByChapter": 1
+    "requiredLevel": 2,
+    "showCondType": "chapter",
+    "showCondPara": "1"
+  },
+  {
+    "id": "make_coarse_rope",
+    "locKey": "recipe.make_coarse_rope",
+    "inputs": [
+      {
+        "resourceId": "weeds",
+        "amount": 3
+      }
+    ],
+    "outputs": [
+      {
+        "resourceId": "coarse_rope",
+        "amount": 1
+      }
+    ],
+    "durationSec": 5,
+    "euPerSec": 0,
+    "requiredRole": "assembler",
+    "requiredLevel": 1,
+    "showCondType": "chapter",
+    "showCondPara": "1"
   },
   {
     "id": "mine_iron_ore",
@@ -164,7 +200,9 @@
     "durationSec": 5,
     "euPerSec": 8,
     "requiredRole": "miner",
-    "unlockedByChapter": 1
+    "requiredLevel": 1,
+    "showCondType": "chapter",
+    "showCondPara": "1"
   },
   {
     "id": "mine_copper_ore",
@@ -179,7 +217,9 @@
     "durationSec": 5,
     "euPerSec": 8,
     "requiredRole": "miner",
-    "unlockedByChapter": 1
+    "requiredLevel": 1,
+    "showCondType": "chapter",
+    "showCondPara": "1"
   },
   {
     "id": "mine_tin_ore",
@@ -194,7 +234,9 @@
     "durationSec": 5,
     "euPerSec": 8,
     "requiredRole": "miner",
-    "unlockedByChapter": 1
+    "requiredLevel": 1,
+    "showCondType": "chapter",
+    "showCondPara": "1"
   },
   {
     "id": "mine_coal",
@@ -209,6 +251,8 @@
     "durationSec": 5,
     "euPerSec": 8,
     "requiredRole": "miner",
-    "unlockedByChapter": 1
+    "requiredLevel": 1,
+    "showCondType": "chapter",
+    "showCondPara": "1"
   }
 ]

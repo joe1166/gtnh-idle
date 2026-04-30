@@ -1,0 +1,2 @@
+id,locKey,descLocKey,biomeIds,startBiomeId,unlockCondition,exploreCost,explorePool
+overworld,dim.overworld.name,dim.overworld.desc,plains|forest,plains,,coarse_rope:1,plains:50|forest:50

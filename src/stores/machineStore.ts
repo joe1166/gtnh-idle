@@ -93,15 +93,16 @@ export const useMachineStore = defineStore('machines', {
 
       const autoRecipe =
         initialRecipeId ?? (
-          def.category === 1 && def.allowedRecipeIds.length === 1
-            ? def.allowedRecipeIds[0]
+          def.category === 1 && def.role
+            ? (() => {
+                const candidates = db.filter('recipes', (r) => r.requiredRole === def.role && r.requiredLevel <= def.tier)
+                return candidates.length === 1 ? candidates[0].id : null
+              })()
             : null
         )
 
-      // 默认电压：ULV机器固定0；其他从配方推断（取最低要求电压），默认1
-      const defaultVoltage = def.maxVoltage === VoltTier.ULV
-        ? VoltTier.ULV
-        : (autoRecipe ? (getRecipeDef(autoRecipe)?.voltage ?? VoltTier.LV) : VoltTier.LV)
+      // 默认电压：取机器可承受的最大值（min(machine.maxVoltage, globalMaxVoltage)）
+      const defaultVoltage = Math.min((def as any).maxVoltage ?? 0, (usePowerStore().globalMaxVoltage))
 
       this.instances.push({
         instanceId:      `machine_${_nextId++}`,
@@ -113,6 +114,29 @@ export const useMachineStore = defineStore('machines', {
         selectedVoltage: defaultVoltage,
       })
       return true
+    },
+
+    /** 直接给玩家一台机器（不消耗材料，用于开局赠送） */
+    giveFreeMachine(defId: string): void {
+      const def = getMachineDef(defId)
+      if (!def) return
+      const autoRecipe =
+        def.category === 1 && def.role
+          ? (() => {
+              const candidates = db.filter('recipes', (r) => r.requiredRole === def.role && r.requiredLevel <= def.tier)
+              return candidates.length === 1 ? candidates[0].id : null
+            })()
+          : null
+      const defaultVoltage = Math.min((def as any).maxVoltage ?? 0, (usePowerStore().globalMaxVoltage))
+      this.instances.push({
+        instanceId:      `machine_${_nextId++}`,
+        defId,
+        isRunning:       false,
+        selectedRecipeId: autoRecipe,
+        progressSec:     0,
+        status:          'paused',
+        selectedVoltage: defaultVoltage,
+      })
     },
 
     toggleMachine(instanceId: string): void {

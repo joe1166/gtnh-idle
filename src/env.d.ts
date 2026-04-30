@@ -1,7 +1,9 @@
 /// <reference types="vite/client" />
 
+// Fallback for editors without the Vue Official (Volar) extension.
+// When Volar is active it replaces this declaration with full type support.
 declare module '*.vue' {
-  import type { DefineComponent } from 'vue'
-  const component: DefineComponent<object, object, unknown>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const component: any
   export default component
 }

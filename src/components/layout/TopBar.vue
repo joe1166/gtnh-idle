@@ -31,8 +31,8 @@
 
     <div class="top-bar__right">
       <span class="chapter-name">{{ progressionStore.currentChapter?.locKey ? t(progressionStore.currentChapter.locKey) : '—' }}</span>
-      <button class="save-btn" @click="handleSave">
-        <span>💾</span> 存档
+      <button class="dev-btn" @click="toggleDevConsole" title="开发者后台">
+        &#9881;
       </button>
     </div>
   </header>
@@ -42,13 +42,14 @@
 import { computed } from 'vue'
 import { usePowerStore } from '../../stores/powerStore'
 import { useProgressionStore } from '../../stores/progressionStore'
-import { useSaveLoad } from '../../composables/useSaveLoad'
+import { useDevConsole } from '../../composables/useDevConsole'
 import { t } from '../../data/i18n'
 import { fmt } from '../../utils/format'
 
 const powerStore = usePowerStore()
 const progressionStore = useProgressionStore()
-const { save } = useSaveLoad()
+const { toggle } = useDevConsole()
+function toggleDevConsole() { toggle() }
 
 const batteryColorClass = computed(() => {
   const pct = powerStore.batteryPercent
@@ -56,10 +57,6 @@ const batteryColorClass = computed(() => {
   if (pct >= 25) return 'color-yellow'
   return 'color-red'
 })
-
-function handleSave() {
-  save()
-}
 </script>
 
 <style scoped>
@@ -180,6 +177,31 @@ function handleSave() {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.dev-btn {
+  background: none;
+  border: 1px solid #333;
+  color: #555;
+  width: 26px;
+  height: 26px;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+.dev-btn:hover {
+  color: #4a9eff;
+  border-color: #4a9eff;
+  background: rgba(74, 158, 255, 0.08);
+}
+.dev-btn:active {
+  background: rgba(74, 158, 255, 0.15);
 }
 
 .save-btn {

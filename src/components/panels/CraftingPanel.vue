@@ -13,14 +13,18 @@
     >
       <!-- 机器标题行 -->
       <div class="machine-header">
-        <!-- 左：图标 + 名称 + 建造按钮 -->
+        <!-- 左：图标 + 名称 + 数量 + 建造按钮 -->
         <div class="machine-title-row">
           <span class="machine-icon">{{ machineIcon(def.role ?? '') }}</span>
           <span class="machine-name">{{ t(def.locKey) }}</span>
           <span class="built-count" v-if="instancesOf(def.id).length > 0">
             ×{{ instancesOf(def.id).length }}
           </span>
+          <span v-if="instancesOf(def.id).length >= def.maxCount" class="max-label">
+            (MAX)
+          </span>
           <button
+            v-else
             class="build-btn"
             :class="{ 'build-btn--ok': canBuild(def.id), 'build-btn--lack': !canBuild(def.id) }"
             @click="handleBuild(def.id, def.locKey)"
@@ -67,7 +71,7 @@
               :value="inst.selectedRecipeId ?? ''"
               @change="onRecipeChange(inst.instanceId, ($event.target as any).value)"
             >
-              <option value="">── 选择配方 ──</option>
+              <option value="">{{ t('crafting.recipe.select_placeholder') }}</option>
               <option
                 v-for="recipe in getAllowedRecipes(def.id)"
                 :key="recipe.id"
@@ -87,7 +91,7 @@
                 {{ getResName(inp.resourceId) }}×{{ inp.amount }}
                 <span class="preview-have">({{ fmt(inventoryStore.getAmount(inp.resourceId)) }})</span>
               </span>
-              <span v-if="(getRecipe(inst.selectedRecipeId)?.inputs ?? []).length === 0" class="preview-ok">无材料需求</span>
+              <span v-if="(getRecipe(inst.selectedRecipeId)?.inputs ?? []).length === 0" class="preview-ok">{{ t('crafting.no_inputs') }}</span>
               <span class="preview-arrow">→</span>
               <span
                 v-for="out in getRecipe(inst.selectedRecipeId)?.outputs ?? []"
@@ -110,7 +114,7 @@
               </div>
               <span class="prog-text">
                 {{ Math.round(progressPct(inst)) }}%
-                <span class="prog-remaining">剩{{ getRecipeDuration(inst.selectedRecipeId) - inst.progressSec }}s</span>
+                <span class="prog-remaining">{{ t('crafting.time_prefix') }}{{ Math.ceil(getRecipeDuration(inst.selectedRecipeId) - inst.progressSec) }}{{ t('crafting.time_suffix') }}</span>
               </span>
             </template>
             <template v-else>
@@ -170,19 +174,24 @@ import { useTechStore } from '../../stores/techStore'
 import { db } from '../../data/db'
 import { t } from '../../data/i18n'
 import { fmt } from '../../utils/format'
+import { evaluateCondition } from '../../data/conditions'
 import { useToast } from '../../composables/useToast'
 import { VoltTierName } from '../../data/types'
 import type { RecipeDef } from '../../data/types'
 import type { MachineInstance, MachineStatus } from '../../stores/machineStore'
 
-const machineStore   = useMachineStore()
+const machineStore    = useMachineStore()
 const powerStore     = usePowerStore()
 const inventoryStore = useInventoryStore()
 const techStore      = useTechStore()
 const { show }       = useToast()
 
 const availableMachineDefs = computed(() =>
-  db.filter('machines', (d) => d.category === 1 && d.role !== 'miner')
+  db.filter('machines', (d) =>
+    d.category === 1 &&
+    d.role !== 'miner' &&
+    evaluateCondition(d.showCond)
+  )
 )
 
 function instancesOf(defId: string): MachineInstance[] {
@@ -192,6 +201,8 @@ function instancesOf(defId: string): MachineInstance[] {
 function canBuild(defId: string): boolean {
   const def = db.get('machines', defId)
   if (!def) return false
+  if (def.maxCount === 0) return false
+  if (instancesOf(defId).length >= def.maxCount) return false
   return inventoryStore.canAfford(def.buildCost)
 }
 
@@ -204,7 +215,9 @@ function handleBuild(defId: string, defLocKey: string) {
 function getAllowedRecipes(defId: string): RecipeDef[] {
   const def = db.get('machines', defId)
   if (!def) return []
-  return def.allowedRecipeIds.map((id) => db.get('recipes', id)).filter(Boolean) as RecipeDef[]
+  return db.filter('recipes', (r) =>
+    r.requiredRole === def.role && r.requiredLevel <= def.tier
+  )
 }
 
 function getRecipe(recipeId: string | null): RecipeDef | null {
@@ -253,15 +266,13 @@ function canOverclock(defId: string): boolean {
   return (getMachineDef(defId)?.maxVoltage ?? 0) > 0
 }
 
-/** 获取当前可选的电压列表（recipe.voltage ～ min(machine.maxVoltage, globalMaxVoltage)） */
+/** 获取当前可选的电压列表（0 ～ min(machine.maxVoltage, globalMaxVoltage)，默认选中最大） */
 function getAvailableVoltages(inst: MachineInstance): number[] {
   const def = getMachineDef(inst.defId)
   if (!def) return []
-  const recipe = inst.selectedRecipeId ? db.get('recipes', inst.selectedRecipeId) : null
-  const minV = recipe?.voltage ?? 0
-  const maxV = Math.min(def.maxVoltage, Math.max(powerStore.globalMaxVoltage, minV))
+  const maxV = Math.min(def.maxVoltage ?? 0, powerStore.globalMaxVoltage)
   const result: number[] = []
-  for (let v = minV; v <= maxV; v++) result.push(v)
+  for (let v = maxV; v >= 0; v--) result.push(v)
   return result
 }
 
@@ -338,6 +349,12 @@ function machineIcon(type: string): string {
   font-size: 12px;
   color: var(--accent-green);
   font-weight: bold;
+}
+
+.max-label {
+  font-size: 11px;
+  color: #666;
+  font-style: italic;
 }
 
 .build-btn {

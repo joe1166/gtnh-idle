@@ -102,6 +102,7 @@ export function useOfflineProgress() {
 
     // 标记离线模拟结束
     gameStore.setOfflineSimulating(false)
+    gameStore.addOfflineSec(actualSec)
 
     const after = takeSnapshot()
     return buildReport(offlineSeconds, actualSec, before, after)

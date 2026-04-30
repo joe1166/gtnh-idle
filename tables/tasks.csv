@@ -4,3 +4,9 @@ id,locKey,type,para1,para2,rewardResourceId,rewardAmount
 3,task.make_circuit,3,basic_circuit,4,iron_plate,20
 4,task.build_boiler,1,steam_boiler,1,,
 5,task.reach_power,4,32,,,
+10,task.gather_wood,3,log_wood,5,,
+11,task.gather_more_wood,3,log_wood,20,,
+12,task.gather_stone,3,cobblestone,10,,
+13,task.gather_coal,3,coal,5,,
+14,task.gather_flint,3,flint,3,,
+15,task.gather_resources,3,log_wood,1,,

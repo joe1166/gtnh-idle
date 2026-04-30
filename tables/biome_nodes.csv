@@ -1,0 +1,12 @@
+id,locKey,actionLocKey,type,resourceId,amount,durationSec,posX,posY,hidden,hitArea,requiredAbility,requiredAbilityValue
+plains_oak_1,world.node.oak_tree,world.action.chop,click,log_wood,1,0,18,38,false,,wood_ability,0
+plains_oak_2,world.node.oak_tree,world.action.chop,click,log_wood,1,0,62,35,false,,wood_ability,0
+plains_stone_rock,world.node.stone,world.action.mine_stone,click,cobblestone,1,0,40,55,false,,mining_ability,0
+plains_weeds_1,world.node.weeds,world.action.gather_weeds,click,weeds,1,0,75,25,false,,wood_ability,0
+plains_weeds_2,world.node.weeds,world.action.gather_weeds,click,weeds,1,0,30,70,false,,wood_ability,0
+plains_flint_patch,world.node.flint,world.action.gather_flint,click,flint,1,0,55,60,true,"48,50 65,50 55,75 48,75",mining_ability,0
+plains_cave_entrance,world.node.cave,world.action.explore_cave,timed,coal,3,30,80,45,true,"72,30 96,30 96,70 72,70",mining_ability,1
+forest_oak_1,world.node.oak_tree,world.action.chop,click,log_wood,2,0,20,40,false,,wood_ability,0
+forest_oak_2,world.node.oak_tree,world.action.chop,click,log_wood,2,0,65,30,false,,wood_ability,0
+forest_stone_1,world.node.stone,world.action.mine_stone,click,cobblestone,1,0,45,60,false,,mining_ability,0
+forest_weeds_1,world.node.weeds,world.action.gather_weeds,click,weeds,2,0,80,55,false,,wood_ability,0

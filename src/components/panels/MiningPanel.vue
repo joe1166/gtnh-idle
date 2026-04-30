@@ -169,9 +169,7 @@ function getMineRecipe(resourceId: string): RecipeDef | null {
 function getMinerAllowedRecipes(defId: string): RecipeDef[] {
   const def = db.get('machines', defId)
   if (!def) return []
-  return def.allowedRecipeIds
-    .map((id) => db.get('recipes', id))
-    .filter((r): r is RecipeDef => r != null)
+  return db.filter('recipes', (r) => r.requiredRole === 'miner' && r.requiredLevel <= def.tier)
 }
 
 /** 获取当前正在开采此资源的矿机实例（按 selectedRecipeId 的产出匹配） */
@@ -244,7 +242,7 @@ function getMinerAvailableVoltages(inst: { defId: string; selectedVoltage: numbe
   if (!def) return []
   const recipe = inst.selectedRecipeId ? db.get('recipes', inst.selectedRecipeId) : null
   const minV = recipe?.voltage ?? 0
-  const maxV = Math.min(def.maxVoltage, Math.max(powerStore.globalMaxVoltage, minV))
+  const maxV = Math.min(def.maxVoltage ?? 0, Math.max(powerStore.globalMaxVoltage, minV))
   const result: number[] = []
   for (let v = minV; v <= maxV; v++) result.push(v)
   return result

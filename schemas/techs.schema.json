@@ -2,9 +2,12 @@
   "root": "array",
   "output": "src/config/techs.json",
   "fields": {
-    "id":         "string",
-    "locKey":     "string",
-    "descLocKey": "string",
+    "id":             "string",
+    "locKey":         "string",
+    "descLocKey":     "string",
+    "treeId":         "string",
+    "col":            "number",
+    "row":            "number",
     "cost": {
       "type": "array", "sep": "|",
       "item": { "type": "object", "sep": ":",
@@ -15,8 +18,16 @@
       }
     },
     "prerequisites": {
-      "type": "array", "sep": "|", "item": "string"
+      "type": "array", "sep": "|",
+      "item": { "type": "object", "sep": ":",
+        "fields": [
+          {"name": "techId", "type": "string"},
+          {"name": "kind",   "type": "string"}
+        ]
+      }
     },
+    "showCondition":   "string",
+    "unlockCondition": "string",
     "unlocks": {
       "type": "object", "sep": ";", "sparse": true,
       "fields": [

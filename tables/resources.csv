@@ -1,4 +1,7 @@
 id,locKey,defaultCap,category,unlockedByChapter
+log_wood,res.log_wood,500,wood,1
+cobblestone,res.cobblestone,500,stone,1
+flint,res.flint,200,stone,1
 coal,res.coal,1000,fuel,1
 iron_ore,res.iron_ore,1000,ore,1
 copper_ore,res.copper_ore,1000,ore,1
@@ -11,3 +14,5 @@ iron_plate,res.iron_plate,200,component,1
 vacuum_tube,res.vacuum_tube,100,component,1
 wrench,res.wrench,10,component,1
 basic_circuit,res.basic_circuit,50,circuit,1
+coarse_rope,res.coarse_rope,200,component,1
+weeds,res.weeds,500,wood,1

@@ -1,0 +1,9 @@
+{
+  "root": "array",
+  "output": "src/config/tech_trees.json",
+  "fields": {
+    "id":     "string",
+    "locKey": "string",
+    "order":  "number"
+  }
+}

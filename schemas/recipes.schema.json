@@ -27,6 +27,8 @@
     "voltage":            "number",
     "overclock":          "number",
     "requiredRole":       "string",
-    "unlockedByChapter":  "number"
+    "requiredLevel":      "number",
+    "showCondType":       "string",
+    "showCondPara":       "string"
   }
 }

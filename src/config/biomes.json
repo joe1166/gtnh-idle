@@ -1,0 +1,25 @@
+[
+  {
+    "id": "plains",
+    "locKey": "biome.plains",
+    "nodeIds": [
+      "plains_oak_1",
+      "plains_oak_2",
+      "plains_stone_rock",
+      "plains_weeds_1",
+      "plains_weeds_2",
+      "plains_flint_patch",
+      "plains_cave_entrance"
+    ]
+  },
+  {
+    "id": "forest",
+    "locKey": "biome.forest",
+    "nodeIds": [
+      "forest_oak_1",
+      "forest_oak_2",
+      "forest_stone_1",
+      "forest_weeds_1"
+    ]
+  }
+]

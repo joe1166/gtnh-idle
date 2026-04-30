@@ -4,39 +4,42 @@
       <div class="modal-box">
         <!-- Header -->
         <div class="modal-header">
-          <span class="header-title">💾 存档管理</span>
+          <span class="header-title">{{ t('settings.title') }}</span>
           <button class="close-x" @click="emit('close')">✕</button>
         </div>
 
+        <!-- 存档区块标题 -->
+        <div class="settings-section-title">{{ t('settings.save_section') }}</div>
+
         <!-- Last save time -->
         <div class="last-save-info">
-          上次存档：{{ lastSaveLabel }}
+          {{ t('save.last_save_prefix') }}{{ lastSaveLabel }}
         </div>
 
         <!-- 手动存档 -->
         <div class="section">
           <button class="action-btn action-btn--primary" @click="handleSave">
-            立即存档
+            {{ t('save.btn_save_now') }}
           </button>
-          <span v-if="justSaved" class="save-ok">✓ 已保存</span>
+          <span v-if="justSaved" class="save-ok">{{ t('save.btn_saved') }}</span>
         </div>
 
         <div class="divider"></div>
 
         <!-- 导出存档 -->
         <div class="section">
-          <div class="section-title">导出存档</div>
-          <button class="action-btn" @click="handleExport">生成存档码</button>
+          <div class="section-title">{{ t('save.export_title') }}</div>
+          <button class="action-btn" @click="handleExport">{{ t('save.btn_generate') }}</button>
           <div v-if="exportedCode" class="export-area">
             <textarea
               class="code-textarea"
               readonly
               :value="exportedCode"
-              @click="($event.target as HTMLTextAreaElement).select()"
+              @click="selectAll($event)"
               rows="4"
             ></textarea>
             <button class="action-btn action-btn--small" @click="copyCode">
-              {{ copied ? '✓ 已复制' : '复制' }}
+              {{ copied ? t('save.btn_copied') : t('save.btn_copy') }}
             </button>
           </div>
         </div>
@@ -45,11 +48,11 @@
 
         <!-- 导入存档 -->
         <div class="section">
-          <div class="section-title">导入存档</div>
+          <div class="section-title">{{ t('save.import_title') }}</div>
           <textarea
             class="code-textarea"
             v-model="importCode"
-            placeholder="在此粘贴存档码..."
+            :placeholder="t('save.code_placeholder')"
             rows="4"
           ></textarea>
           <div class="import-actions">
@@ -58,7 +61,7 @@
               :disabled="!importCode.trim()"
               @click="handleImport"
             >
-              导入并刷新
+              {{ t('save.btn_import') }}
             </button>
             <span v-if="importError" class="import-error">{{ importError }}</span>
           </div>
@@ -68,19 +71,19 @@
 
         <!-- 删除存档 -->
         <div class="section">
-          <div class="section-title delete-title">危险操作</div>
+          <div class="section-title delete-title">{{ t('save.danger_title') }}</div>
           <button
             v-if="!confirmDelete"
             class="action-btn action-btn--danger"
             @click="confirmDelete = true"
           >
-            删除存档
+            {{ t('save.btn_delete') }}
           </button>
           <div v-else class="confirm-delete">
-            <span class="confirm-text">确定要删除所有存档吗？此操作不可撤销。</span>
+            <span class="confirm-text">{{ t('save.confirm_text') }}</span>
             <div class="confirm-buttons">
-              <button class="action-btn action-btn--danger" @click="handleDelete">确认删除</button>
-              <button class="action-btn" @click="confirmDelete = false">取消</button>
+              <button class="action-btn action-btn--danger" @click="handleDelete">{{ t('save.btn_confirm_delete') }}</button>
+              <button class="action-btn" @click="confirmDelete = false">{{ t('btn.cancel') }}</button>
             </div>
           </div>
         </div>
@@ -93,6 +96,7 @@
 import { ref, computed, watch } from 'vue'
 import { useGameStore } from '../../stores/gameStore'
 import { useSaveLoad } from '../../composables/useSaveLoad'
+import { t } from '../../data/i18n'
 import { fmtTime } from '../../utils/format'
 
 const props = defineProps<{
@@ -116,7 +120,7 @@ const copied = ref(false)
 // Reset state when modal opens
 watch(
   () => props.show,
-  (val) => {
+  (val: boolean) => {
     if (val) {
       exportedCode.value = ''
       importCode.value = ''
@@ -130,9 +134,13 @@ watch(
 
 const lastSaveLabel = computed(() => {
   const sec = gameStore.secondsSinceLastSave
-  if (sec < 5) return '刚刚'
-  return `${fmtTime(sec)}前`
+  if (sec < 5) return t('save.just_now')
+  return `${fmtTime(sec)}${t('save.time_ago_suffix')}`
 })
+
+function selectAll(e: Event) {
+  (e.target as HTMLTextAreaElement).select()
+}
 
 function handleSave() {
   save()
@@ -163,7 +171,7 @@ function handleImport() {
   if (!code) return
   const ok = importSave(code)
   if (!ok) {
-    importError.value = '存档码无效，请检查后重试。'
+    importError.value = t('save.invalid_code')
   }
   // On success, importSave calls location.reload()
 }
@@ -222,6 +230,16 @@ function handleDelete() {
   padding: 0 4px;
   line-height: 1;
   transition: color 0.15s;
+}
+
+.settings-section-title {
+  font-size: 11px;
+  color: #555;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 6px;
+  margin-bottom: 4px;
 }
 
 .close-x:hover {

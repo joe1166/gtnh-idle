@@ -5,8 +5,10 @@ import { useMachineStore } from '../stores/machineStore'
 import { useProgressionStore } from '../stores/progressionStore'
 import { useTechStore } from '../stores/techStore'
 import { useTaskStore } from '../stores/taskStore'
+import { useWorldStore } from '../stores/worldStore'
+import { useToolStore } from '../stores/toolStore'
 
-const SAVE_VERSION = '3.0.0'
+const SAVE_VERSION = '4.0.0'
 const SAVE_KEY = 'gtnh_idle_save'
 
 interface SaveData {
@@ -20,6 +22,8 @@ interface SaveData {
     progression: ReturnType<typeof useProgressionStore>['$state']
     tasks:       ReturnType<typeof useTaskStore>['$state']
     tech?:       ReturnType<typeof useTechStore>['$state']
+    world?:      ReturnType<typeof useWorldStore>['$state']
+    tools?:     ReturnType<typeof useToolStore>['$state']
   }
 }
 
@@ -41,6 +45,8 @@ export function useSaveLoad() {
         progression: JSON.parse(JSON.stringify(useProgressionStore().$state)),
         tasks:       JSON.parse(JSON.stringify(useTaskStore().$state)),
         tech:        JSON.parse(JSON.stringify(useTechStore().$state)),
+        world:       JSON.parse(JSON.stringify(useWorldStore().$state)),
+        tools:       JSON.parse(JSON.stringify(useToolStore().$state)),
       },
     }
     localStorage.setItem(SAVE_KEY, JSON.stringify(data))
@@ -69,6 +75,8 @@ export function useSaveLoad() {
     if (data.state.progression) useProgressionStore().$patch(data.state.progression)
     if (data.state.tasks)       useTaskStore().$patch(data.state.tasks)
     if (data.state.tech)        useTechStore().$patch(data.state.tech)
+    if (data.state.world)       useWorldStore().$patch(data.state.world)
+    if (data.state.tools)       useToolStore().$patch(data.state.tools)
 
     return { success: true, offlineSeconds: (Date.now() - data.savedAt) / 1000 }
   }
@@ -120,6 +128,11 @@ export function useSaveLoad() {
       }
 
       data.version = '3.0.0'
+    }
+
+    // v3.0.0 → v4.0.0：新增工具系统，tools 由 store 默认状态初始化，无需迁移
+    if (data.version === '3.0.0') {
+      data.version = '4.0.0'
     }
 
     return data

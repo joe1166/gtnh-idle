@@ -1,0 +1,98 @@
+[
+  {
+    "id": 1001,
+    "type": "stone_axe",
+    "level": 0,
+    "abilityId": "wood_ability",
+    "abilityValue": 1,
+    "upgradeCost": [
+      {
+        "resourceId": "log_wood",
+        "amount": 5
+      },
+      {
+        "resourceId": "coarse_rope",
+        "amount": 2
+      }
+    ],
+    "locKey": "tool.stone_axe.level_0",
+    "unlockedByChapter": 1
+  },
+  {
+    "id": 1002,
+    "type": "stone_axe",
+    "level": 1,
+    "abilityId": "wood_ability",
+    "abilityValue": 2,
+    "upgradeCost": [
+      {
+        "resourceId": "log_wood",
+        "amount": 10
+      },
+      {
+        "resourceId": "cobblestone",
+        "amount": 8
+      }
+    ],
+    "locKey": "tool.stone_axe.level_1",
+    "unlockedByChapter": 1
+  },
+  {
+    "id": 1003,
+    "type": "stone_axe",
+    "level": 2,
+    "abilityId": "wood_ability",
+    "abilityValue": 3,
+    "upgradeCost": [],
+    "locKey": "tool.stone_axe.level_2",
+    "unlockedByChapter": 1
+  },
+  {
+    "id": 1004,
+    "type": "stone_pickaxe",
+    "level": 0,
+    "abilityId": "mining_ability",
+    "abilityValue": 1,
+    "upgradeCost": [
+      {
+        "resourceId": "log_wood",
+        "amount": 5
+      },
+      {
+        "resourceId": "coarse_rope",
+        "amount": 2
+      }
+    ],
+    "locKey": "tool.stone_pickaxe.level_0",
+    "unlockedByChapter": 1
+  },
+  {
+    "id": 1005,
+    "type": "stone_pickaxe",
+    "level": 1,
+    "abilityId": "mining_ability",
+    "abilityValue": 2,
+    "upgradeCost": [
+      {
+        "resourceId": "log_wood",
+        "amount": 10
+      },
+      {
+        "resourceId": "cobblestone",
+        "amount": 8
+      }
+    ],
+    "locKey": "tool.stone_pickaxe.level_1",
+    "unlockedByChapter": 1
+  },
+  {
+    "id": 1006,
+    "type": "stone_pickaxe",
+    "level": 2,
+    "abilityId": "mining_ability",
+    "abilityValue": 3,
+    "upgradeCost": [],
+    "locKey": "tool.stone_pickaxe.level_2",
+    "unlockedByChapter": 1
+  }
+]

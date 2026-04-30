@@ -1,0 +1,22 @@
+{
+  "root": "array",
+  "output": "src/config/tools.json",
+  "fields": {
+    "id": "number",
+    "type": "string",
+    "level": "number",
+    "abilityId": "string",
+    "abilityValue": "number",
+    "upgradeCost": {
+      "type": "array", "sep": "|",
+      "item": { "type": "object", "sep": ":",
+        "fields": [
+          {"name": "resourceId", "type": "string"},
+          {"name": "amount",     "type": "number"}
+        ]
+      }
+    },
+    "locKey": "string",
+    "unlockedByChapter": "number"
+  }
+}

@@ -6,6 +6,7 @@ import { usePowerStore } from '../stores/powerStore'
 import { useSteamStore } from '../stores/steamStore'
 import { useMachineStore } from '../stores/machineStore'
 import { useProgressionStore } from '../stores/progressionStore'
+import { useWorldStore } from '../stores/worldStore'
 
 import { useSaveLoad } from './useSaveLoad'
 
@@ -39,6 +40,11 @@ export function useGameLoop() {
       inventoryStore.addItem('iron_ingot', 30)
       inventoryStore.addItem('iron_plate', 20)
       inventoryStore.addItem('wrench', 2)
+      // 开局赠送一台徒手组装机
+      useMachineStore().giveFreeMachine('hand_assembly')
+      // 新游戏立即存档，避免刷新丢进度
+      const { save } = useSaveLoad()
+      save()
     }
   }
 
@@ -49,7 +55,8 @@ export function useGameLoop() {
    * 3. machineStore     — Phase1: 蒸汽发生器; Phase2: EU发电机; Phase3: 合成机器
    * 4. powerStore       — 过载计数
    * 5. progressionStore — 章节解锁（内部调用 taskStore.checkTasks）
-   * 6. 自动存档
+   * 6. worldStore       — timed 节点完成检查
+   * 7. 自动存档
    */
   function tick(): void {
     const gameStore        = useGameStore()
@@ -57,12 +64,14 @@ export function useGameLoop() {
     const machineStore     = useMachineStore()
     const powerStore       = usePowerStore()
     const progressionStore = useProgressionStore()
+    const worldStore       = useWorldStore()
 
     gameStore.tick()
     steamStore.beginTick()
     machineStore.tick()
     powerStore.tick()
     progressionStore.tick()
+    worldStore.tick()
 
     if (!gameStore.isSimulatingOffline && gameStore.secondsSinceLastSave >= 30) {
       const { save } = useSaveLoad()

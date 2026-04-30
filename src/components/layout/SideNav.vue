@@ -14,8 +14,18 @@
     </ul>
 
     <div class="nav-footer">
-      <div class="playtime-label">{{ t('nav.playtime') }}</div>
-      <div class="playtime-value">{{ gameStore.formattedPlaytime }}</div>
+      <div class="playtime-row">
+        <span class="playtime-label">{{ t('nav.playtime') }}</span>
+        <span class="playtime-value">{{ gameStore.formattedPlaytime }}</span>
+      </div>
+      <div class="footer-btns">
+        <button class="footer-btn" @click="emit('open-stats')">
+          {{ t('nav.stats_btn') }}
+        </button>
+        <button class="footer-btn" @click="emit('open-settings')">
+          {{ t('nav.settings_btn') }}
+        </button>
+      </div>
     </div>
   </nav>
 </template>
@@ -23,12 +33,10 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useGameStore } from '../../stores/gameStore'
-import { useTechStore } from '../../stores/techStore'
 import { t } from '../../data/i18n'
-import { PANEL_DEFS } from '../../data/panelConfig'
+import { PANEL_DEFS, evaluateCondition, type PanelDef } from '../../data/panelConfig'
 
 const gameStore = useGameStore()
-const techStore = useTechStore()
 
 defineProps<{
   modelValue: string
@@ -36,19 +44,51 @@ defineProps<{
 
 const emit = defineEmits<{
   'update:modelValue': [value: string]
+  'open-stats': []
+  'open-settings': []
 }>()
 
-function isVisible(condition: typeof PANEL_DEFS[number]['condition']): boolean {
-  if (!condition) return true
-  if (condition.type === 'tech') return techStore.isResearched(condition.para)
+/**
+ * 判断面板是否可见：
+ *   1. hideCond 满足 → 强制隐藏（优先，panel 类型需两轮计算）
+ *   2. showCond 不满足 → 隐藏（通用 evaluateCondition）
+ *   3. 其余情况 → 显示
+ *
+ * panel 类型条件需要已知当前可见列表，故传入 visibleIds（仅 hideCond 使用）。
+ */
+function isVisible(def: PanelDef, visibleIds: Set<string>): boolean {
+  if (def.hideCond) {
+    if (def.hideCond.type === 'panel') {
+      // panel 类型需两轮计算，这里只在第二轮被调用，visibleIds 已包含第一轮结果
+      if (visibleIds.has(def.hideCond.para)) return false
+    }
+  }
+  if (def.showCond && !evaluateCondition(def.showCond)) return false
   return true
 }
 
-const navItems = computed(() =>
-  PANEL_DEFS
-    .filter(p => isVisible(p.condition))
-    .sort((a, b) => a.order - b.order)
-)
+/**
+ * 计算可见面板列表。
+ * panel 类型条件会引入循环依赖，采用两轮计算：
+ *   第一轮：计算所有不含 panel 条件的面板可见性
+ *   第二轮：再计算含 panel 条件的面板（以第一轮结果为依据）
+ */
+const navItems = computed(() => {
+  const sorted = [...PANEL_DEFS].sort((a, b) => a.order - b.order)
+
+  // 第一轮：不含 hideCond.panel 的面板（hideCond.panel 需两轮计算）
+  const firstPass = new Set(
+    sorted
+      .filter(p => p.hideCond?.type !== 'panel')
+      .filter(p => isVisible(p, new Set()))
+      .map(p => p.id)
+  )
+
+  // 第二轮：含 hideCond.panel 的面板，用第一轮结果作为 visibleIds
+  const result = sorted.filter(p => isVisible(p, firstPass))
+
+  return result
+})
 </script>
 
 <style scoped>
@@ -104,20 +144,57 @@ const navItems = computed(() =>
   font-size: 13px;
 }
 
+/* ── Footer ── */
 .nav-footer {
-  padding: 12px 14px;
+  padding: 10px 12px 12px;
   border-top: 1px solid var(--border-color);
-  font-size: 11px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.playtime-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
 }
 
 .playtime-label {
-  color: #666;
-  margin-bottom: 2px;
+  font-size: 10px;
+  color: #555;
 }
 
 .playtime-value {
+  font-size: 12px;
   color: #888;
   font-family: 'Consolas', 'Courier New', monospace;
   letter-spacing: 1px;
+}
+
+.footer-btns {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+}
+
+.footer-btn {
+  width: 100%;
+  background: #222;
+  border: 1px solid var(--border-color);
+  color: #888;
+  padding: 4px 0;
+  font-family: inherit;
+  font-size: 11px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.footer-btn:hover {
+  background: #333;
+  color: var(--text-primary);
+  border-color: #555;
 }
 </style>

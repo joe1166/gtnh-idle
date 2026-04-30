@@ -3,6 +3,9 @@
     "id": "basic_automation",
     "locKey": "tech.basic_automation.name",
     "descLocKey": "tech.basic_automation.desc",
+    "treeId": "automation",
+    "col": 0,
+    "row": 0,
     "cost": [
       {
         "resourceId": "iron_plate",
@@ -24,6 +27,9 @@
     "id": "machine_overclock",
     "locKey": "tech.machine_overclock.name",
     "descLocKey": "tech.machine_overclock.desc",
+    "treeId": "automation",
+    "col": 1,
+    "row": 0,
     "cost": [
       {
         "resourceId": "iron_plate",
@@ -35,7 +41,10 @@
       }
     ],
     "prerequisites": [
-      "basic_automation"
+      {
+        "techId": "basic_automation",
+        "kind": "explicit"
+      }
     ],
     "unlocks": {
       "features": [
@@ -47,6 +56,9 @@
     "id": "parallel_processing",
     "locKey": "tech.parallel_processing.name",
     "descLocKey": "tech.parallel_processing.desc",
+    "treeId": "automation",
+    "col": 2,
+    "row": 0,
     "cost": [
       {
         "resourceId": "basic_circuit",
@@ -58,7 +70,10 @@
       }
     ],
     "prerequisites": [
-      "machine_overclock"
+      {
+        "techId": "machine_overclock",
+        "kind": "explicit"
+      }
     ],
     "unlocks": {
       "features": [

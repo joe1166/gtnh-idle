@@ -1,0 +1,16 @@
+[
+  { "name": "resources",   "schema": "schemas/resources.schema.json",    "input": "tables/resources.csv"   },
+  { "name": "recipes",     "schema": "schemas/recipes.schema.json",      "input": "tables/recipes.csv"     },
+  { "name": "machines",    "schema": "schemas/machines.schema.json",     "input": "tables/machines.csv"    },
+  { "name": "techs",       "schema": "schemas/techs.schema.json",        "input": "tables/techs.csv"       },
+  { "name": "tech_trees",  "schema": "schemas/tech_trees.schema.json",   "input": "tables/tech_trees.csv"  },
+  { "name": "chapters",    "schema": "schemas/chapters.schema.json",     "input": "tables/chapters.csv"    },
+  { "name": "tasks",       "schema": "schemas/tasks.schema.json",        "input": "tables/tasks.csv"       },
+  { "name": "panels",      "schema": "schemas/panels.schema.json",       "input": "tables/panels.csv"      },
+  { "name": "dimensions",  "schema": "schemas/dimensions.schema.json",   "input": "tables/dimensions.csv"  },
+  { "name": "biomes",      "schema": "schemas/biomes.schema.json",       "input": "tables/biomes.csv"      },
+  { "name": "biome_nodes", "schema": "schemas/biome_nodes.schema.json",  "input": "tables/biome_nodes.csv" },
+  { "name": "tools",       "schema": "schemas/tools.schema.json",         "input": "tables/tools.csv"       },
+  { "name": "locale",      "schema": "schemas/locale.schema.json",       "input": "tables/locale.csv",
+    "pre": "node tools/sort-locale.cjs" }
+]

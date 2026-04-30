@@ -1,0 +1,3 @@
+id,locKey,imagePath,ambientColor,nodeIds
+plains,biome.plains,,,plains_oak_1|plains_oak_2|plains_stone_rock|plains_weeds_1|plains_weeds_2|plains_flint_patch|plains_cave_entrance
+forest,biome.forest,,,forest_oak_1|forest_oak_2|forest_stone_1|forest_weeds_1

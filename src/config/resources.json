@@ -1,5 +1,26 @@
 [
   {
+    "id": "log_wood",
+    "locKey": "res.log_wood",
+    "defaultCap": 500,
+    "category": "wood",
+    "unlockedByChapter": 1
+  },
+  {
+    "id": "cobblestone",
+    "locKey": "res.cobblestone",
+    "defaultCap": 500,
+    "category": "stone",
+    "unlockedByChapter": 1
+  },
+  {
+    "id": "flint",
+    "locKey": "res.flint",
+    "defaultCap": 200,
+    "category": "stone",
+    "unlockedByChapter": 1
+  },
+  {
     "id": "coal",
     "locKey": "res.coal",
     "defaultCap": 1000,
@@ -81,6 +102,20 @@
     "locKey": "res.basic_circuit",
     "defaultCap": 50,
     "category": "circuit",
+    "unlockedByChapter": 1
+  },
+  {
+    "id": "coarse_rope",
+    "locKey": "res.coarse_rope",
+    "defaultCap": 200,
+    "category": "component",
+    "unlockedByChapter": 1
+  },
+  {
+    "id": "weeds",
+    "locKey": "res.weeds",
+    "defaultCap": 500,
+    "category": "wood",
     "unlockedByChapter": 1
   }
 ]

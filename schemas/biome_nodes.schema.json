@@ -1,0 +1,19 @@
+{
+  "root": "array",
+  "output": "src/config/biome_nodes.json",
+  "fields": {
+    "id":           "string",
+    "locKey":       "string",
+    "actionLocKey": "string",
+    "type":         "string",
+    "resourceId":   "string",
+    "amount":       "number",
+    "durationSec":  "number",
+    "posX":         "number",
+    "posY":         "number",
+    "hidden":       "boolean",
+    "hitArea":      "string",
+    "requiredAbility": "string",
+    "requiredAbilityValue": "number"
+  }
+}

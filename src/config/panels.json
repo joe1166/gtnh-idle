@@ -1,0 +1,66 @@
+[
+  {
+    "id": "world",
+    "order": 0,
+    "icon": "🌍",
+    "labelKey": "nav.world"
+  },
+  {
+    "id": "chapter",
+    "order": 1,
+    "icon": "📋",
+    "labelKey": "nav.chapter",
+    "showCondType": "task",
+    "showCondPara": "10"
+  },
+  {
+    "id": "steam",
+    "order": 2,
+    "icon": "♨",
+    "labelKey": "nav.steam",
+    "showCondType": "task",
+    "showCondPara": "13",
+    "hideCondType": "tech",
+    "hideCondPara": "electric_age"
+  },
+  {
+    "id": "power",
+    "order": 3,
+    "icon": "⚡",
+    "labelKey": "nav.power",
+    "showCondType": "tech",
+    "showCondPara": "electric_age"
+  },
+  {
+    "id": "mining",
+    "order": 4,
+    "icon": "⛏️",
+    "labelKey": "nav.mining",
+    "showCondType": "task",
+    "showCondPara": "14"
+  },
+  {
+    "id": "crafting",
+    "order": 5,
+    "icon": "🔨",
+    "labelKey": "nav.crafting",
+    "showCondType": "resource",
+    "showCondPara": "weeds"
+  },
+  {
+    "id": "inventory",
+    "order": 6,
+    "icon": "📦",
+    "labelKey": "nav.inventory",
+    "showCondType": "task",
+    "showCondPara": "15"
+  },
+  {
+    "id": "tech",
+    "order": 7,
+    "icon": "🔬",
+    "labelKey": "nav.tech",
+    "showCondType": "task",
+    "showCondPara": "12"
+  }
+]

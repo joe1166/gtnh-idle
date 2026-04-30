@@ -1,14 +1,17 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { t } from './data/i18n'
 import { useGameLoop } from './composables/useGameLoop'
 import { useSaveLoad } from './composables/useSaveLoad'
 import { useOfflineProgress } from './composables/useOfflineProgress'
 import { useGameStore } from './stores/gameStore'
+import { PANEL_DEFS } from './data/panelConfig'
 import type { OfflineReport } from './composables/useOfflineProgress'
 
 import TopBar from './components/layout/TopBar.vue'
 import ToastContainer from './components/ToastContainer.vue'
 import SideNav from './components/layout/SideNav.vue'
+import WorldPanel from './components/panels/WorldPanel.vue'
 import SteamPanel from './components/panels/SteamPanel.vue'
 import PowerPanel from './components/panels/PowerPanel.vue'
 import MiningPanel from './components/panels/MiningPanel.vue'
@@ -18,21 +21,28 @@ import ChapterPanel from './components/panels/ChapterPanel.vue'
 import TechPanel from './components/panels/TechPanel.vue'
 import OfflineModal from './components/modals/OfflineModal.vue'
 import SaveModal from './components/modals/SaveModal.vue'
+import StatsModal from './components/modals/StatsModal.vue'
+import DevConsole from './components/modals/DevConsole.vue'
 
 const { initGame, start } = useGameLoop()
 const { load, save } = useSaveLoad()
 const { simulate } = useOfflineProgress()
 const gameStore = useGameStore()
 
-// 面板切换
-const activePanel = ref('chapter')
+// 默认激活 order 最小的面板（由配置决定，不硬编码具体 id）
+const defaultPanelId = PANEL_DEFS.reduce((min, p) => p.order < min.order ? p : min).id
+const activePanel = ref(defaultPanelId)
+
+// 世界面板全屏，不需要内边距
+const isPanelFullBleed = computed(() => activePanel.value === 'world')
 
 // 离线弹窗
 const showOfflineModal = ref(false)
 const offlineReport = ref<OfflineReport | null>(null)
 
-// 存档弹窗
-const showSaveModal = ref(false)
+// 统计弹窗 & 设置弹窗
+const showStatsModal    = ref(false)
+const showSettingsModal = ref(false)
 
 let loopId: ReturnType<typeof setInterval>
 
@@ -63,10 +73,15 @@ onUnmounted(() => {
 <template>
   <!-- 整体布局：顶栏 + 左导航 + 主面板 -->
   <div class="app-container">
-    <TopBar @open-save="showSaveModal = true" />
+    <TopBar />
     <div class="main-layout">
-      <SideNav v-model="activePanel" />
-      <main class="panel-container">
+      <SideNav
+        v-model="activePanel"
+        @open-stats="showStatsModal = true"
+        @open-settings="showSettingsModal = true"
+      />
+      <main class="panel-container" :class="{ 'panel-container--full-bleed': isPanelFullBleed }">
+        <WorldPanel v-if="activePanel === 'world'" />
         <SteamPanel v-if="activePanel === 'steam'" />
         <PowerPanel v-if="activePanel === 'power'" />
         <MiningPanel v-if="activePanel === 'mining'" />
@@ -80,7 +95,7 @@ onUnmounted(() => {
     <!-- 离线模拟进度遮罩（模拟期间显示） -->
     <div v-if="gameStore.isSimulatingOffline" class="sim-overlay">
       <div class="sim-box">
-        <p>正在模拟离线进度...</p>
+        <p>{{ t('offline.sim_overlay_label') }}</p>
         <div class="sim-bar">
           <div :style="{ width: gameStore.offlineSimProgress + '%' }"></div>
         </div>
@@ -95,10 +110,15 @@ onUnmounted(() => {
       :report="offlineReport"
       @close="showOfflineModal = false"
     />
-    <SaveModal
-      :show="showSaveModal"
-      @close="showSaveModal = false"
+    <StatsModal
+      :show="showStatsModal"
+      @close="showStatsModal = false"
     />
+    <SaveModal
+      :show="showSettingsModal"
+      @close="showSettingsModal = false"
+    />
+    <DevConsole />
   </div>
 </template>
 
@@ -123,6 +143,11 @@ onUnmounted(() => {
   overflow-x: hidden;
   min-width: 0;
   padding: 16px;
+}
+/* 世界面板全屏无内边距 */
+.panel-container--full-bleed {
+  padding: 0;
+  overflow: hidden;
 }
 .sim-overlay {
   position: fixed; inset: 0;

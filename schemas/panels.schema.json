@@ -1,0 +1,14 @@
+{
+  "root": "array",
+  "output": "src/config/panels.json",
+  "fields": {
+    "id":           "string",
+    "order":        "number",
+    "icon":         "string",
+    "labelKey":     "string",
+    "showCondType": "string",
+    "showCondPara": "string",
+    "hideCondType": "string",
+    "hideCondPara": "string"
+  }
+}

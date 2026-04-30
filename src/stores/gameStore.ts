@@ -4,6 +4,7 @@ export const useGameStore = defineStore('game', {
   state: () => ({
     gameStartedAt: Date.now(),
     totalPlaytimeSec: 0,
+    totalOfflineSec: 0,
     tickCount: 0,
     lastSaveTime: Date.now(),
     isSimulatingOffline: false,
@@ -47,6 +48,11 @@ export const useGameStore = defineStore('game', {
     /** 更新离线模拟进度（0-100） */
     updateOfflineSimProgress(progress: number): void {
       this.offlineSimProgress = Math.min(100, Math.max(0, progress))
+    },
+
+    /** 累加离线补偿时长（秒） */
+    addOfflineSec(sec: number): void {
+      this.totalOfflineSec += Math.floor(sec)
     },
   },
 })

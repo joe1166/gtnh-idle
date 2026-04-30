@@ -1,0 +1,11 @@
+{
+  "root": "array",
+  "output": "src/config/biomes.json",
+  "fields": {
+    "id":           "string",
+    "locKey":       "string",
+    "imagePath":    "string",
+    "ambientColor": "string",
+    "nodeIds":      { "type": "array", "sep": "|", "item": "string" }
+  }
+}

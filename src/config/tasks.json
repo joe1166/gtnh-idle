@@ -34,5 +34,47 @@
     "locKey": "task.reach_power",
     "type": 4,
     "para1": "32"
+  },
+  {
+    "id": 10,
+    "locKey": "task.gather_wood",
+    "type": 3,
+    "para1": "log_wood",
+    "para2": "5"
+  },
+  {
+    "id": 11,
+    "locKey": "task.gather_more_wood",
+    "type": 3,
+    "para1": "log_wood",
+    "para2": "20"
+  },
+  {
+    "id": 12,
+    "locKey": "task.gather_stone",
+    "type": 3,
+    "para1": "cobblestone",
+    "para2": "10"
+  },
+  {
+    "id": 13,
+    "locKey": "task.gather_coal",
+    "type": 3,
+    "para1": "coal",
+    "para2": "5"
+  },
+  {
+    "id": 14,
+    "locKey": "task.gather_flint",
+    "type": 3,
+    "para1": "flint",
+    "para2": "3"
+  },
+  {
+    "id": 15,
+    "locKey": "task.gather_resources",
+    "type": 3,
+    "para1": "log_wood",
+    "para2": "1"
   }
 ]

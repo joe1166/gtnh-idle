@@ -6,12 +6,8 @@
     "locKey":   "string",
     "category":   "number",
     "role":       "string",
+    "tier":       "number",
     "euPerSec":   "number",
-    "maxVoltage": "number",
-    "voltage":    "number",
-    "allowedRecipeIds": {
-      "type": "array", "sep": "|", "item": "string"
-    },
     "fuelResourceId": "string",
     "fuelPerSec":     "number",
     "buildCost": {
@@ -23,6 +19,8 @@
         ]
       }
     },
-    "unlockedByChapter": "number"
+    "maxCount": "number",
+    "showCondType": "string",
+    "showCondPara": "string"
   }
 }

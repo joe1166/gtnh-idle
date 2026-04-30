@@ -5,16 +5,19 @@
         <!-- Header -->
         <div class="modal-header">
           <span class="header-icon">🌙</span>
-          <span class="header-title">欢迎回来！</span>
+          <span class="header-title">{{ t('offline.title') }}</span>
         </div>
 
         <div class="offline-time">
-          你离线了 <strong>{{ fmtTime(report.offlineSeconds) }}</strong>
+          {{ t('offline.time_prefix') }}<strong>{{ fmtTime(report.offlineSeconds) }}</strong>
+          <span v-if="report.simulatedSeconds < report.offlineSeconds" class="sim-cap-hint">
+            {{ simCapHint }}
+          </span>
         </div>
 
         <!-- 模拟进度条（模拟中显示） -->
         <div v-if="gameStore.isSimulatingOffline" class="sim-progress-section">
-          <div class="sim-label">模拟进度</div>
+          <div class="sim-label">{{ t('offline.sim_progress_label') }}</div>
           <div class="sim-bar-wrap">
             <div
               class="sim-bar-fill"
@@ -26,7 +29,7 @@
 
         <!-- 生产汇报 -->
         <div v-if="!gameStore.isSimulatingOffline && hasProduction" class="produced-section">
-          <div class="section-title">期间生产了：</div>
+          <div class="section-title">{{ t('offline.produced_label') }}</div>
           <div class="produced-list">
             <div
               v-for="(amount, resourceId) in report.gained"
@@ -59,7 +62,7 @@
             :disabled="gameStore.isSimulatingOffline"
             @click="emit('close')"
           >
-            {{ gameStore.isSimulatingOffline ? '模拟中…' : '好的，继续！' }}
+            {{ gameStore.isSimulatingOffline ? t('offline.btn_simulating') : t('offline.btn_close') }}
           </button>
         </div>
       </div>
@@ -71,8 +74,8 @@
 import { computed } from 'vue'
 import { useGameStore } from '../../stores/gameStore'
 import { db } from '../../data/db'
-import { fmt } from '../../utils/format'
-import { fmtTime } from '../../utils/format'
+import { fmt, fmtTime } from '../../utils/format'
+import { t } from '../../data/i18n'
 import type { OfflineReport } from '../../composables/useOfflineProgress'
 
 export type { OfflineReport }
@@ -91,6 +94,10 @@ const gameStore = useGameStore()
 const hasProduction = computed(() =>
   props.report.gained &&
   Object.values(props.report.gained).some((v) => v > 0)
+)
+
+const simCapHint = computed(() =>
+  t('offline.sim_cap').replace('{time}', fmtTime(props.report.simulatedSeconds))
 )
 
 function getResourceName(resourceId: string): string {
@@ -147,6 +154,12 @@ function getResourceName(resourceId: string): string {
 
 .offline-time strong {
   color: var(--accent-yellow);
+}
+
+.sim-cap-hint {
+  color: #888;
+  font-size: 12px;
+  margin-left: 4px;
 }
 
 /* Simulation progress */

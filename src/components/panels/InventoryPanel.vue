@@ -2,7 +2,7 @@
   <div class="inventory-panel">
     <div class="panel-card">
       <div class="card-header">
-        <span class="card-title">📦 仓库</span>
+        <span class="card-title">{{ t('inventory.title') }}</span>
       </div>
 
       <div v-for="group in resourceGroups" :key="group.category" class="resource-group">
@@ -32,7 +32,7 @@
       </div>
 
       <div v-if="totalItems === 0" class="empty-hint">
-        仓库为空。开始采集或合成资源。
+        {{ t('inventory.empty') }}
       </div>
     </div>
   </div>

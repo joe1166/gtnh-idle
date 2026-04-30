@@ -1,0 +1,7 @@
+id,type,level,abilityId,abilityValue,upgradeCost,locKey,unlockedByChapter
+1001,stone_axe,0,wood_ability,1,log_wood:5|coarse_rope:2,tool.stone_axe.level_0,1
+1002,stone_axe,1,wood_ability,2,log_wood:10|cobblestone:8,tool.stone_axe.level_1,1
+1003,stone_axe,2,wood_ability,3,,tool.stone_axe.level_2,1
+1004,stone_pickaxe,0,mining_ability,1,log_wood:5|coarse_rope:2,tool.stone_pickaxe.level_0,1
+1005,stone_pickaxe,1,mining_ability,2,log_wood:10|cobblestone:8,tool.stone_pickaxe.level_1,1
+1006,stone_pickaxe,2,mining_ability,3,,tool.stone_pickaxe.level_2,1
