@@ -3,6 +3,7 @@ attr.mining_ability,Mining Ability,Mining Ability
 attr.wood_ability,Wood Ability,Wood Ability
 biome.desert,沙漠,Desert
 biome.forest,森林,Forest
+biome.mountain,山地,Mountains
 biome.plains,平原,Plains
 biome.swamp,沼泽,Swamp
 btn.build,建造,Build
@@ -28,6 +29,7 @@ category.stone,石材,Stone
 category.wood,木材,Wood
 chapter.1.desc,用煤炭和蒸汽驱动第一批机器，迈出工业化的第一步。,Power your first machines with coal and steam.
 chapter.1.name,第一章：蒸汽时代,Chapter 1: Steam Age
+chapter.2.name,第二章：蒸汽时代,Chapter 2: Steam Age
 chapter.empty,暂无章节数据。,No chapter data.
 chapter.goal.eu_per_sec_prefix,章节目标：发电量达到,Chapter Goal: Reach
 chapter.tasks.all_done,本章所有任务已完成！,All tasks complete!
@@ -44,6 +46,7 @@ explore.action.loot,搜刮,Loot
 explore.combat.enemies,敌方单位,Enemies
 explore.combat.flee,撤退,Flee
 explore.combat.running,战斗进行中...,Combat in progress...
+explore.enemy.mummy_elite,法老精英守卫,Pharaoh Elite
 explore.enemy.mummy_guard,木乃伊守卫,Mummy Guard
 explore.enemy.scarab,圣甲虫,Scarab
 explore.exit.defeat_confirm,确认,Confirm
@@ -65,9 +68,12 @@ explore.mode.result,结算,Result
 explore.panel.role,职责,Role
 explore.panel.room,房间,Room
 explore.role.hp,生命值,HP
+explore.room.antechamber,前厅,Antechamber
+explore.room.burial_chamber,墓室,Burial Chamber
 explore.room.corridor,走廊,Corridor
 explore.room.corridor.desc,一条阴暗的走廊，尽头隐约透着光。,"A dark corridor, faint light ahead."
 explore.room.entry_desc,进入,Enter
+explore.room.guard_room,守卫室,Guard Room
 explore.room.side_chamber,侧室,Side Chamber
 explore.room.side_chamber.desc,墙壁上刻满了古老的符文。,Ancient runes cover the walls.
 explore.room.storage,储藏室,Storage
@@ -75,6 +81,7 @@ explore.room.storage.desc,落满灰尘的房间，角落堆着破旧的箱子。
 feature.auto_miner_eu,矿机EU化,Miner EU Mode
 feature.overclock,超频,Overclock
 feature.parallel_2x,并行处理,Parallel Processing
+gen.steam_boiler,蒸汽锅炉,Steam Boiler
 hint.biome_discovered,发现新群系：,New biome discovered:
 hint.explore_cost,探索消耗：,Explore cost:
 hint.explore_fail,探索失败！,Explore failed!
@@ -98,12 +105,15 @@ label.steam_generator,蒸汽锅炉,Steam Generator
 label.waste,浪费,Waste
 machine.alloy_furnace,合金炉,Alloy Furnace
 machine.assembler,组装台,Assembler
+machine.basic_miner,采矿机,Basic Miner
 machine.coal_miner,煤矿采掘机,Coal Miner
 machine.copper_miner,铜矿采掘机,Copper Miner
+machine.electric_furnace,电炉,Electric Furnace
 machine.forge_hammer,锻造锤,Forge Hammer
 machine.furnace,冶炼炉,Furnace
 machine.hand_assembly,徒手组装,Hand Assembly
 machine.iron_miner,铁矿采掘机,Iron Miner
+machine.plate_press,模具机,Plate Press
 machine.steam_boiler,蒸汽锅炉,Steam Boiler
 machine.tin_miner,锡矿采掘机,Tin Miner
 machine.wire_cutter,切线机,Wire Cutter
@@ -111,10 +121,17 @@ machine.workbench,工作台,Workbench
 mine.block.bedrock,基岩,Bedrock
 mine.block.coal,煤矿,Coal Ore
 mine.block.copper,铜矿,Copper Ore
+mine.block.deep_stone,深岩,Deep Stone
 mine.block.dirt,泥土,Dirt
+mine.block.gold,金矿,Gold Ore
 mine.block.iron,铁矿,Iron Ore
 mine.block.stone,岩石,Stone
+mine.block.tin,锡矿,Tin Ore
+mine.block.tunnel,隧道,Tunnel
 mine.btn.exit,离开矿洞,Exit Mine
+mine.cave.large,大型洞穴,Large Cave
+mine.cave.medium,中型洞穴,Medium Cave
+mine.cave.small,小型洞穴,Small Cave
 mine.exit.cancel,取消,Cancel
 mine.exit.confirm,确认离开,Confirm
 mine.exit.loot_title,本次收获,Loot This Run
@@ -124,6 +141,7 @@ mine.hint.not_visible,未发现任何东西,Nothing found
 mine.node.desert_cave,沙漠矿洞,Desert Cave
 mine.node.entrance,矿洞入口,Mine Entrance
 mine.node.medium_cave,中型矿洞,Medium Cave
+mine.node.mountain_cave,山地矿洞,Mountain Cave
 mine.node.small_cave,小型矿洞,Small Cave
 mine.node.swamp_cave,沼泽矿洞,Swamp Cave
 mine.prospector.no_tool,需要探矿仪,Prospector Required
@@ -163,9 +181,12 @@ panel.tech.hint,研究先进技术,Research advanced technology
 panel.tech.title,科技,Tech
 panel.tool.title,工具,Tools
 recipe.make_basic_circuit,合成基础电路板,Assemble Basic Circuit
+recipe.make_bronze,制作青铜,Make Bronze
 recipe.make_coarse_rope,制作粗绳,Make Coarse Rope
 recipe.make_copper_wire,制作铜线,Make Copper Wire
 recipe.make_iron_plate,制作铁板,Make Iron Plate
+recipe.make_rope_from_reed,用芦苇制作绳索,Make Rope from Reed
+recipe.make_torch,制作火把,Make Torch
 recipe.make_vacuum_tube,制作真空管,Make Vacuum Tube
 recipe.mine_coal,采掘煤炭,Mine Coal
 recipe.mine_copper_ore,采掘铜矿石,Mine Copper Ore
@@ -174,8 +195,10 @@ recipe.mine_tin_ore,采掘锡矿石,Mine Tin Ore
 recipe.smelt_copper,冶炼铜锭,Smelt Copper Ingot
 recipe.smelt_iron,冶炼铁锭,Smelt Iron Ingot
 recipe.smelt_tin,冶炼锡锭,Smelt Tin Ingot
+res.ancient_coin,古钱币,Ancient Coin
 res.apple,苹果,Apple
 res.basic_circuit,基础电路板,Basic Circuit
+res.bronze_ingot,青铜锭,Bronze Ingot
 res.cactus_fruit,仙人掌果,Cactus Fruit
 res.coal,煤炭,Coal
 res.coarse_rope,粗绳,Coarse Rope
@@ -190,6 +213,7 @@ res.iron_ore,铁矿石,Iron Ore
 res.iron_plate,铁板,Iron Plate
 res.log_wood,原木,Log
 res.mushroom,蘑菇,Mushroom
+res.reed,芦苇,Reed
 res.tin_ingot,锡锭,Tin Ingot
 res.tin_ore,锡矿石,Tin Ore
 res.torch,火把,Torch
@@ -228,9 +252,13 @@ status.no_fuel,缺少燃料,No Fuel
 status.no_material,缺材料,No Material
 status.paused,已暂停,Paused
 status.running,运行中,Running
+task.build_assembler,建造组装机,Build Assembler
 task.build_boiler,建造蒸汽锅炉,Build a Steam Boiler
 task.build_furnace,建造第一台冶炼炉,Build your first Furnace
+task.build_miner,建造采矿机,Build Miner
+task.build_steam_boiler,建造蒸汽锅炉,Build Steam Boiler
 task.gather_coal,探索洞穴收集 5 块煤炭,Gather 5 Coal from the cave
+task.gather_coal_100,收集煤炭100,Gather 100 Coal
 task.gather_flint,收集 3 块燧石,Gather 3 Flint
 task.gather_more_wood,收集共 20 块原木,Gather 20 Logs total
 task.gather_ore,采集矿石,Gather Ore
@@ -238,11 +266,19 @@ task.gather_resources,捡起第一块原木,Pick up your first Log
 task.gather_stone,收集 10 块鹅卵石,Gather 10 Cobblestone
 task.gather_weeds,采集杂草,Gather Weeds
 task.gather_wood,收集 5 块原木,Gather 5 Logs
+task.make_bronze,制作青铜,Make Bronze
 task.make_circuit,合成基础电路板 × 4,Craft Basic Circuit × 4
 task.make_coarse_rope,制作粗绳,Make Coarse Rope
+task.make_copper_ingot,制作铜锭,Make Copper Ingot
+task.make_copper_wire,制作铜线,Make Copper Wire
+task.make_iron_plate,制作铁板,Make Iron Plate
 task.make_stone_pickaxe,制作石镐,Make Stone Pickaxe
+task.make_tin_ingot,制作锡锭,Make Tin Ingot
+task.make_vacuum_tube,制作真空管,Make Vacuum Tube
 task.make_wire,合成铜线 × 10,Craft Copper Wire × 10
 task.make_wooden_pickaxe,制作木镐,Make Wooden Pickaxe
+task.mine_coal_50,挖掘煤炭50,Mine 50 Coal
+task.produce_steam_500,产出500蒸汽,Produce 500 Steam
 task.reach_power,发电量达到 32 EU/s,Reach 32 EU/s power output
 tech.basic_automation.desc,解锁矿机的 EU 消耗与自动化基础,Unlock EU consumption for miners
 tech.basic_automation.name,基础自动化,Basic Automation
@@ -278,6 +314,9 @@ toast.deploy.fail,部署失败,Deploy Failed
 toast.deploy.success,部署成功,Deploy Success
 toast.research.fail,研究失败,Research Failed
 toast.research.success,研究成功,Research Success
+tool.prospector.level_1,探矿仪 Lv1,Prospector Lv1
+tool.prospector.level_2,探矿仪 Lv2,Prospector Lv2
+tool.prospector.level_3,探矿仪 Lv3,Prospector Lv3
 tool.stone_axe.level_0,木斧（待制作）,Wooden Axe (To Craft)
 tool.stone_axe.level_1,木斧,Wooden Axe
 tool.stone_axe.level_2,石斧,Stone Axe
@@ -296,11 +335,19 @@ world.action.gather_reeds,采芦苇,Gather Reeds
 world.action.gather_sand,挖沙子,Gather Sand
 world.action.gather_weeds,采集杂草,Gather Weeds
 world.action.mine_stone,凿取石块,Break Rock
+world.node.cactus,仙人掌,Cactus
 world.node.cave,洞穴入口 — 派人探索（30秒后获得煤炭）,Cave Entrance — Send someone in (returns coal in 30s)
+world.node.coal_outcrop,煤矿露出,Coal Outcrop
 world.node.flint,燧石堆 — 点击采集,Flint Deposit — Click to gather
+world.node.flint_vein,燧石矿脉,Flint Vein
+world.node.mushroom_patch,蘑菇丛,Mushroom Patch
 world.node.oak_tree,橡树 — 点击砍伐,Oak Tree — Click to chop
 world.node.ready,点击领取,Claim
+world.node.reeds,芦苇丛,Reeds
+world.node.rock,岩石,Rock
+world.node.rubble,碎石堆,Rubble
 world.node.ruins,遗迹,Ruins
 world.node.sand_pile,沙堆,Sand Pile
 world.node.stone,石块 — 点击敲击,Stone Rock — Click to break
 world.node.weeds,杂草丛 — 点击采集,Weeds — Click to gather
+world.node.willow_tree,柳树,Willow Tree
