@@ -9,9 +9,7 @@
     "id": "chapter",
     "order": 1,
     "icon": "📋",
-    "labelKey": "nav.chapter",
-    "showCondType": "task",
-    "showCondPara": "10"
+    "labelKey": "nav.chapter"
   },
   {
     "id": "steam",
@@ -44,7 +42,7 @@
     "order": 5,
     "icon": "🔨",
     "labelKey": "nav.crafting",
-    "showCondType": "resource",
+    "showCondType": "resource_ever",
     "showCondPara": "weeds"
   },
   {
@@ -52,8 +50,8 @@
     "order": 6,
     "icon": "📦",
     "labelKey": "nav.inventory",
-    "showCondType": "task",
-    "showCondPara": "15"
+    "showCondType": "resource_ever",
+    "showCondPara": "*"
   },
   {
     "id": "tech",

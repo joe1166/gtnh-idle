@@ -1,2 +1,2 @@
-id,locKey,descLocKey,biomeIds,startBiomeId,unlockCondition,exploreCost,explorePool
-overworld,dim.overworld.name,dim.overworld.desc,plains|forest,plains,,coarse_rope:1,plains:50|forest:50
+id,locKey,descLocKey,biomeIds,startBiomeId,unlockCondition,exploreFoodCost,explorePool
+overworld,dim.overworld.name,dim.overworld.desc,plains|forest|desert|swamp|mountain,plains,,30,plains:60|forest:50|desert:40|swamp:35|mountain:30

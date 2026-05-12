@@ -1,0 +1,32 @@
+[
+  {
+    "id": "scarab",
+    "locKey": "explore.enemy.scarab",
+    "descLocKey": "explore.enemy.scarab.desc",
+    "hp": 16,
+    "attack": 6,
+    "defense": 1,
+    "speed": 7,
+    "rewardId": 27
+  },
+  {
+    "id": "mummy_guard",
+    "locKey": "explore.enemy.mummy_guard",
+    "descLocKey": "explore.enemy.mummy_guard.desc",
+    "hp": 28,
+    "attack": 8,
+    "defense": 2,
+    "speed": 5,
+    "rewardId": 26
+  },
+  {
+    "id": "mummy_elite",
+    "locKey": "explore.enemy.mummy_elite",
+    "descLocKey": "explore.enemy.mummy_elite.desc",
+    "hp": 40,
+    "attack": 11,
+    "defense": 4,
+    "speed": 4,
+    "rewardId": 24
+  }
+]

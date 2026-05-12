@@ -1,0 +1,22 @@
+{
+  "root": "array",
+  "output": "src/config/explore_events.json",
+  "fields": {
+    "id": "string",
+    "textLocKey": "string",
+    "autoNextId": "string",
+    "isTerminal": "boolean",
+    "optionATextLocKey": "string",
+    "optionANextId": "string",
+    "optionARewardId": "number",
+    "optionAHpDelta": "number",
+    "optionBTextLocKey": "string",
+    "optionBNextId": "string",
+    "optionBRewardId": "number",
+    "optionBHpDelta": "number",
+    "optionCTextLocKey": "string",
+    "optionCNextId": "string",
+    "optionCRewardId": "number",
+    "optionCHpDelta": "number"
+  }
+}

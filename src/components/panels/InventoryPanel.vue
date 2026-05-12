@@ -47,7 +47,8 @@ import { fmt } from '../../utils/format'
 
 const inventoryStore = useInventoryStore()
 
-const CATEGORY_ORDER = ['ore', 'ingot', 'component', 'circuit', 'fuel']
+/** 仓库面板显示的大类顺序 */
+const CATEGORY_ORDER = ['raw', 'mat', 'prod', 'misc']
 
 interface ResourceRow {
   id: string
@@ -63,11 +64,18 @@ interface ResourceGroup {
   items: ResourceRow[]
 }
 
+/** 从 category 字段（如 'raw.wood'）提取顶层大类 */
+function topCategory(category: string): string {
+  return category.split('.')[0]
+}
+
 const resourceGroups = computed((): ResourceGroup[] => {
   const groups: ResourceGroup[] = []
   const allResources = db.table('resources')
+
   for (const cat of CATEGORY_ORDER) {
-    const resources = allResources.filter((r) => r.category === cat)
+    // 筛选该大类的所有资源（category 以 cat. 开头或是顶级分类）
+    const resources = allResources.filter((r) => topCategory(r.category) === cat)
     if (resources.length === 0) continue
 
     const items: ResourceRow[] = resources
@@ -109,7 +117,7 @@ function barColorClass(pct: number): string {
 
 .panel-card {
   background: var(--bg-panel);
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--border);
   padding: 14px 16px;
 }
 
@@ -189,18 +197,18 @@ function barColorClass(pct: number): string {
 
 /* Bar colors */
 .bar-green {
-  background-color: var(--accent-green);
-  color: var(--accent-green);
+  background-color: var(--accent);
+  color: var(--accent);
 }
 
 .bar-yellow {
-  background-color: var(--accent-yellow);
-  color: var(--accent-yellow);
+  background-color: var(--warn);
+  color: var(--warn);
 }
 
 .bar-red {
-  background-color: var(--accent-red);
-  color: var(--accent-red);
+  background-color: var(--danger);
+  color: var(--danger);
 }
 
 /* Text-only classes for pct label */

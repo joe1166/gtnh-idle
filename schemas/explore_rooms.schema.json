@@ -1,0 +1,42 @@
+{
+  "root": "array",
+  "output": "src/config/explore_rooms.json",
+  "fields": {
+    "id": "string",
+    "locKey": "string",
+    "layoutType": "string",
+    "type": "string",
+    "shape": {
+      "type": "array",
+      "sep": "|",
+      "item": {
+        "type": "object",
+        "sep": ":",
+        "fields": [
+          { "name": "dRow", "type": "number" },
+          { "name": "dCol", "type": "number" }
+        ]
+      }
+    },
+    "minCells": "number",
+    "maxCells": "number",
+    "weight": "number",
+    "rewardId": "number",
+    "descLocKey": "string",
+    "eventStartNodeId": "string",
+    "enemyPool": {
+      "type": "array",
+      "sep": "|",
+      "item": {
+        "type": "object",
+        "sep": ":",
+        "fields": [
+          { "name": "enemyId", "type": "string" },
+          { "name": "weight", "type": "number" }
+        ]
+      }
+    },
+    "enemyCountMin": "number",
+    "enemyCountMax": "number"
+  }
+}

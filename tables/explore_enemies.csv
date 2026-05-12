@@ -1,0 +1,4 @@
+id,locKey,descLocKey,hp,attack,defense,speed,rewardId
+scarab,explore.enemy.scarab,explore.enemy.scarab.desc,16,6,1,7,27
+mummy_guard,explore.enemy.mummy_guard,explore.enemy.mummy_guard.desc,28,8,2,5,26
+mummy_elite,explore.enemy.mummy_elite,explore.enemy.mummy_elite.desc,40,11,4,4,24

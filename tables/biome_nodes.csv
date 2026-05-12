@@ -1,12 +1,28 @@
-id,locKey,actionLocKey,type,resourceId,amount,durationSec,posX,posY,hidden,hitArea,requiredAbility,requiredAbilityValue
-plains_oak_1,world.node.oak_tree,world.action.chop,click,log_wood,1,0,18,38,false,,wood_ability,0
-plains_oak_2,world.node.oak_tree,world.action.chop,click,log_wood,1,0,62,35,false,,wood_ability,0
-plains_stone_rock,world.node.stone,world.action.mine_stone,click,cobblestone,1,0,40,55,false,,mining_ability,0
-plains_weeds_1,world.node.weeds,world.action.gather_weeds,click,weeds,1,0,75,25,false,,wood_ability,0
-plains_weeds_2,world.node.weeds,world.action.gather_weeds,click,weeds,1,0,30,70,false,,wood_ability,0
-plains_flint_patch,world.node.flint,world.action.gather_flint,click,flint,1,0,55,60,true,"48,50 65,50 55,75 48,75",mining_ability,0
-plains_cave_entrance,world.node.cave,world.action.explore_cave,timed,coal,3,30,80,45,true,"72,30 96,30 96,70 72,70",mining_ability,1
-forest_oak_1,world.node.oak_tree,world.action.chop,click,log_wood,2,0,20,40,false,,wood_ability,0
-forest_oak_2,world.node.oak_tree,world.action.chop,click,log_wood,2,0,65,30,false,,wood_ability,0
-forest_stone_1,world.node.stone,world.action.mine_stone,click,cobblestone,1,0,45,60,false,,mining_ability,0
-forest_weeds_1,world.node.weeds,world.action.gather_weeds,click,weeds,2,0,80,55,false,,wood_ability,0
+id,locKey,actionLocKey,type,rewardId,durationSec,posX,posY,hidden,hitArea,requiredAbility,requiredAbilityValue,entryCost,caveId,exploreMapId
+plains_oak_1,world.node.oak_tree,world.action.chop,click,1,0,18,38,false,,wood_ability,0,,
+plains_oak_2,world.node.oak_tree,world.action.chop,click,1,0,62,35,false,,wood_ability,0,,
+plains_stone_rock,world.node.stone,world.action.mine_stone,click,3,0,40,55,false,,mining_ability,0,,
+plains_weeds_1,world.node.weeds,world.action.gather_weeds,click,5,0,75,25,false,,wood_ability,0,,
+plains_weeds_2,world.node.weeds,world.action.gather_weeds,click,5,0,30,70,false,,wood_ability,0,,
+plains_flint_patch,world.node.flint,world.action.gather_flint,click,4,0,55,60,true,"48,50 65,50 55,75 48,75",mining_ability,0,,
+plains_cave_entrance,mine.node.medium_cave,mine.node.enter_cave,mine,0,20,80,45,true,"72,30 96,30 96,70 72,70",mining_ability,2,torch:5,medium_cave
+plains_mine_entrance,mine.node.small_cave,mine.node.enter_cave,mine,0,5,50,20,false,,mining_ability,1,,plains_cave
+forest_oak_1,world.node.oak_tree,world.action.chop,click,2,0,20,40,false,,wood_ability,0,,
+forest_oak_2,world.node.oak_tree,world.action.chop,click,2,0,65,30,false,,wood_ability,0,,
+forest_stone_1,world.node.stone,world.action.mine_stone,click,3,0,45,60,false,,mining_ability,0,,
+forest_weeds_1,world.node.weeds,world.action.gather_weeds,click,6,0,80,55,false,,wood_ability,0,,
+desert_cactus_1,world.node.cactus,world.action.chop_cactus,click,14,0,18,32,false,,wood_ability,1,,
+desert_cactus_2,world.node.cactus,world.action.chop_cactus,click,14,0,42,58,false,,wood_ability,1,,
+desert_sand_pile,world.node.sand_pile,world.action.gather_sand,click,15,0,62,45,false,,,0,,
+desert_ruins,world.node.ruins,world.action.explore_ruins,explore,0,0,75,22,true,"67,13 90,13 90,38 67,38",,0,,,pyramid
+desert_mine_entrance,mine.node.desert_cave,mine.node.enter_cave,mine,0,15,82,68,false,,mining_ability,1,torch:3,medium_cave
+swamp_willow_1,world.node.willow_tree,world.action.chop_willow,click,17,0,18,25,false,,wood_ability,1,,
+swamp_willow_2,world.node.willow_tree,world.action.chop_willow,click,17,0,48,48,false,,wood_ability,1,,
+swamp_mushroom,world.node.mushroom_patch,world.action.gather_mushroom,click,18,0,28,68,false,,,0,,
+swamp_reeds,world.node.reeds,world.action.gather_reeds,click,19,0,65,55,false,,,0,,
+swamp_cave_entrance,mine.node.swamp_cave,mine.node.enter_cave,mine,0,10,78,30,false,,mining_ability,1,torch:3,medium_cave
+mountain_coal_outcrop,world.node.coal_outcrop,world.action.mine_coal_outcrop,click,20,0,20,35,false,,mining_ability,1,,
+mountain_rock,world.node.rock,world.action.mine_rock,click,21,0,48,62,false,,mining_ability,1,,
+mountain_flint_vein,world.node.flint_vein,world.action.mine_flint,click,22,0,65,30,false,,mining_ability,1,,
+mountain_rubble,world.node.rubble,world.action.search_rubble,timed,23,40,30,72,false,,,0,,
+mountain_cave_entrance,mine.node.mountain_cave,mine.node.enter_cave,mine,0,30,82,42,false,,mining_ability,2,torch:20,large_cave

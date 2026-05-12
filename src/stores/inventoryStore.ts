@@ -15,6 +15,8 @@ export const useInventoryStore = defineStore('inventory', {
   getters: {
     getAmount: (state) => (id: string): number => state.items[id] ?? 0,
     getCap: (state) => (id: string): number => state.caps[id] ?? 0,
+    /** 是否曾经获得过该资源（累计产出 > 0） */
+    everHad: (state) => (id: string): boolean => (state.totalProduced[id] ?? 0) > 0,
   },
 
   actions: {

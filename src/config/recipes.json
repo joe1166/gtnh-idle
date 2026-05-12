@@ -1,5 +1,125 @@
 [
   {
+    "id": "smelt_iron_coal",
+    "locKey": "recipe.smelt_iron",
+    "inputs": [
+      {
+        "resourceId": "iron_ore",
+        "amount": 2
+      },
+      {
+        "resourceId": "coal",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "resourceId": "iron_ingot",
+        "amount": 1
+      }
+    ],
+    "durationSec": 10,
+    "euPerSec": 0,
+    "voltage": -1,
+    "overclock": 0,
+    "requiredRole": "furnace",
+    "requiredLevel": 1,
+    "maxRequiredLevel": 1,
+    "showCondType": "resource_ever",
+    "showCondPara": "cobblestone"
+  },
+  {
+    "id": "smelt_copper_coal",
+    "locKey": "recipe.smelt_copper",
+    "inputs": [
+      {
+        "resourceId": "copper_ore",
+        "amount": 2
+      },
+      {
+        "resourceId": "coal",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "resourceId": "copper_ingot",
+        "amount": 1
+      }
+    ],
+    "durationSec": 10,
+    "euPerSec": 0,
+    "voltage": -1,
+    "overclock": 0,
+    "requiredRole": "furnace",
+    "requiredLevel": 1,
+    "maxRequiredLevel": 1,
+    "showCondType": "resource_ever",
+    "showCondPara": "cobblestone"
+  },
+  {
+    "id": "smelt_tin_coal",
+    "locKey": "recipe.smelt_tin",
+    "inputs": [
+      {
+        "resourceId": "tin_ore",
+        "amount": 2
+      },
+      {
+        "resourceId": "coal",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "resourceId": "tin_ingot",
+        "amount": 1
+      }
+    ],
+    "durationSec": 10,
+    "euPerSec": 0,
+    "voltage": -1,
+    "overclock": 0,
+    "requiredRole": "furnace",
+    "requiredLevel": 1,
+    "maxRequiredLevel": 1,
+    "showCondType": "resource_ever",
+    "showCondPara": "cobblestone"
+  },
+  {
+    "id": "make_bronze",
+    "locKey": "recipe.make_bronze",
+    "inputs": [
+      {
+        "resourceId": "copper_ingot",
+        "amount": 3
+      },
+      {
+        "resourceId": "tin_ingot",
+        "amount": 1
+      },
+      {
+        "resourceId": "coal",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "resourceId": "bronze_ingot",
+        "amount": 1
+      }
+    ],
+    "durationSec": 15,
+    "euPerSec": 0,
+    "voltage": -1,
+    "overclock": 0,
+    "requiredRole": "alloy_furnace",
+    "requiredLevel": 1,
+    "maxRequiredLevel": 1,
+    "showCondType": "resource_ever",
+    "showCondPara": "cobblestone"
+  },
+  {
     "id": "smelt_iron",
     "locKey": "recipe.smelt_iron",
     "inputs": [
@@ -16,8 +136,10 @@
     ],
     "durationSec": 10,
     "euPerSec": 8,
+    "voltage": 0,
+    "overclock": 0,
     "requiredRole": "furnace",
-    "requiredLevel": 1,
+    "requiredLevel": 2,
     "showCondType": "chapter",
     "showCondPara": "1"
   },
@@ -38,8 +160,10 @@
     ],
     "durationSec": 10,
     "euPerSec": 8,
+    "voltage": 0,
+    "overclock": 0,
     "requiredRole": "furnace",
-    "requiredLevel": 1,
+    "requiredLevel": 2,
     "showCondType": "chapter",
     "showCondPara": "1"
   },
@@ -60,8 +184,10 @@
     ],
     "durationSec": 10,
     "euPerSec": 8,
+    "voltage": 0,
+    "overclock": 0,
     "requiredRole": "furnace",
-    "requiredLevel": 1,
+    "requiredLevel": 2,
     "showCondType": "chapter",
     "showCondPara": "1"
   },
@@ -71,21 +197,23 @@
     "inputs": [
       {
         "resourceId": "iron_ingot",
-        "amount": 1
+        "amount": 2
       }
     ],
     "outputs": [
       {
         "resourceId": "iron_plate",
-        "amount": 2
+        "amount": 1
       }
     ],
-    "durationSec": 8,
-    "euPerSec": 6,
-    "requiredRole": "forge_hammer",
+    "durationSec": 3,
+    "euPerSec": 0,
+    "voltage": -1,
+    "overclock": 0,
+    "requiredRole": "plate_press",
     "requiredLevel": 1,
-    "showCondType": "chapter",
-    "showCondPara": "1"
+    "showCondType": "resource_ever",
+    "showCondPara": "iron_ingot"
   },
   {
     "id": "make_copper_wire",
@@ -104,6 +232,8 @@
     ],
     "durationSec": 8,
     "euPerSec": 6,
+    "voltage": 0,
+    "overclock": 0,
     "requiredRole": "wire_cutter",
     "requiredLevel": 1,
     "showCondType": "chapter",
@@ -130,6 +260,8 @@
     ],
     "durationSec": 15,
     "euPerSec": 10,
+    "voltage": 1,
+    "overclock": 0,
     "requiredRole": "assembler",
     "requiredLevel": 2,
     "showCondType": "chapter",
@@ -160,6 +292,8 @@
     ],
     "durationSec": 30,
     "euPerSec": 12,
+    "voltage": 1,
+    "overclock": 0,
     "requiredRole": "assembler",
     "requiredLevel": 2,
     "showCondType": "chapter",
@@ -182,6 +316,36 @@
     ],
     "durationSec": 5,
     "euPerSec": 0,
+    "voltage": -1,
+    "overclock": 0,
+    "requiredRole": "assembler",
+    "requiredLevel": 1,
+    "showCondType": "chapter",
+    "showCondPara": "1"
+  },
+  {
+    "id": "make_torch",
+    "locKey": "recipe.make_torch",
+    "inputs": [
+      {
+        "resourceId": "log_wood",
+        "amount": 1
+      },
+      {
+        "resourceId": "coal",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "resourceId": "torch",
+        "amount": 4
+      }
+    ],
+    "durationSec": 3,
+    "euPerSec": 0,
+    "voltage": -1,
+    "overclock": 0,
     "requiredRole": "assembler",
     "requiredLevel": 1,
     "showCondType": "chapter",
@@ -199,6 +363,8 @@
     ],
     "durationSec": 5,
     "euPerSec": 8,
+    "voltage": 1,
+    "overclock": 0,
     "requiredRole": "miner",
     "requiredLevel": 1,
     "showCondType": "chapter",
@@ -216,6 +382,8 @@
     ],
     "durationSec": 5,
     "euPerSec": 8,
+    "voltage": 1,
+    "overclock": 0,
     "requiredRole": "miner",
     "requiredLevel": 1,
     "showCondType": "chapter",
@@ -233,6 +401,8 @@
     ],
     "durationSec": 5,
     "euPerSec": 8,
+    "voltage": 1,
+    "overclock": 0,
     "requiredRole": "miner",
     "requiredLevel": 1,
     "showCondType": "chapter",
@@ -250,9 +420,35 @@
     ],
     "durationSec": 5,
     "euPerSec": 8,
+    "voltage": 1,
+    "overclock": 0,
     "requiredRole": "miner",
     "requiredLevel": 1,
     "showCondType": "chapter",
     "showCondPara": "1"
+  },
+  {
+    "id": "make_rope_from_reed",
+    "locKey": "recipe.make_rope_from_reed",
+    "inputs": [
+      {
+        "resourceId": "reed",
+        "amount": 1
+      }
+    ],
+    "outputs": [
+      {
+        "resourceId": "coarse_rope",
+        "amount": 1
+      }
+    ],
+    "durationSec": 5,
+    "euPerSec": 0,
+    "voltage": -1,
+    "overclock": 0,
+    "requiredRole": "assembler",
+    "requiredLevel": 1,
+    "showCondType": "resource_ever",
+    "showCondPara": "reed"
   }
 ]

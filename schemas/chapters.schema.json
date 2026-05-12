@@ -5,23 +5,9 @@
     "id":         "number",
     "locKey":     "string",
     "descLocKey": "string",
-    "unlockCondition": {
-      "type": "object", "sep": ":",
-      "fields": [
-        {"name": "type",  "type": "string"},
-        {"name": "value", "type": "number"}
-      ]
-    },
     "taskIds": {
-      "type": "array", "sep": "|", "item": "number"
+      "type": "array", "sep": "|", "item": "string"
     },
-    "unlocks": {
-      "type": "object", "sep": ";",
-      "fields": [
-        {"name": "resourceIds",   "type": {"type": "array", "sep": "|", "item": "string"}},
-        {"name": "recipeIds",     "type": {"type": "array", "sep": "|", "item": "string"}},
-        {"name": "machineDefIds", "type": {"type": "array", "sep": "|", "item": "string"}}
-      ]
-    }
+    "advancesEra": "string"
   }
 }

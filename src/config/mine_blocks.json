@@ -1,0 +1,82 @@
+[
+  {
+    "id": "dirt",
+    "locKey": "mine.block.dirt",
+    "category": "soft",
+    "color": "#8B6914",
+    "requiredMiningAbility": 0,
+    "rewardId": 0
+  },
+  {
+    "id": "stone",
+    "locKey": "mine.block.stone",
+    "category": "hard",
+    "color": "#808080",
+    "requiredMiningAbility": 1,
+    "rewardId": 7
+  },
+  {
+    "id": "coal_vein",
+    "locKey": "mine.block.coal",
+    "category": "ore",
+    "color": "#2A2A2A",
+    "requiredMiningAbility": 1,
+    "rewardId": 9
+  },
+  {
+    "id": "iron_vein",
+    "locKey": "mine.block.iron",
+    "category": "ore",
+    "color": "#C8A882",
+    "requiredMiningAbility": 2,
+    "rewardId": 10
+  },
+  {
+    "id": "copper_vein",
+    "locKey": "mine.block.copper",
+    "category": "ore",
+    "color": "#B87333",
+    "requiredMiningAbility": 2,
+    "rewardId": 11
+  },
+  {
+    "id": "tin_vein",
+    "locKey": "mine.block.tin",
+    "category": "ore",
+    "color": "#C0C0C0",
+    "requiredMiningAbility": 2,
+    "rewardId": 12
+  },
+  {
+    "id": "deep_stone",
+    "locKey": "mine.block.deep_stone",
+    "category": "hard",
+    "color": "#4A4A4A",
+    "requiredMiningAbility": 3,
+    "rewardId": 8
+  },
+  {
+    "id": "gold_vein",
+    "locKey": "mine.block.gold",
+    "category": "ore",
+    "color": "#D4AF37",
+    "requiredMiningAbility": 3,
+    "rewardId": 13
+  },
+  {
+    "id": "abandoned_tunnel",
+    "locKey": "mine.block.tunnel",
+    "category": "special",
+    "color": "#3A2A1A",
+    "requiredMiningAbility": 0,
+    "rewardId": 0
+  },
+  {
+    "id": "bedrock",
+    "locKey": "mine.block.bedrock",
+    "category": "hard",
+    "color": "#1A1018",
+    "requiredMiningAbility": 999,
+    "rewardId": 0
+  }
+]

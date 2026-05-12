@@ -1,2 +1,3 @@
-id,locKey,descLocKey,unlockCondition,taskIds,unlocks
-1,chapter.1.name,chapter.1.desc,eu_per_sec:32,1|2|3|4|5,"coal|iron_ore|copper_ore|tin_ore|iron_ingot|copper_ingot|tin_ingot|copper_wire|iron_plate|vacuum_tube|basic_circuit|wrench;smelt_iron|smelt_copper|smelt_tin|make_copper_wire|make_iron_plate|make_vacuum_tube|make_basic_circuit|mine_iron_ore|mine_copper_ore|mine_tin_ore|mine_coal;furnace|wire_cutter|forge_hammer|assembler|iron_miner|copper_miner|tin_miner|coal_miner|steam_boiler"
+id,locKey,descLocKey,taskIds,advancesEra
+1,chapter.1.name,chapter.1.desc,gather_wood|gather_stone|gather_weeds|make_coarse_rope|make_wooden_pickaxe|make_stone_pickaxe|gather_ore|build_furnace|make_copper_ingot|make_tin_ingot|make_bronze|build_steam_boiler|produce_steam_500,steam
+2,chapter.2.name,chapter.2.desc,gather_coal_100|build_assembler|make_copper_wire|make_iron_plate|make_vacuum_tube|build_miner|mine_coal_50,lv

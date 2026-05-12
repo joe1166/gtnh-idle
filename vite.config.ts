@@ -206,4 +206,8 @@ function i18nCapturePlugin() {
 export default defineConfig({
   plugins: [vue(), i18nCapturePlugin()],
   resolve: { alias: { '@': '/src' } },
+  server: {
+    host: '0.0.0.0',
+    port: 5180,
+  },
 })

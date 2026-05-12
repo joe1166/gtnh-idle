@@ -1,5 +1,5 @@
 <template>
-  <div class="crafting-panel">
+  <div class="crafting-panel" ref="panelEl">
     <div class="panel-header">
       <span class="panel-title">{{ t('panel.crafting.title') }}</span>
       <span class="panel-hint">{{ t('panel.crafting.hint') }}</span>
@@ -13,38 +13,44 @@
     >
       <!-- 机器标题行 -->
       <div class="machine-header">
-        <!-- 左：图标 + 名称 + 数量 + 建造按钮 -->
+        <!-- 第一行：图标 + 名称 + 数量 -->
         <div class="machine-title-row">
           <span class="machine-icon">{{ machineIcon(def.role ?? '') }}</span>
           <span class="machine-name">{{ t(def.locKey) }}</span>
-          <span class="built-count" v-if="instancesOf(def.id).length > 0">
-            ×{{ instancesOf(def.id).length }}
+          <span
+            v-if="def.maxCount > 1"
+            class="built-count"
+            :class="instancesOf(def.id).length >= def.maxCount ? 'built-count--max' : ''"
+          >
+            {{ instancesOf(def.id).length >= def.maxCount ? 'MAX' : '×' + instancesOf(def.id).length }}
           </span>
-          <span v-if="instancesOf(def.id).length >= def.maxCount" class="max-label">
-            (MAX)
-          </span>
+        </div>
+
+        <!-- 第二行：建造按钮 + 成本（未达上限时才显示） -->
+        <div v-if="instancesOf(def.id).length < def.maxCount" class="build-row">
           <button
-            v-else
             class="build-btn"
-            :class="{ 'build-btn--ok': canBuild(def.id), 'build-btn--lack': !canBuild(def.id) }"
+            :class="canBuild(def.id) ? 'build-btn--ok' : 'build-btn--lack'"
+            :disabled="!canBuild(def.id)"
             @click="handleBuild(def.id, def.locKey)"
           >
             {{ t('btn.build') }}
           </button>
-        </div>
-
-        <!-- 右：建造成本 -->
-        <div class="build-cost-row">
-          <span class="cost-label">{{ t('btn.needs') }}</span>
-          <span
-            v-for="c in def.buildCost"
-            :key="c.resourceId"
-            class="cost-chip"
-            :class="inventoryStore.getAmount(c.resourceId) >= c.amount ? 'cost-chip--ok' : 'cost-chip--lack'"
-          >
-            {{ getResName(c.resourceId) }}×{{ c.amount }}
-            <span class="cost-have">({{ fmt(inventoryStore.getAmount(c.resourceId)) }})</span>
-          </span>
+          <div class="build-cost-row">
+            <span v-if="def.buildCost.length === 0" class="cost-chip cost-chip--ok">免费</span>
+            <template v-else>
+              <span class="cost-label">{{ t('btn.needs') }}</span>
+              <span
+                v-for="c in def.buildCost"
+                :key="c.resourceId"
+                class="cost-chip"
+                :class="inventoryStore.getAmount(c.resourceId) >= c.amount ? 'cost-chip--ok' : 'cost-chip--lack'"
+              >
+                {{ getResName(c.resourceId) }}×{{ c.amount }}
+                <span class="cost-have">({{ fmt(inventoryStore.getAmount(c.resourceId)) }})</span>
+              </span>
+            </template>
+          </div>
         </div>
       </div>
 
@@ -71,7 +77,6 @@
               :value="inst.selectedRecipeId ?? ''"
               @change="onRecipeChange(inst.instanceId, ($event.target as any).value)"
             >
-              <option value="">{{ t('crafting.recipe.select_placeholder') }}</option>
               <option
                 v-for="recipe in getAllowedRecipes(def.id)"
                 :key="recipe.id"
@@ -105,7 +110,17 @@
 
           <!-- 进度 / 状态 -->
           <div class="inst-progress">
-            <template v-if="inst.status === 'running' && inst.selectedRecipeId">
+            <!-- 瞬时机器（instantMode=1）：缺材料时显示 -->
+            <template v-if="isInstantMachine(inst)">
+              <span
+                v-if="!canAffordInstant(inst)"
+                class="status-badge status--no_material"
+              >
+                {{ t('status.no_material') }}
+              </span>
+            </template>
+            <!-- 普通机器：进度条 + 状态 -->
+            <template v-else-if="inst.status === 'running' && inst.selectedRecipeId">
               <div class="prog-bar-wrap">
                 <div
                   class="prog-bar-fill"
@@ -131,67 +146,98 @@
 
           <!-- 开/关 + 超频 -->
           <div class="inst-controls">
-            <!-- 运行状态指示 -->
-            <span v-if="inst.isRunning" class="run-indicator">
-              {{ getVoltTierName(inst.selectedVoltage) }}
-              {{ inst.status === 'running' ? t('overclock.indicator.normal') : '' }}
-            </span>
-            <!-- 开启/停止按钮 -->
-            <button
-              class="toggle-btn"
-              :class="inst.isRunning ? 'toggle-btn--on' : 'toggle-btn--off'"
-              @click="machineStore.toggleMachine(inst.instanceId)"
-            >
-              {{ inst.isRunning ? t('btn.stop') : t('btn.start') }}
-            </button>
-            <!-- 电压选择器（需解锁超频科技） -->
-            <template v-if="techStore.hasFeature('overclock') && canOverclock(inst.defId)">
-              <select
-                class="voltage-select"
-                :value="inst.selectedVoltage"
-                @change="onVoltageChange(inst.instanceId, $event)"
+            <!-- 瞬时机器：显示制作按钮 -->
+            <template v-if="isInstantMachine(inst)">
+              <button
+                class="craft-btn"
+                :class="canAffordInstant(inst) ? 'craft-btn--ok' : 'craft-btn--lack'"
+                :disabled="!canAffordInstant(inst)"
+                @click="handleCraft($event, inst)"
               >
-                <option
-                  v-for="v in getAvailableVoltages(inst)"
-                  :key="v"
-                  :value="v"
-                >{{ getVoltTierName(v) }}</option>
-              </select>
+                {{ t('btn.craft') }}
+              </button>
+            </template>
+            <!-- 普通机器 -->
+            <template v-else>
+              <!-- 运行状态指示（仅在全局电压 >= LV 时显示） -->
+              <span v-if="inst.isRunning && showVoltageIndicator()" class="run-indicator">
+                {{ getVoltageDisplay(inst.selectedVoltage) }}
+                {{ inst.status === 'running' ? t('overclock.indicator.normal') : '' }}
+              </span>
+              <!-- 开启/停止按钮 -->
+              <button
+                class="toggle-btn"
+                :class="inst.isRunning ? 'toggle-btn--on' : 'toggle-btn--off'"
+                @click="onToggleClick(inst)"
+              >
+                {{ inst.isRunning ? t('btn.stop') : t('btn.start') }}
+              </button>
+              <!-- 电压选择器（需解锁超频科技） -->
+              <template v-if="techStore.hasFeature('overclock') && canOverclock(inst.defId)">
+                <select
+                  class="voltage-select"
+                  :value="inst.selectedVoltage"
+                  @change="onVoltageChange(inst.instanceId, $event)"
+                >
+                  <option
+                    v-for="v in getAvailableVoltages(inst)"
+                    :key="v"
+                    :value="v"
+                  >{{ getVoltTierName(v) }}</option>
+                </select>
+              </template>
             </template>
           </div>
         </div>
       </div>
     </div>
+    <!-- 浮动文字 -->
+    <div class="float-container" ref="floatContainer" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useMachineStore } from '../../stores/machineStore'
 import { usePowerStore } from '../../stores/powerStore'
+import { useProgressionStore } from '../../stores/progressionStore'
 import { useInventoryStore } from '../../stores/inventoryStore'
 import { useTechStore } from '../../stores/techStore'
+import { useTaskStore } from '../../stores/taskStore'
 import { db } from '../../data/db'
 import { t } from '../../data/i18n'
 import { fmt } from '../../utils/format'
-import { evaluateCondition } from '../../data/conditions'
+import { checkCondition } from '../../data/conditions'
 import { useToast } from '../../composables/useToast'
 import { VoltTierName } from '../../data/types'
 import type { RecipeDef } from '../../data/types'
 import type { MachineInstance, MachineStatus } from '../../stores/machineStore'
 
-const machineStore    = useMachineStore()
-const powerStore     = usePowerStore()
-const inventoryStore = useInventoryStore()
+const machineStore      = useMachineStore()
+const powerStore        = usePowerStore()
+const inventoryStore    = useInventoryStore()
+const progressionStore  = useProgressionStore()
 const techStore      = useTechStore()
 const { show }       = useToast()
+const floatContainer = ref<HTMLElement | null>(null)
+const panelEl        = ref<HTMLElement | null>(null)
 
 const availableMachineDefs = computed(() =>
   db.filter('machines', (d) =>
     d.category === 1 &&
     d.role !== 'miner' &&
-    evaluateCondition(d.showCond)
-  )
+    checkCondition(d.showCond)
+  ).sort((a, b) => {
+    const ma = a.maxVoltage ?? 0
+    const mb = b.maxVoltage ?? 0
+    if (ma !== mb) {
+      // -1（不耗电）排最后，其余按电压降序
+      if (ma === -1) return 1
+      if (mb === -1) return -1
+      return mb - ma
+    }
+    return (a.order ?? 0) - (b.order ?? 0)
+  })
 )
 
 function instancesOf(defId: string): MachineInstance[] {
@@ -208,15 +254,48 @@ function canBuild(defId: string): boolean {
 
 function handleBuild(defId: string, defLocKey: string) {
   const ok = machineStore.buildMachine(defId)
-  if (ok) show(`${t('toast.build.success')} ${t(defLocKey)}`, 'var(--accent-green)')
-  else show(t('toast.build.fail'), 'var(--accent-red)')
+  if (ok) show(`${t('toast.build.success')} ${t(defLocKey)}`, 'var(--accent)')
+  else show(t('toast.build.fail'), 'var(--danger)')
+}
+
+function handleCraft(e: MouseEvent, inst: MachineInstance): void {
+  if (!inst.selectedRecipeId) return
+  if (!canAffordInstant(inst)) return
+  const recipe = db.get('recipes', inst.selectedRecipeId)
+  if (!recipe) return
+  // 直接消耗并产出
+  inventoryStore.spend(recipe.inputs)
+  for (const output of recipe.outputs) {
+    inventoryStore.addItem(output.resourceId, output.amount)
+    useTaskStore().onCraftComplete(output.resourceId, output.amount)
+    spawnFloat(e, `+${output.amount} ${getResName(output.resourceId)}`)
+  }
+}
+
+// ─── 浮动文字 ────────────────────────────────────────────────
+
+function spawnFloat(e: MouseEvent, text: string) {
+  const container = floatContainer.value
+  const panel     = panelEl.value
+  if (!container || !panel) return
+  const rect = panel.getBoundingClientRect()
+  const el   = document.createElement('span')
+  el.className   = 'float-text'
+  el.textContent = text
+  el.style.left  = (e.clientX - rect.left) + 'px'
+  el.style.top   = (e.clientY - rect.top)  + 'px'
+  container.appendChild(el)
+  setTimeout(() => el.remove(), 900)
 }
 
 function getAllowedRecipes(defId: string): RecipeDef[] {
   const def = db.get('machines', defId)
   if (!def) return []
   return db.filter('recipes', (r) =>
-    r.requiredRole === def.role && r.requiredLevel <= def.tier
+    r.requiredRole === def.role &&
+    r.requiredLevel <= def.tier &&
+    (r.maxRequiredLevel == null || r.maxRequiredLevel >= def.tier) &&
+    checkCondition(r.showCond)
   )
 }
 
@@ -234,15 +313,31 @@ function onRecipeChange(instanceId: string, recipeId: string) {
   if (recipeId) machineStore.setRecipe(instanceId, recipeId)
 }
 
+function isInstantMachine(inst: MachineInstance): boolean {
+  const def = getMachineDef(inst.defId)
+  return (def?.instantMode ?? 0) === 1
+}
+
+function canAffordInstant(inst: MachineInstance): boolean {
+  if (!inst.selectedRecipeId) return false
+  const recipe = db.get('recipes', inst.selectedRecipeId)
+  if (!recipe) return false
+  return inventoryStore.canAfford(recipe.inputs)
+}
+
 function progressPct(inst: MachineInstance): number {
   if (!inst.selectedRecipeId) return 0
   const recipe = db.get('recipes', inst.selectedRecipeId)
   if (!recipe || recipe.durationSec <= 0) return 0
+  if (typeof inst.progressSec !== 'number' || isNaN(inst.progressSec)) return 0
   return Math.min(100, (inst.progressSec / recipe.durationSec) * 100)
 }
 
 function getRecipeDuration(recipeId: string | null): number {
-  return recipeId ? (db.get('recipes', recipeId)?.durationSec ?? 0) : 0
+  if (!recipeId) return 0
+  const recipe = db.get('recipes', recipeId)
+  const d = recipe?.durationSec
+  return typeof d === 'number' && !isNaN(d) ? d : 0
 }
 
 function getRecipeEU(recipeId: string | null): number {
@@ -280,6 +375,23 @@ function getVoltTierName(v: number): string {
   return VoltTierName[v] ?? `V${v}`
 }
 
+/**
+ * 电压指示器显示文本。
+ * selectedVoltage = -1 → "不耗电"，否则显示对应电压名称。
+ */
+function getVoltageDisplay(v: number): string {
+  return v === -1 ? t('voltage.no_consume') : getVoltTierName(v)
+}
+
+/** 是否显示电压指示器（进入 LV 时代后才显示） */
+function showVoltageIndicator(): boolean {
+  return progressionStore.era === 'lv'
+}
+
+function onToggleClick(inst: MachineInstance): void {
+  machineStore.toggleMachine(inst.instanceId)
+}
+
 function onVoltageChange(instanceId: string, event: Event): void {
   machineStore.setVoltage(instanceId, Number((event.target as any).value))
 }
@@ -290,6 +402,7 @@ function machineIcon(type: string): string {
     forge_hammer: '🔨',
     wire_cutter: '✂️',
     assembler: '⚙️',
+    plate_press: '🔧',
   }
   return icons[type] ?? '🏭'
 }
@@ -315,7 +428,7 @@ function machineIcon(type: string): string {
 
 /* 每台机器块 */
 .machine-block {
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--border);
   background: var(--bg-panel);
   overflow: hidden;
 }
@@ -324,7 +437,7 @@ function machineIcon(type: string): string {
 .machine-header {
   padding: 8px 14px;
   background: #262626;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border);
   display: flex;
   flex-direction: column;
   gap: 5px;
@@ -347,8 +460,18 @@ function machineIcon(type: string): string {
 
 .built-count {
   font-size: 12px;
-  color: var(--accent-green);
+  color: var(--accent);
   font-weight: bold;
+}
+
+.built-count--max {
+  color: #888;
+}
+
+.build-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .max-label {
@@ -369,16 +492,16 @@ function machineIcon(type: string): string {
 }
 
 .build-btn--ok {
-  background: #1e3a1e;
-  border-color: var(--accent-green);
-  color: var(--accent-green);
+  background: var(--accent-bg);
+  border-color: var(--accent);
+  color: var(--accent);
 }
-.build-btn--ok:hover { background: #254a25; }
+.build-btn--ok:hover { background: var(--accent-bg-hover); }
 
 .build-btn--lack {
-  background: #2a2020;
-  border-color: #4a3030;
-  color: #774444;
+  background: var(--danger-bg);
+  border-color: var(--danger-border);
+  color: var(--danger-text);
   cursor: not-allowed;
 }
 
@@ -401,8 +524,8 @@ function machineIcon(type: string): string {
   border: 1px solid;
   white-space: nowrap;
 }
-.cost-chip--ok   { color: var(--accent-green);  border-color: #2a4a2a; }
-.cost-chip--lack { color: var(--accent-red);    border-color: #4a2a2a; }
+.cost-chip--ok   { color: var(--accent);  border-color: var(--accent-bg-hover); }
+.cost-chip--lack { color: var(--danger);    border-color: var(--danger-border); }
 
 .cost-have {
   font-size: 10px;
@@ -434,7 +557,7 @@ function machineIcon(type: string): string {
   transition: background 0.1s;
 }
 
-.instance-row--running { background: rgba(76,175,80,0.04); }
+.instance-row--running { background: var(--accent-subtle); }
 .instance-row--no_power { background: rgba(244,67,54,0.04); }
 
 .inst-index {
@@ -457,7 +580,7 @@ function machineIcon(type: string): string {
   cursor: pointer;
   outline: none;
 }
-.recipe-select:focus { border-color: var(--accent-green); }
+.recipe-select:focus { border-color: var(--accent); }
 .recipe-select option { background: #1e1e1e; }
 
 .recipe-preview {
@@ -473,8 +596,8 @@ function machineIcon(type: string): string {
   padding: 1px 4px;
   border: 1px solid;
 }
-.preview-ok   { color: #5a9; border-color: #2a4a3a; }
-.preview-lack { color: var(--accent-red); border-color: #4a2a2a; }
+.preview-ok   { color: var(--accent); border-color: var(--accent-bg-hover); }
+.preview-lack { color: var(--danger); border-color: var(--danger-border); }
 
 .preview-have {
   opacity: 0.6;
@@ -485,7 +608,7 @@ function machineIcon(type: string): string {
 
 .preview-output {
   font-size: 10px;
-  color: var(--accent-yellow);
+  color: var(--warn);
 }
 
 /* 进度 */
@@ -503,7 +626,7 @@ function machineIcon(type: string): string {
 }
 .prog-bar-fill {
   height: 100%;
-  background: var(--accent-green);
+  background: var(--accent);
   transition: width 0.5s linear;
 }
 .prog-text {
@@ -517,16 +640,17 @@ function machineIcon(type: string): string {
   padding: 1px 6px;
   border: 1px solid;
 }
-.status--running   { color: var(--accent-green);  border-color: var(--accent-green); }
+.status--running   { color: var(--accent);  border-color: var(--accent); }
 .status--paused    { color: #666;                  border-color: #444; }
-.status--no_recipe { color: var(--accent-yellow); border-color: #554400; }
-.status--no_material { color: var(--accent-yellow); border-color: #554400; }
-.status--no_power  { color: var(--accent-red);    border-color: #552222; }
+.status--no_recipe { color: var(--warn); border-color: #554400; }
+.status--no_material { color: var(--warn); border-color: #554400; }
+.status--no_power  { color: var(--danger);    border-color: #552222; }
+.status--instant   { color: var(--accent-cyan, #00bcd4); border-color: #004a5a; }
 
 /* EU/s */
 .inst-eu {
   font-size: 11px;
-  color: var(--accent-yellow);
+  color: var(--warn);
   text-align: right;
   white-space: nowrap;
 }
@@ -541,7 +665,7 @@ function machineIcon(type: string): string {
 
 .run-indicator {
   font-size: 10px;
-  color: var(--accent-green);
+  color: var(--accent);
   white-space: nowrap;
 }
 
@@ -556,16 +680,16 @@ function machineIcon(type: string): string {
 }
 .toggle-btn--on {
   background: #2e2020;
-  border-color: var(--accent-red);
-  color: var(--accent-red);
+  border-color: var(--danger);
+  color: var(--danger);
 }
 .toggle-btn--on:hover { background: #3a2525; }
 .toggle-btn--off {
-  background: #1e3a1e;
-  border-color: var(--accent-green);
-  color: var(--accent-green);
+  background: var(--accent-bg);
+  border-color: var(--accent);
+  color: var(--accent);
 }
-.toggle-btn--off:hover { background: #254a25; }
+.toggle-btn--off:hover { background: var(--accent-bg-hover); }
 
 /* 超频/降频按钮 */
 .oc-btn {
@@ -578,11 +702,11 @@ function machineIcon(type: string): string {
   white-space: nowrap;
 }
 .oc-btn--up {
-  background: #2a2a10;
-  border-color: var(--accent-yellow);
-  color: var(--accent-yellow);
+  background: var(--warn-bg);
+  border-color: var(--warn);
+  color: var(--warn);
 }
-.oc-btn--up:hover { background: #3a3a18; }
+.oc-btn--up:hover { background: var(--warn-bg-hover); }
 .oc-btn--down {
   background: #252525;
   border-color: #666;
@@ -592,12 +716,60 @@ function machineIcon(type: string): string {
 
 .voltage-select {
   background: #1e1e2a;
-  border: 1px solid var(--accent-yellow);
-  color: var(--accent-yellow);
+  border: 1px solid var(--warn);
+  color: var(--warn);
   font-family: inherit;
   font-size: 10px;
   padding: 2px 4px;
   cursor: pointer;
 }
 .voltage-select:focus { outline: none; }
+
+/* 制作按钮（瞬时机器） */
+.craft-btn {
+  padding: 3px 10px;
+  font-family: inherit;
+  font-size: 11px;
+  cursor: pointer;
+  border: 1px solid;
+  transition: background 0.12s;
+  white-space: nowrap;
+}
+.craft-btn--ok {
+  background: var(--accent-bg);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.craft-btn--ok:hover { background: var(--accent-bg-hover); }
+.craft-btn--lack {
+  background: var(--danger-bg);
+  border-color: var(--danger-border);
+  color: var(--danger-text);
+  cursor: not-allowed;
+}
+
+/* ── 浮动文字 ── */
+.float-container {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 30;
+}
+
+:global(.float-text) {
+  position: absolute;
+  transform: translate(-50%, -100%);
+  white-space: nowrap;
+  font-size: 12px;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.9);
+  pointer-events: none;
+  animation: float-up 0.9s ease-out forwards;
+}
+
+@keyframes float-up {
+  0%   { opacity: 1; transform: translate(-50%, -100%); }
+  100% { opacity: 0; transform: translate(-50%, calc(-100% - 40px)); }
+}
 </style>

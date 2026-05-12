@@ -128,6 +128,20 @@ function parseValue(raw, type) {
   return undefined
 }
 
+function getBaseType(type) {
+  if (typeof type === 'string') return type
+  if (typeof type === 'object' && type.type) return type.type
+  return 'string'
+}
+
+function parseValueAllowEmpty(raw, type) {
+  const baseType = getBaseType(type)
+  if (baseType === 'string') return raw // 保留原样（允许空字符串）
+  if (baseType === 'number') return raw === '' || raw == null ? 0 : Number(raw)
+  if (baseType === 'boolean') return raw.toLowerCase() === 'true'
+  return parseValue(raw, type)
+}
+
 // ─── 行对象构建 ───────────────────────────────────────────────────────────────
 // 将 CSV 一行（{列名: 原始值}）按 schema.fields 构建成嵌套 JSON 对象
 
@@ -135,10 +149,13 @@ function buildRow(row, fields) {
   const obj = {}
   for (const [key, type] of Object.entries(fields)) {
     const raw   = row[key] ?? ''
-    const value = parseValue(raw, type)
+    // allowEmpty: true 时，空字符串也是合法值
+    const useAllowEmpty = typeof type === 'object' && type.allowEmpty
+    const parser = useAllowEmpty ? parseValueAllowEmpty : parseValue
+    const value = parser(raw, type)
 
     if (value === undefined) continue
-    if (value === '') continue
+    if (value === '' && !useAllowEmpty) continue
     obj[key] = value
   }
   return obj

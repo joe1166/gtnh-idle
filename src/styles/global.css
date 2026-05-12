@@ -7,24 +7,121 @@
   padding: 0;
 }
 
-/* CSS Variables - Industrial Dark Theme */
+/* =====================================================================
+   CSS Design Tokens — Industrial Dark UI
+   =====================================================================
+   背景层：deep < base < panel < elevated < hover
+   文字层：primary > secondary > muted > faint > disabled
+   Accent 组随主题切换，其余 token 保持不变。
+   ===================================================================== */
+
 :root {
-  --bg-primary: #1a1a1a;
-  --bg-panel: #2a2a2a;
-  --border-color: #444;
-  --text-primary: #e0e0e0;
+  /* ── Backgrounds ─────────────────────────────────────────────── */
+  --bg-deep:     #0d0d0d;               /* 矿洞/全屏遮罩底色 */
+  --bg-base:     #1a1a1a;               /* 应用根背景 */
+  --bg-panel:    #2a2a2a;               /* 面板容器 */
+  --bg-elevated: #333333;               /* 卡片/按钮基色 */
+  --bg-hover:    #3a3a3a;               /* hover 态 elevated */
+  --bg-sunken:   #222222;               /* 凹陷区域（输入框等） */
+  --bg-overlay:  rgba(0, 0, 0, 0.72);  /* 模态遮罩 */
+  --bg-glass:    rgba(15, 15, 15, 0.85); /* 底部面板毛玻璃背景 */
+
+  /* ── Text ────────────────────────────────────────────────────── */
+  --text-primary:   #e0e0e0;
   --text-secondary: #a0a0a0;
-  --accent-green: #4CAF50;
-  --accent-yellow: #FFC107;
-  --accent-red: #f44336;
-  --font-mono: 'Courier New', Courier, monospace;
+  --text-muted:     #888888;
+  --text-faint:     #666666;
+  --text-disabled:  #555555;
+
+  /* ── Borders ─────────────────────────────────────────────────── */
+  --border:         rgba(180, 180, 180, 0.2);
+  --border-subtle:  rgba(180, 180, 180, 0.1);
+  --border-strong:  rgba(180, 180, 180, 0.35);
+  --border-emphasis: rgba(180, 180, 180, 0.5);
+
+  /* ── Accent (主题色，随 data-theme 切换) ─────────────────────── */
+  --accent:           #4caf50;
+  --accent-bg:        #1e3a1e;
+  --accent-bg-hover:  #254a25;
+  --accent-subtle:    rgba(76, 175, 80, 0.08);
+  --accent-soft:      rgba(76, 175, 80, 0.12);
+  --accent-dim:       rgba(76, 175, 80, 0.5);
+
+  /* ── Warn / Yellow（固定，不随主题变） ───────────────────────── */
+  --warn:             #ffc107;
+  --warn-bg:          #2a2a10;
+  --warn-bg-hover:    #3a3a18;
+  --warn-subtle:      rgba(255, 193, 7, 0.08);
+
+  /* ── Danger / Red（固定） ────────────────────────────────────── */
+  --danger:                #f44336;
+  --danger-bg:             #2a2020;
+  --danger-border:         #4a3030;
+  --danger-text:           #774444;
+  --danger-subtle:         rgba(244, 67, 54, 0.08);
+  --danger-subtle-border:  rgba(244, 67, 54, 0.25);
+
+  /* ── Info / Blue（控制台调试色，固定） ───────────────────────── */
+  --info:        #4a9eff;
+  --info-subtle: rgba(74, 158, 255, 0.08);
+  --info-soft:   rgba(74, 158, 255, 0.15);
+
+  /* ── Scrollbar ───────────────────────────────────────────────── */
+  --scrollbar-thumb: rgba(140, 140, 140, 0.3);
+
+  /* ── Typography ──────────────────────────────────────────────── */
+  --font-mono: 'Consolas', 'Courier New', Courier, monospace;
 }
+
+/* ── Theme: Cobalt (electric blue) ────────────────────────────── */
+[data-theme="cobalt"] {
+  --accent:          #4a9eff;
+  --accent-bg:       #1a2a3a;
+  --accent-bg-hover: #1e3a50;
+  --accent-subtle:   rgba(74, 158, 255, 0.08);
+  --accent-soft:     rgba(74, 158, 255, 0.12);
+  --accent-dim:      rgba(74, 158, 255, 0.5);
+}
+
+/* ── Theme: Amber (warm orange) ────────────────────────────────── */
+[data-theme="amber"] {
+  --accent:          #ff9800;
+  --accent-bg:       #2a1a00;
+  --accent-bg-hover: #3a2500;
+  --accent-subtle:   rgba(255, 152, 0, 0.08);
+  --accent-soft:     rgba(255, 152, 0, 0.12);
+  --accent-dim:      rgba(255, 152, 0, 0.5);
+}
+
+/* ── Theme: Violet (purple) ─────────────────────────────────────── */
+[data-theme="violet"] {
+  --accent:          #9c27b0;
+  --accent-bg:       #2a1030;
+  --accent-bg-hover: #38153f;
+  --accent-subtle:   rgba(156, 39, 176, 0.08);
+  --accent-soft:     rgba(156, 39, 176, 0.12);
+  --accent-dim:      rgba(156, 39, 176, 0.5);
+}
+
+/* ── Theme: Cyan (neon) ─────────────────────────────────────────── */
+[data-theme="cyan"] {
+  --accent:          #00bcd4;
+  --accent-bg:       #0a2a2e;
+  --accent-bg-hover: #0e3840;
+  --accent-subtle:   rgba(0, 188, 212, 0.08);
+  --accent-soft:     rgba(0, 188, 212, 0.12);
+  --accent-dim:      rgba(0, 188, 212, 0.5);
+}
+
+/* =====================================================================
+   Base Styles
+   ===================================================================== */
 
 html,
 body {
   width: 100%;
   height: 100%;
-  background-color: var(--bg-primary);
+  background-color: var(--bg-base);
   color: var(--text-primary);
   font-family: var(--font-mono);
   font-size: 14px;
@@ -45,11 +142,11 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--bg-primary);
+  background: var(--bg-base);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--border-color);
+  background: var(--scrollbar-thumb);
   border-radius: 3px;
 }
 
@@ -60,12 +157,12 @@ body {
 /* Panel base */
 .panel {
   background-color: var(--bg-panel);
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--border);
   padding: 1rem;
 }
 
 /* Utility classes */
-.text-green { color: var(--accent-green); }
-.text-yellow { color: var(--accent-yellow); }
-.text-red { color: var(--accent-red); }
-.text-muted { color: var(--text-secondary); }
+.text-green  { color: var(--accent); }
+.text-yellow { color: var(--warn); }
+.text-red    { color: var(--danger); }
+.text-muted  { color: var(--text-secondary); }

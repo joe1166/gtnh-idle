@@ -13,6 +13,9 @@
 //   'dimensions'  — 维度定义      (DimensionDef[])
 //   'biomes'      — 群系定义      (BiomeDef[])    含 nodeIds，不嵌套节点
 //   'biome_nodes' — 资源节点定义  (BiomeNodeDef[])
+//   'mine_blocks' — 矿洞方块定义  (MineBlockDef[])
+//   'mine_veins'  — 矿脉类型定义  (MineVeinDef[])
+//   'mine_caves'  — 洞穴定义      (MineCaveDef[])
 //
 // 【使用方式】
 //   db.table('machines')                          // → MachineDef[]
@@ -35,6 +38,14 @@ import type {
   BiomeDef,
   BiomeNodeDef,
   ToolDef,
+  MineBlockDef,
+  MineCaveDef,
+  MineVeinDef,
+  RewardDef,
+  ExploreMapDef,
+  ExploreRoomDef,
+  ExploreEnemyDef,
+  ExploreEventNodeDef,
 } from './types'
 
 import resourcesData   from '../config/resources.json'
@@ -48,6 +59,14 @@ import dimensionsData  from '../config/dimensions.json'
 import biomesData      from '../config/biomes.json'
 import biomeNodesData  from '../config/biome_nodes.json'
 import toolsData       from '../config/tools.json'
+import mineBlocksData  from '../config/mine_blocks.json'
+import mineVeinsData  from '../config/mine_veins.json'
+import mineCavesData  from '../config/mine_caves.json'
+import rewardsData    from '../config/rewards.json'
+import exploreMapsData  from '../config/explore_maps.json'
+import exploreRoomsData from '../config/explore_rooms.json'
+import exploreEnemiesData from '../config/explore_enemies.json'
+import exploreEventsData from '../config/explore_events.json'
 
 /** 将 showCondType + showCondPara 合并为 Condition 对象 */
 function buildShowCond(raw: { showCondType?: string; showCondPara?: string }): Condition | undefined {
@@ -56,17 +75,25 @@ function buildShowCond(raw: { showCondType?: string; showCondPara?: string }): C
 }
 
 interface TableMap {
-  resources:   ResourceDef
-  recipes:     RecipeDef
-  machines:    MachineDef
-  chapters:    ChapterDef
-  techs:       TechDef
-  tech_trees:  TechTreeDef
-  tasks:       TaskDef
-  dimensions:  DimensionDef
-  biomes:      BiomeDef
-  biome_nodes: BiomeNodeDef
-  tools:       ToolDef
+  resources:     ResourceDef
+  recipes:       RecipeDef
+  machines:      MachineDef
+  chapters:      ChapterDef
+  techs:         TechDef
+  tech_trees:    TechTreeDef
+  tasks:         TaskDef
+  dimensions:    DimensionDef
+  biomes:        BiomeDef
+  biome_nodes:   BiomeNodeDef
+  tools:         ToolDef
+  mine_blocks:   MineBlockDef
+  mine_veins:    MineVeinDef
+  mine_caves:    MineCaveDef
+  rewards:       RewardDef
+  explore_maps:  ExploreMapDef
+  explore_rooms: ExploreRoomDef
+  explore_enemies: ExploreEnemyDef
+  explore_events: ExploreEventNodeDef
 }
 
 export type TableName = keyof TableMap
@@ -83,6 +110,11 @@ interface RawMachine {
   euPerSec: number; fuelResourceId?: string; fuelPerSec?: number;
   buildCost: { resourceId: string; amount: number }[]; maxCount: number;
   showCondType: string; showCondPara: string; maxVoltage?: number; voltage?: number;
+}
+interface RawTool {
+  id: string; type: string; level: number; abilityId: string; abilityValue: number;
+  upgradeCost: { resourceId: string; amount: number }[]; locKey: string;
+  unlockedByChapter: number; showCondType: string; showCondPara: string;
 }
 
 const RAW: Record<TableName, unknown[]> = {
@@ -101,10 +133,21 @@ const RAW: Record<TableName, unknown[]> = {
   dimensions:  dimensionsData as DimensionDef[],
   biomes:      biomesData     as BiomeDef[],
   biome_nodes: biomeNodesData as BiomeNodeDef[],
-  tools:       toolsData      as ToolDef[],
+  tools:       (toolsData as RawTool[]).map(t => ({
+    ...t, showCond: buildShowCond(t),
+  })) as unknown as ToolDef[],
+  mine_blocks: mineBlocksData as MineBlockDef[],
+  mine_veins:  mineVeinsData  as MineVeinDef[],
+  mine_caves:  mineCavesData  as MineCaveDef[],
+  rewards:       rewardsData      as RewardDef[],
+  explore_maps:  exploreMapsData  as ExploreMapDef[],
+  explore_rooms: exploreRoomsData as ExploreRoomDef[],
+  explore_enemies: exploreEnemiesData as ExploreEnemyDef[],
+  explore_events: exploreEventsData as ExploreEventNodeDef[],
 }
 
 const INDEX_CACHE: Partial<Record<TableName, Map<string | number, unknown>>> = {}
+let _toolsByTypeCache: Record<string, ToolDef[]> | null = null
 
 function getIndex(tableName: TableName): Map<string | number, unknown> {
   if (!INDEX_CACHE[tableName]) {
@@ -146,17 +189,18 @@ export const db = {
     return t(item.descLocKey)
   },
 
-  /** 工具按 type 分组，返回 { type: ToolDef[] } */
+  /** 工具按 type 分组，返回 { type: ToolDef[] }。结果缓存，只在首次调用时计算。 */
   toolsByType(): Record<string, ToolDef[]> {
+    if (_toolsByTypeCache) return _toolsByTypeCache
     const result: Record<string, ToolDef[]> = {}
     for (const tool of this.table('tools')) {
       if (!result[tool.type]) result[tool.type] = []
       result[tool.type].push(tool)
     }
-    // 每个 type 内部按 level 排序
     for (const type of Object.keys(result)) {
       result[type].sort((a, b) => a.level - b.level)
     }
+    _toolsByTypeCache = result
     return result
   },
 }

@@ -1,0 +1,31 @@
+[
+  {
+    "id": "pharaoh_intro_001",
+    "textLocKey": "explore.event.pharaoh_intro_001",
+    "autoNextId": "pharaoh_intro_002",
+    "isTerminal": false
+  },
+  {
+    "id": "pharaoh_intro_002",
+    "textLocKey": "explore.event.pharaoh_intro_002",
+    "isTerminal": false,
+    "optionATextLocKey": "explore.event.pharaoh_intro_002.opt_a",
+    "optionANextId": "pharaoh_intro_003",
+    "optionARewardId": 24,
+    "optionAHpDelta": 0,
+    "optionBTextLocKey": "explore.event.pharaoh_intro_002.opt_b",
+    "optionBNextId": "pharaoh_intro_004",
+    "optionBRewardId": 0,
+    "optionBHpDelta": -10
+  },
+  {
+    "id": "pharaoh_intro_003",
+    "textLocKey": "explore.event.pharaoh_intro_003",
+    "isTerminal": true
+  },
+  {
+    "id": "pharaoh_intro_004",
+    "textLocKey": "explore.event.pharaoh_intro_004",
+    "isTerminal": true
+  }
+]

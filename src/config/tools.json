@@ -1,7 +1,7 @@
 [
   {
-    "id": 1001,
-    "type": "stone_axe",
+    "id": "stone_axe_0",
+    "type": "axe",
     "level": 0,
     "abilityId": "wood_ability",
     "abilityValue": 1,
@@ -19,8 +19,8 @@
     "unlockedByChapter": 1
   },
   {
-    "id": 1002,
-    "type": "stone_axe",
+    "id": "stone_axe_1",
+    "type": "axe",
     "level": 1,
     "abilityId": "wood_ability",
     "abilityValue": 2,
@@ -38,8 +38,8 @@
     "unlockedByChapter": 1
   },
   {
-    "id": 1003,
-    "type": "stone_axe",
+    "id": "stone_axe_2",
+    "type": "axe",
     "level": 2,
     "abilityId": "wood_ability",
     "abilityValue": 3,
@@ -48,8 +48,8 @@
     "unlockedByChapter": 1
   },
   {
-    "id": 1004,
-    "type": "stone_pickaxe",
+    "id": "stone_pickaxe_0",
+    "type": "pickaxe",
     "level": 0,
     "abilityId": "mining_ability",
     "abilityValue": 1,
@@ -67,8 +67,8 @@
     "unlockedByChapter": 1
   },
   {
-    "id": 1005,
-    "type": "stone_pickaxe",
+    "id": "stone_pickaxe_1",
+    "type": "pickaxe",
     "level": 1,
     "abilityId": "mining_ability",
     "abilityValue": 2,
@@ -86,13 +86,76 @@
     "unlockedByChapter": 1
   },
   {
-    "id": 1006,
-    "type": "stone_pickaxe",
+    "id": "stone_pickaxe_2",
+    "type": "pickaxe",
     "level": 2,
     "abilityId": "mining_ability",
     "abilityValue": 3,
     "upgradeCost": [],
     "locKey": "tool.stone_pickaxe.level_2",
     "unlockedByChapter": 1
+  },
+  {
+    "id": "prospector_1",
+    "type": "prospector",
+    "level": 1,
+    "abilityId": "prospector_ability",
+    "abilityValue": 3,
+    "upgradeCost": [
+      {
+        "resourceId": "iron_plate",
+        "amount": 2
+      },
+      {
+        "resourceId": "basic_circuit",
+        "amount": 1
+      }
+    ],
+    "locKey": "tool.prospector.level_1",
+    "unlockedByChapter": 1,
+    "showCondType": "resource_ever",
+    "showCondPara": "basic_circuit"
+  },
+  {
+    "id": "prospector_2",
+    "type": "prospector",
+    "level": 2,
+    "abilityId": "prospector_ability",
+    "abilityValue": 5,
+    "upgradeCost": [
+      {
+        "resourceId": "iron_ingot",
+        "amount": 12
+      },
+      {
+        "resourceId": "copper_wire",
+        "amount": 5
+      }
+    ],
+    "locKey": "tool.prospector.level_2",
+    "unlockedByChapter": 1,
+    "showCondType": "tool",
+    "showCondPara": "prospector:1"
+  },
+  {
+    "id": "prospector_3",
+    "type": "prospector",
+    "level": 3,
+    "abilityId": "prospector_ability",
+    "abilityValue": 8,
+    "upgradeCost": [
+      {
+        "resourceId": "iron_ingot",
+        "amount": 25
+      },
+      {
+        "resourceId": "basic_circuit",
+        "amount": 2
+      }
+    ],
+    "locKey": "tool.prospector.level_3",
+    "unlockedByChapter": 1,
+    "showCondType": "tool",
+    "showCondPara": "prospector:2"
   }
 ]

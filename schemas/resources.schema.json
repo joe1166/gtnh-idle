@@ -5,7 +5,13 @@
     "id":                "string",
     "locKey":            "string",
     "defaultCap":        "number",
-    "category":          "string",
-    "unlockedByChapter": "number"
+    "category":           "string",
+    "tags": {
+      "type": "array",
+      "sep": ",",
+      "item": "string"
+    },
+    "unlockedByChapter": "number",
+    "foodPoints": "number"
   }
 }

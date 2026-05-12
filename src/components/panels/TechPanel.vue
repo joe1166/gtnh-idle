@@ -325,9 +325,9 @@ const edges = computed<Edge[]>(() => {
       const bothResearched = child.researched
       const parentResearched = parent.researched
       const color = bothResearched
-        ? 'var(--accent-green)'
+        ? 'var(--accent)'
         : parentResearched
-          ? 'var(--accent-yellow)'
+          ? 'var(--warn)'
           : '#444'
       const dashed = !parentResearched
 
@@ -439,7 +439,7 @@ function doResearch() {
 
 .tree-tab {
   background: var(--bg-panel);
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--border);
   color: #888;
   padding: 5px 16px;
   font-family: inherit;
@@ -453,9 +453,9 @@ function doResearch() {
 }
 
 .tree-tab.active {
-  color: var(--accent-green);
-  background: rgba(76, 175, 80, 0.12);
-  border-color: var(--accent-green);
+  color: var(--accent);
+  background: var(--accent-soft);
+  border-color: var(--accent);
 }
 
 /* ── Canvas Inner ── */
@@ -478,7 +478,7 @@ function doResearch() {
   position: absolute;
   width: 160px;
   height: 90px;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--border);
   background: var(--bg-panel);
   display: flex;
   flex-direction: column;
@@ -496,12 +496,12 @@ function doResearch() {
 }
 
 .node-researched {
-  border-color: var(--accent-green);
-  box-shadow: 0 0 6px rgba(76, 175, 80, 0.3);
+  border-color: var(--accent);
+  box-shadow: 0 0 6px var(--accent-soft);
 }
 
 .node-available {
-  border-color: var(--accent-yellow);
+  border-color: var(--warn);
 }
 
 .node-locked {
@@ -527,7 +527,7 @@ function doResearch() {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.72);
+  background: var(--bg-overlay);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -537,7 +537,7 @@ function doResearch() {
 
 .modal-box {
   background: var(--bg-panel);
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--border);
   padding: 20px 24px;
   min-width: 340px;
   max-width: 460px;
@@ -572,8 +572,8 @@ function doResearch() {
   border: 1px solid;
 }
 
-.status-researched { color: var(--accent-green); border-color: var(--accent-green); }
-.status-available  { color: var(--accent-yellow); border-color: var(--accent-yellow); }
+.status-researched { color: var(--accent); border-color: var(--accent); }
+.status-available  { color: var(--warn); border-color: var(--warn); }
 .status-locked     { color: #666; border-color: #444; }
 
 .detail-desc {
@@ -605,18 +605,18 @@ function doResearch() {
   border: 1px solid;
 }
 
-.chip-ok      { color: var(--accent-green); border-color: var(--accent-green); }
+.chip-ok      { color: var(--accent); border-color: var(--accent); }
 .chip-missing { color: #f44336; border-color: #f44336; }
 
 .implicit-hint {
   margin-top: 6px;
   font-size: 11px;
-  color: var(--accent-yellow);
+  color: var(--warn);
 }
 
 .unlock-cond-warn {
   font-size: 12px;
-  color: var(--accent-yellow);
+  color: var(--warn);
 }
 
 .cost-list {
@@ -631,7 +631,7 @@ function doResearch() {
   font-size: 12px;
 }
 
-.cost-ok      { color: var(--accent-green); }
+.cost-ok      { color: var(--accent); }
 .cost-missing { color: #f44336; }
 
 .unlocks-grid {
@@ -656,7 +656,7 @@ function doResearch() {
 }
 
 .btn-research {
-  background: var(--accent-green);
+  background: var(--accent);
   border: none;
   color: #111;
   padding: 6px 20px;
@@ -673,12 +673,12 @@ function doResearch() {
 }
 
 .btn-research:not(:disabled):hover {
-  background: #5dcf61;
+  background: var(--accent);
 }
 
 .btn-close {
   background: none;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--border);
   color: #888;
   padding: 6px 16px;
   font-family: inherit;

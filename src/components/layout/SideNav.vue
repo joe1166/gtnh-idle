@@ -31,10 +31,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, watch } from 'vue'
 import { useGameStore } from '../../stores/gameStore'
+import { useInventoryStore } from '../../stores/inventoryStore'
 import { t } from '../../data/i18n'
-import { PANEL_DEFS, evaluateCondition, type PanelDef } from '../../data/panelConfig'
+import { useSaveLoad } from '../../composables/useSaveLoad'
+import { PANEL_DEFS, checkCondition, type PanelDef } from '../../data/panelConfig'
 
 const gameStore = useGameStore()
 
@@ -51,7 +53,7 @@ const emit = defineEmits<{
 /**
  * 判断面板是否可见：
  *   1. hideCond 满足 → 强制隐藏（优先，panel 类型需两轮计算）
- *   2. showCond 不满足 → 隐藏（通用 evaluateCondition）
+ *   2. showCond 不满足 → 隐藏（通用 checkCondition）
  *   3. 其余情况 → 显示
  *
  * panel 类型条件需要已知当前可见列表，故传入 visibleIds（仅 hideCond 使用）。
@@ -63,7 +65,7 @@ function isVisible(def: PanelDef, visibleIds: Set<string>): boolean {
       if (visibleIds.has(def.hideCond.para)) return false
     }
   }
-  if (def.showCond && !evaluateCondition(def.showCond)) return false
+  if (def.showCond && !checkCondition(def.showCond)) return false
   return true
 }
 
@@ -73,7 +75,12 @@ function isVisible(def: PanelDef, visibleIds: Set<string>): boolean {
  *   第一轮：计算所有不含 panel 条件的面板可见性
  *   第二轮：再计算含 panel 条件的面板（以第一轮结果为依据）
  */
+const prevVisibleIds = new Set<string>()
+
 const navItems = computed(() => {
+  // 读取所有资源数量，强制让 Vue 追踪所有资源的增量变化
+  void useInventoryStore().items
+
   const sorted = [...PANEL_DEFS].sort((a, b) => a.order - b.order)
 
   // 第一轮：不含 hideCond.panel 的面板（hideCond.panel 需两轮计算）
@@ -87,7 +94,17 @@ const navItems = computed(() => {
   // 第二轮：含 hideCond.panel 的面板，用第一轮结果作为 visibleIds
   const result = sorted.filter(p => isVisible(p, firstPass))
 
-  return result
+return result
+})
+
+// 解锁新面板时自动存档（防止刷新后倒退）
+watch(navItems, (newItems) => {
+  const newIds = newItems.map(p => p.id).filter(id => !prevVisibleIds.has(id))
+  if (newIds.length > 0) {
+    newItems.forEach(p => prevVisibleIds.add(p.id))
+    const { save } = useSaveLoad()
+    save()
+  }
 })
 </script>
 
@@ -96,7 +113,7 @@ const navItems = computed(() => {
   width: 140px;
   min-width: 140px;
   background: var(--bg-panel);
-  border-right: 1px solid var(--border-color);
+  border-right: 1px solid var(--border);
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -130,8 +147,8 @@ const navItems = computed(() => {
 
 .nav-item--active {
   background: #333;
-  color: var(--accent-green);
-  border-left-color: var(--accent-green);
+  color: var(--accent);
+  border-left-color: var(--accent);
 }
 
 .nav-icon {
@@ -147,7 +164,7 @@ const navItems = computed(() => {
 /* ── Footer ── */
 .nav-footer {
   padding: 10px 12px 12px;
-  border-top: 1px solid var(--border-color);
+  border-top: 1px solid var(--border);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -183,7 +200,7 @@ const navItems = computed(() => {
 .footer-btn {
   width: 100%;
   background: #222;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--border);
   color: #888;
   padding: 4px 0;
   font-family: inherit;

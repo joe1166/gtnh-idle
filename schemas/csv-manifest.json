@@ -11,6 +11,14 @@
   { "name": "biomes",      "schema": "schemas/biomes.schema.json",       "input": "tables/biomes.csv"      },
   { "name": "biome_nodes", "schema": "schemas/biome_nodes.schema.json",  "input": "tables/biome_nodes.csv" },
   { "name": "tools",       "schema": "schemas/tools.schema.json",         "input": "tables/tools.csv"       },
+  { "name": "mine_blocks", "schema": "schemas/mine_blocks.schema.json",  "input": "tables/mine_blocks.csv" },
+  { "name": "mine_veins",  "schema": "schemas/mine_veins.schema.json",   "input": "tables/mine_veins.csv"  },
+  { "name": "mine_caves",  "schema": "schemas/mine_caves.schema.json",   "input": "tables/mine_caves.csv"  },
+  { "name": "rewards",     "schema": "schemas/rewards.schema.json",      "input": "tables/rewards.csv"     },
+  { "name": "explore_maps",  "schema": "schemas/explore_maps.schema.json",  "input": "tables/explore_maps.csv"  },
+  { "name": "explore_rooms", "schema": "schemas/explore_rooms.schema.json", "input": "tables/explore_rooms.csv" },
+  { "name": "explore_enemies", "schema": "schemas/explore_enemies.schema.json", "input": "tables/explore_enemies.csv" },
+  { "name": "explore_events", "schema": "schemas/explore_events.schema.json", "input": "tables/explore_events.csv" },
   { "name": "locale",      "schema": "schemas/locale.schema.json",       "input": "tables/locale.csv",
     "pre": "node tools/sort-locale.cjs" }
 ]

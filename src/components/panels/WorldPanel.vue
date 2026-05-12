@@ -36,7 +36,11 @@
       class="world-tooltip"
       :style="{ left: tooltip.x + 'px', top: tooltip.y + 'px' }"
     >
-      {{ tooltip.text }}
+      <div
+        v-for="(line, i) in tooltip.lines"
+        :key="i"
+        :class="{ 'tooltip-meta': i > 0 }"
+      >{{ line }}</div>
     </div>
 
     <!-- ── 节点按钮层 ── -->
@@ -68,7 +72,7 @@
           <button
             v-if="!timedState(node.id)"
             class="action-btn"
-            @click="worldStore.startTimedNode(node.id)"
+            @click="handleStartNode(node.id)"
             @mouseenter="onBtnHover($event, node)"
             @mousemove="moveTooltip($event)"
             @mouseleave="hideTooltip()"
@@ -103,6 +107,62 @@
             @mouseleave="hideTooltip()"
           >
             {{ t('world.node.ready') }}
+          </button>
+        </template>
+
+        <!-- explore 节点：点击直接进入遗迹探索 -->
+        <button
+          v-else-if="node.type === 'explore'"
+          class="action-btn action-btn--explore"
+          @click="handleClickNode($event, node)"
+          @mouseenter="onBtnHover($event, node)"
+          @mousemove="moveTooltip($event)"
+          @mouseleave="hideTooltip()"
+        >
+          🏛 {{ t(node.actionLocKey) }}
+        </button>
+
+        <!-- mine 节点：三态（与 timed 相同流程，完成后进入矿洞） -->
+        <template v-else-if="node.type === 'mine'">
+          <!-- 未开始 -->
+          <button
+            v-if="!timedState(node.id)"
+            class="action-btn"
+            @click="handleStartNode(node.id)"
+            @mouseenter="onBtnHover($event, node)"
+            @mousemove="moveTooltip($event)"
+            @mouseleave="hideTooltip()"
+          >
+            {{ t(node.locKey) }}
+          </button>
+
+          <!-- 准备中 -->
+          <div
+            v-else-if="timedState(node.id)?.done === false"
+            class="timed-running"
+            @mouseenter="onBtnHover($event, node)"
+            @mousemove="moveTooltip($event)"
+            @mouseleave="hideTooltip()"
+          >
+            <div class="timed-bar-bg">
+              <div
+                class="timed-bar-fill timed-bar-fill--mine"
+                :style="{ width: timedProgress(node.id) + '%' }"
+              />
+            </div>
+            <span class="timed-label">{{ timedRemaining(node.id) }}s</span>
+          </div>
+
+          <!-- 完成，进入矿洞 -->
+          <button
+            v-else
+            class="action-btn action-btn--ready action-btn--mine"
+            @click="enterMine(node.id)"
+            @mouseenter="onBtnHover($event, node)"
+            @mousemove="moveTooltip($event)"
+            @mouseleave="hideTooltip()"
+          >
+            ⛏ {{ t(node.locKey) }}
           </button>
         </template>
 
@@ -141,11 +201,32 @@ const floatContainer = ref<HTMLElement | null>(null)
 
 // ─── 自定义 Tooltip 状态 ───────────────────────────────────────
 
-const tooltip = reactive({ visible: false, x: 0, y: 0, text: '' })
+const tooltip = reactive({ visible: false, x: 0, y: 0, lines: [] as string[] })
+
+function parseEntryCostLocal(raw: string): { resourceId: string; amount: number }[] {
+  return raw.split('|').map(part => {
+    const [resourceId, amountStr] = part.split(':')
+    return { resourceId: resourceId.trim(), amount: parseInt(amountStr, 10) || 0 }
+  }).filter(r => r.resourceId && r.amount > 0)
+}
 
 function onBtnHover(e: MouseEvent, node: BiomeNodeDef) {
+  const lines: string[] = [t(node.locKey)]
+
+  if (node.entryCost) {
+    const parts = parseEntryCostLocal(node.entryCost)
+    if (parts.length > 0) {
+      const costStr = parts.map(c => `${t('res.' + c.resourceId)} ×${c.amount}`).join('  ')
+      lines.push(`消耗: ${costStr}`)
+    }
+  }
+
+  if (node.durationSec > 0) {
+    lines.push(`时间: ${node.durationSec}s`)
+  }
+
   tooltip.visible = true
-  tooltip.text    = t(node.locKey)
+  tooltip.lines   = lines
   moveTooltip(e)
 }
 
@@ -159,6 +240,11 @@ function moveTooltip(e: MouseEvent) {
 
 function hideTooltip() {
   tooltip.visible = false
+}
+
+function enterMine(nodeId: string) {
+  hideTooltip()
+  worldStore.claimTimedNode(nodeId)
 }
 
 // ─── 响应式时钟（驱动倒计时显示，每 500ms 更新）────────────
@@ -183,7 +269,7 @@ function timedState(nodeId: string) {
 function timedProgress(nodeId: string): number {
   const s = worldStore.timedNodes[nodeId]
   if (!s || s.done) return 0
-  return Math.min(100, (nowMs.value - s.startAt) / (s.endAt - s.startAt) * 100)
+  return Math.max(0, Math.min(100, (nowMs.value - s.startAt) / (s.endAt - s.startAt) * 100))
 }
 
 function timedRemaining(nodeId: string): number {
@@ -215,17 +301,28 @@ function handleClickNode(e: MouseEvent, node: BiomeNodeDef) {
   if (node.requiredAbility && node.requiredAbilityValue !== undefined) {
     const playerAbility = toolStore.getAbility(node.requiredAbility)
     if (playerAbility < node.requiredAbilityValue) {
-      show(t('hint.tool.not_enough_ability'), 'var(--accent-red)')
+      show(t('hint.tool.not_enough_ability'), 'var(--danger)')
       return
     }
   }
-  const got = worldStore.clickNode(node.id)
-  if (got > 0) spawnFloat(e, `+${got} ${t('res.' + node.resourceId)}`)
+  const gains = worldStore.clickNode(node.id)
+  const text = Object.entries(gains).map(([r, a]) => `+${a} ${t('res.' + r)}`).join('  ')
+  if (text) spawnFloat(e, text)
+}
+
+function handleStartNode(nodeId: string) {
+  const ok = worldStore.startTimedNode(nodeId)
+  if (!ok) {
+    show(t('hint.no_cost'), 'var(--danger)')
+  } else {
+    nowMs.value = Date.now()  // 立即同步，避免 nowMs 滞后导致首帧显示异常
+  }
 }
 
 function handleClaim(e: MouseEvent, node: BiomeNodeDef) {
-  const got = worldStore.claimTimedNode(node.id)
-  if (got > 0) spawnFloat(e, `+${got} ${t('res.' + node.resourceId)}`)
+  const gains = worldStore.claimTimedNode(node.id)
+  const text = Object.entries(gains).map(([r, a]) => `+${a} ${t('res.' + r)}`).join('  ')
+  if (text) spawnFloat(e, text)
 }
 </script>
 
@@ -311,9 +408,41 @@ function handleClaim(e: MouseEvent, node: BiomeNodeDef) {
 }
 
 .action-btn--ready {
-  border-color: var(--accent-green, #4caf50);
-  color: var(--accent-green, #4caf50);
+  border-color: var(--accent);
+  color: var(--accent);
   animation: pulse-ready 1.2s ease-in-out infinite;
+}
+
+.action-btn--explore {
+  border-color: #8b6914;
+  color: #d4a830;
+}
+.action-btn--explore:hover {
+  border-color: #d4a830;
+  background: rgba(50, 40, 0, 0.9);
+}
+
+.action-btn--mine {
+  border-color: #b8860b;
+  color: #ffd700;
+}
+.action-btn--mine:hover {
+  border-color: #ffd700;
+  background: rgba(50, 40, 0, 0.9);
+}
+.action-btn--ready.action-btn--mine {
+  border-color: var(--warn);
+  color: var(--warn);
+  animation: pulse-mine 1.2s ease-in-out infinite;
+}
+
+@keyframes pulse-mine {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255,193,7,0); }
+  50%       { box-shadow: 0 0 8px 2px rgba(255,193,7,0.5); }
+}
+
+.timed-bar-fill--mine {
+  background: var(--warn);
 }
 
 @keyframes pulse-ready {
@@ -344,7 +473,7 @@ function handleClaim(e: MouseEvent, node: BiomeNodeDef) {
 
 .timed-bar-fill {
   height: 100%;
-  background: var(--accent-green, #4caf50);
+  background: var(--accent);
   border-radius: 3px;
   transition: width 0.5s linear;
 }
@@ -384,15 +513,21 @@ function handleClaim(e: MouseEvent, node: BiomeNodeDef) {
   position: absolute;
   z-index: 50;
   background: rgba(10, 10, 10, 0.92);
-  border: 1px solid rgba(180, 180, 180, 0.35);
+  border: 1px solid var(--border-strong);
   border-radius: 4px;
-  padding: 5px 10px;
+  padding: 6px 10px;
   color: #ddd;
   font-size: 12px;
   white-space: nowrap;
   pointer-events: none;
   backdrop-filter: blur(4px);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.tooltip-meta {
+  color: #999;
+  font-size: 11px;
+  margin-top: 3px;
 }
 
 /* ── 群系名称 ── */

@@ -1,0 +1,11 @@
+id,locKey,category,color,requiredMiningAbility,rewardId
+dirt,mine.block.dirt,soft,#8B6914,0,0
+stone,mine.block.stone,hard,#808080,1,7
+coal_vein,mine.block.coal,ore,#2A2A2A,1,9
+iron_vein,mine.block.iron,ore,#C8A882,2,10
+copper_vein,mine.block.copper,ore,#B87333,2,11
+tin_vein,mine.block.tin,ore,#C0C0C0,2,12
+deep_stone,mine.block.deep_stone,hard,#4A4A4A,3,8
+gold_vein,mine.block.gold,ore,#D4AF37,3,13
+abandoned_tunnel,mine.block.tunnel,special,#3A2A1A,0,0
+bedrock,mine.block.bedrock,hard,#1A1018,999,0

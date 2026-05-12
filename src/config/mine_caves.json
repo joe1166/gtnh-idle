@@ -1,0 +1,95 @@
+[
+  {
+    "id": "plains_cave",
+    "locKey": "mine.cave.small",
+    "rows": 50,
+    "cols": 20,
+    "maxStamina": 50,
+    "tunnelCountMin": 2,
+    "tunnelCountMax": 3,
+    "veinIds": [
+      "vein_coal_s",
+      "vein_coal_m",
+      "vein_iron_s",
+      "vein_copper_s"
+    ],
+    "strata": [
+      {
+        "depthMin": 0,
+        "depthMax": 0.15,
+        "blockId": "dirt"
+      },
+      {
+        "depthMin": 0.1,
+        "depthMax": 1,
+        "blockId": "stone"
+      }
+    ]
+  },
+  {
+    "id": "medium_cave",
+    "locKey": "mine.cave.medium",
+    "rows": 100,
+    "cols": 30,
+    "maxStamina": 80,
+    "tunnelCountMin": 3,
+    "tunnelCountMax": 5,
+    "veinIds": [
+      "vein_coal_l",
+      "vein_iron_m",
+      "vein_copper_m",
+      "vein_tin",
+      "vein_gold_s"
+    ],
+    "strata": [
+      {
+        "depthMin": 0,
+        "depthMax": 0.1,
+        "blockId": "dirt"
+      },
+      {
+        "depthMin": 0.05,
+        "depthMax": 1,
+        "blockId": "stone"
+      },
+      {
+        "depthMin": 0.8,
+        "depthMax": 1,
+        "blockId": "deep_stone"
+      }
+    ]
+  },
+  {
+    "id": "large_cave",
+    "locKey": "mine.cave.large",
+    "rows": 200,
+    "cols": 40,
+    "maxStamina": 150,
+    "tunnelCountMin": 4,
+    "tunnelCountMax": 7,
+    "veinIds": [
+      "vein_coal_l",
+      "vein_iron_l",
+      "vein_copper_m",
+      "vein_tin",
+      "vein_gold_m"
+    ],
+    "strata": [
+      {
+        "depthMin": 0,
+        "depthMax": 0.1,
+        "blockId": "dirt"
+      },
+      {
+        "depthMin": 0.05,
+        "depthMax": 0.5,
+        "blockId": "stone"
+      },
+      {
+        "depthMin": 0.4,
+        "depthMax": 1,
+        "blockId": "deep_stone"
+      }
+    ]
+  }
+]

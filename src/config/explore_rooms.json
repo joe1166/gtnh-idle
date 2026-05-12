@@ -1,0 +1,132 @@
+[
+  {
+    "id": "burial_chamber",
+    "locKey": "explore.room.burial_chamber",
+    "layoutType": "fixed",
+    "type": "event",
+    "shape": [
+      {
+        "dRow": 0,
+        "dCol": 0
+      },
+      {
+        "dRow": 0,
+        "dCol": 1
+      },
+      {
+        "dRow": 0,
+        "dCol": 2
+      }
+    ],
+    "weight": 0,
+    "rewardId": 24,
+    "descLocKey": "explore.room.burial_chamber.desc",
+    "eventStartNodeId": "pharaoh_intro_001",
+    "enemyPool": []
+  },
+  {
+    "id": "antechamber",
+    "locKey": "explore.room.antechamber",
+    "layoutType": "fixed",
+    "type": "normal",
+    "shape": [
+      {
+        "dRow": 0,
+        "dCol": 0
+      },
+      {
+        "dRow": 1,
+        "dCol": 0
+      }
+    ],
+    "weight": 0,
+    "rewardId": 25,
+    "descLocKey": "explore.room.antechamber.desc",
+    "enemyPool": []
+  },
+  {
+    "id": "corridor",
+    "locKey": "explore.room.corridor",
+    "layoutType": "generatable",
+    "type": "normal",
+    "shape": [],
+    "minCells": 1,
+    "maxCells": 2,
+    "weight": 60,
+    "rewardId": 0,
+    "descLocKey": "explore.room.corridor.desc",
+    "enemyPool": []
+  },
+  {
+    "id": "side_chamber",
+    "locKey": "explore.room.side_chamber",
+    "layoutType": "generatable",
+    "type": "combat",
+    "shape": [],
+    "minCells": 1,
+    "maxCells": 3,
+    "weight": 30,
+    "rewardId": 26,
+    "descLocKey": "explore.room.side_chamber.desc",
+    "enemyPool": [
+      {
+        "enemyId": "scarab",
+        "weight": 70
+      },
+      {
+        "enemyId": "mummy_guard",
+        "weight": 30
+      }
+    ],
+    "enemyCountMin": 1,
+    "enemyCountMax": 2
+  },
+  {
+    "id": "storage",
+    "locKey": "explore.room.storage",
+    "layoutType": "generatable",
+    "type": "combat",
+    "shape": [],
+    "minCells": 1,
+    "maxCells": 2,
+    "weight": 20,
+    "rewardId": 27,
+    "descLocKey": "explore.room.storage.desc",
+    "enemyPool": [
+      {
+        "enemyId": "scarab",
+        "weight": 50
+      },
+      {
+        "enemyId": "mummy_guard",
+        "weight": 50
+      }
+    ],
+    "enemyCountMin": 1,
+    "enemyCountMax": 2
+  },
+  {
+    "id": "guard_room",
+    "locKey": "explore.room.guard_room",
+    "layoutType": "generatable",
+    "type": "combat",
+    "shape": [],
+    "minCells": 2,
+    "maxCells": 4,
+    "weight": 15,
+    "rewardId": 27,
+    "descLocKey": "explore.room.guard_room.desc",
+    "enemyPool": [
+      {
+        "enemyId": "mummy_guard",
+        "weight": 70
+      },
+      {
+        "enemyId": "mummy_elite",
+        "weight": 30
+      }
+    ],
+    "enemyCountMin": 2,
+    "enemyCountMax": 3
+  }
+]

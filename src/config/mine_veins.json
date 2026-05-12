@@ -1,0 +1,134 @@
+[
+  {
+    "id": "vein_coal_s",
+    "blockId": "coal_vein",
+    "depthMin": 0.1,
+    "depthMax": 0.75,
+    "spawnRate": 0.22,
+    "veinSizeMin": 2,
+    "veinSizeMax": 4,
+    "forbidBlocks": [
+      "dirt"
+    ]
+  },
+  {
+    "id": "vein_coal_m",
+    "blockId": "coal_vein",
+    "depthMin": 0.2,
+    "depthMax": 0.85,
+    "spawnRate": 0.12,
+    "veinSizeMin": 4,
+    "veinSizeMax": 7,
+    "forbidBlocks": [
+      "dirt"
+    ]
+  },
+  {
+    "id": "vein_coal_l",
+    "blockId": "coal_vein",
+    "depthMin": 0.05,
+    "depthMax": 0.75,
+    "spawnRate": 0.15,
+    "veinSizeMin": 6,
+    "veinSizeMax": 10,
+    "forbidBlocks": [
+      "dirt"
+    ]
+  },
+  {
+    "id": "vein_iron_s",
+    "blockId": "iron_vein",
+    "depthMin": 0.3,
+    "depthMax": 1,
+    "spawnRate": 0.1,
+    "veinSizeMin": 2,
+    "veinSizeMax": 4,
+    "forbidBlocks": [
+      "dirt"
+    ]
+  },
+  {
+    "id": "vein_iron_m",
+    "blockId": "iron_vein",
+    "depthMin": 0.15,
+    "depthMax": 1,
+    "spawnRate": 0.14,
+    "veinSizeMin": 4,
+    "veinSizeMax": 7,
+    "forbidBlocks": [
+      "dirt"
+    ]
+  },
+  {
+    "id": "vein_iron_l",
+    "blockId": "iron_vein",
+    "depthMin": 0.1,
+    "depthMax": 1,
+    "spawnRate": 0.12,
+    "veinSizeMin": 6,
+    "veinSizeMax": 10,
+    "forbidBlocks": [
+      "dirt"
+    ]
+  },
+  {
+    "id": "vein_copper_s",
+    "blockId": "copper_vein",
+    "depthMin": 0.4,
+    "depthMax": 1,
+    "spawnRate": 0.1,
+    "veinSizeMin": 2,
+    "veinSizeMax": 4,
+    "forbidBlocks": [
+      "dirt"
+    ]
+  },
+  {
+    "id": "vein_copper_m",
+    "blockId": "copper_vein",
+    "depthMin": 0.25,
+    "depthMax": 0.9,
+    "spawnRate": 0.11,
+    "veinSizeMin": 3,
+    "veinSizeMax": 6,
+    "forbidBlocks": [
+      "dirt"
+    ]
+  },
+  {
+    "id": "vein_tin",
+    "blockId": "tin_vein",
+    "depthMin": 0.45,
+    "depthMax": 1,
+    "spawnRate": 0.13,
+    "veinSizeMin": 3,
+    "veinSizeMax": 6,
+    "forbidBlocks": [
+      "dirt"
+    ]
+  },
+  {
+    "id": "vein_gold_s",
+    "blockId": "gold_vein",
+    "depthMin": 0.65,
+    "depthMax": 1,
+    "spawnRate": 0.07,
+    "veinSizeMin": 2,
+    "veinSizeMax": 4,
+    "forbidBlocks": [
+      "dirt"
+    ]
+  },
+  {
+    "id": "vein_gold_m",
+    "blockId": "gold_vein",
+    "depthMin": 0.5,
+    "depthMax": 1,
+    "spawnRate": 0.1,
+    "veinSizeMin": 3,
+    "veinSizeMax": 6,
+    "forbidBlocks": [
+      "dirt"
+    ]
+  }
+]

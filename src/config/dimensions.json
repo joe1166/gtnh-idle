@@ -5,23 +5,33 @@
     "descLocKey": "dim.overworld.desc",
     "biomeIds": [
       "plains",
-      "forest"
+      "forest",
+      "desert",
+      "swamp",
+      "mountain"
     ],
     "startBiomeId": "plains",
-    "exploreCost": [
-      {
-        "resourceId": "coarse_rope",
-        "amount": 1
-      }
-    ],
+    "exploreFoodCost": 30,
     "explorePool": [
       {
         "biomeId": "plains",
-        "weight": 50
+        "weight": 60
       },
       {
         "biomeId": "forest",
         "weight": 50
+      },
+      {
+        "biomeId": "desert",
+        "weight": 40
+      },
+      {
+        "biomeId": "swamp",
+        "weight": 35
+      },
+      {
+        "biomeId": "mountain",
+        "weight": 30
       }
     ]
   }

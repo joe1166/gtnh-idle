@@ -28,6 +28,7 @@
     "overclock":          "number",
     "requiredRole":       "string",
     "requiredLevel":      "number",
+    "maxRequiredLevel":   "number",
     "showCondType":       "string",
     "showCondPara":       "string"
   }

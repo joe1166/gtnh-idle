@@ -1,0 +1,2 @@
+id,locKey,rows,cols,voidRate,cycleEdgeRate,mergeProb,maxMergeSize,generatableRoomIds,requiredRoomIds,entryPos,fixedRooms
+pyramid,explore.map.pyramid,9,9,0.15,0.25,0.35,4,corridor|side_chamber|storage|guard_room,burial_chamber|antechamber,8:4,"burial_chamber:0:3:S|antechamber:4:3:N,S"

@@ -80,7 +80,7 @@ function handleTabClick(tabId: string) {
   flex: 1;
   padding: 6px 16px;
   background: rgba(20, 20, 20, 0.9);
-  border: 1px solid rgba(180, 180, 180, 0.2);
+  border: 1px solid var(--border);
   border-bottom: none;
   border-radius: 6px 6px 0 0;
   color: #888;
@@ -98,14 +98,14 @@ function handleTabClick(tabId: string) {
 .tab-btn--active {
   background: rgba(12, 12, 12, 0.95);
   color: #e8e8e8;
-  border-color: rgba(180, 180, 180, 0.35);
+  border-color: var(--border-strong);
 }
 
 .panel-content {
   pointer-events: all;
   width: 100%;
   background: rgba(12, 12, 12, 0.92);
-  border-top: 1px solid rgba(180, 180, 180, 0.2);
+  border-top: 1px solid var(--border);
 }
 
 /* 让子面板内容填满宽度 */

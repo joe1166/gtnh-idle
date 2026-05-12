@@ -195,10 +195,10 @@ function deployMiner(def: MachineDef, resourceId: string) {
   if (!recipe) return
   const ok = machineStore.buildMachine(def.id, recipe.id)
   if (ok) {
-    show(`${t('toast.deploy.success')} ${t(def.locKey)} → ${t(recipe.locKey)}`, 'var(--accent-yellow)')
+    show(`${t('toast.deploy.success')} ${t(def.locKey)} → ${t(recipe.locKey)}`, 'var(--warn)')
     deployingFor.value = null
   } else {
-    show(t('toast.deploy.fail'), 'var(--accent-red)')
+    show(t('toast.deploy.fail'), 'var(--danger)')
   }
 }
 
@@ -289,7 +289,7 @@ function onMinerVoltageChange(instanceId: string, event: Event): void {
   align-items: start;
   gap: 10px;
   background: var(--bg-panel);
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--border);
   padding: 8px 14px;
   transition: border-color 0.15s;
 }
@@ -318,7 +318,7 @@ function onMinerVoltageChange(instanceId: string, event: Event): void {
   white-space: nowrap;
 }
 
-.amount-warn { color: var(--accent-yellow); }
+.amount-warn { color: var(--warn); }
 .amount-sep  { color: #555; margin: 0 2px; }
 .amount-cap  { color: #666; }
 
@@ -335,13 +335,13 @@ function onMinerVoltageChange(instanceId: string, event: Event): void {
   height: 100%;
   transition: width 0.4s;
 }
-.bar-green  { background: var(--accent-green); }
-.bar-yellow { background: var(--accent-yellow); }
-.bar-red    { background: var(--accent-red); }
+.bar-green  { background: var(--accent); }
+.bar-yellow { background: var(--warn); }
+.bar-red    { background: var(--danger); }
 
 /* 手动采集 */
 .collect-btn {
-  background: #1e2e1e;
+  background: var(--accent-bg);
   border: 1px solid #3a5a3a;
   color: var(--text-primary);
   padding: 5px 14px;
@@ -354,15 +354,15 @@ function onMinerVoltageChange(instanceId: string, event: Event): void {
   margin-top: 1px;
 }
 .collect-btn:hover:not(:disabled) {
-  background: #254025;
-  border-color: var(--accent-green);
+  background: var(--accent-bg-hover);
+  border-color: var(--accent);
 }
 .collect-btn:disabled {
   opacity: 0.35;
   cursor: not-allowed;
 }
 .collect-plus {
-  color: var(--accent-green);
+  color: var(--accent);
   font-weight: bold;
 }
 
@@ -391,7 +391,7 @@ function onMinerVoltageChange(instanceId: string, event: Event): void {
 
 .miner-run-indicator {
   font-size: 10px;
-  color: var(--accent-green);
+  color: var(--accent);
   white-space: nowrap;
 }
 
@@ -400,10 +400,10 @@ function onMinerVoltageChange(instanceId: string, event: Event): void {
   padding: 1px 4px;
   border: 1px solid;
 }
-.status--no_power   { color: var(--accent-red);    border-color: var(--accent-red); }
-.status--no_fuel    { color: var(--accent-yellow);  border-color: var(--accent-yellow); }
-.status--no_recipe  { color: var(--accent-yellow);  border-color: var(--accent-yellow); }
-.status--no_material { color: var(--accent-yellow); border-color: var(--accent-yellow); }
+.status--no_power   { color: var(--danger);    border-color: var(--danger); }
+.status--no_fuel    { color: var(--warn);  border-color: var(--warn); }
+.status--no_recipe  { color: var(--warn);  border-color: var(--warn); }
+.status--no_material { color: var(--warn); border-color: var(--warn); }
 
 /* 换矿下拉 */
 .mine-select {
@@ -418,7 +418,7 @@ function onMinerVoltageChange(instanceId: string, event: Event): void {
 }
 .mine-select:focus {
   outline: none;
-  border-color: var(--accent-yellow);
+  border-color: var(--warn);
 }
 
 /* 开关标签 */
@@ -433,14 +433,14 @@ function onMinerVoltageChange(instanceId: string, event: Event): void {
 }
 .miner-tag:hover { opacity: 0.75; }
 .miner-tag--running {
-  color: var(--accent-red);
-  border-color: var(--accent-red);
-  background: rgba(244,67,54,0.08);
+  color: var(--danger);
+  border-color: var(--danger);
+  background: var(--danger-subtle);
 }
 .miner-tag--paused {
-  color: var(--accent-green);
-  border-color: var(--accent-green);
-  background: rgba(76,175,80,0.08);
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--accent-subtle);
 }
 
 /* 超频按钮 */
@@ -454,8 +454,8 @@ function onMinerVoltageChange(instanceId: string, event: Event): void {
 }
 .mine-voltage-select {
   background: #1e1e2a;
-  border: 1px solid var(--accent-yellow);
-  color: var(--accent-yellow);
+  border: 1px solid var(--warn);
+  color: var(--warn);
   font-family: inherit;
   font-size: 10px;
   padding: 1px 4px;
@@ -477,8 +477,8 @@ function onMinerVoltageChange(instanceId: string, event: Event): void {
 }
 .deploy-btn:hover {
   background: #2e2e2e;
-  border-color: var(--accent-yellow);
-  color: var(--accent-yellow);
+  border-color: var(--warn);
+  color: var(--warn);
 }
 
 /* 矿机类型选择器 */
@@ -504,7 +504,7 @@ function onMinerVoltageChange(instanceId: string, event: Event): void {
 }
 .deploy-option:hover:not(.deploy-option--lack) {
   background: #2a2a2a;
-  border-color: var(--accent-yellow);
+  border-color: var(--warn);
 }
 .deploy-option--lack {
   opacity: 0.45;
@@ -527,6 +527,6 @@ function onMinerVoltageChange(instanceId: string, event: Event): void {
   color: #888;
 }
 .cost-red {
-  color: var(--accent-red) !important;
+  color: var(--danger) !important;
 }
 </style>

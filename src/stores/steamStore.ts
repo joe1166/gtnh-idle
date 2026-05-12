@@ -17,6 +17,8 @@ export const useSteamStore = defineStore('steam', {
     genPerSec: 0,
     /** 上一 tick 总消耗 mb/s（供 UI 展示） */
     consumePerSec: 0,
+    /** 累计产出蒸汽 mb（用于 PRODUCE_STEAM 任务追踪） */
+    totalProducedMb: 0,
   }),
 
   getters: {
@@ -44,11 +46,12 @@ export const useSteamStore = defineStore('steam', {
     addSteam(mb: number): void {
       this._steamPool += mb
       this.genPerSec += mb
+      this.totalProducedMb += mb
     },
 
     /**
-     * 合成机器从池子消耗蒸汽。
-     * @returns 蒸汽足够返回 true，不足返回 false（不扣除）
+     * 从池中实际消耗蒸汽。
+     * @returns 蒸汽足够返回 true 并扣除，不足返回 false（不扣除）
      */
     consumeSteam(mb: number): boolean {
       if (this._steamPool < mb) return false

@@ -1,0 +1,16 @@
+{
+  "root": "array",
+  "output": "src/config/rewards.json",
+  "fields": {
+    "id": "number",
+    "fixed": { "type": "array", "sep": "|", "item": { "type": "object", "sep": ":", "fields": [
+      { "name": "resourceId", "type": "string" },
+      { "name": "amount",     "type": "number" }
+    ]}},
+    "pool": { "type": "array", "sep": "|", "item": { "type": "object", "sep": ":", "fields": [
+      { "name": "resourceId", "type": "string" },
+      { "name": "amount",     "type": "number" },
+      { "name": "weight",     "type": "number" }
+    ]}}
+  }
+}

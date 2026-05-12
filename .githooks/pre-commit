@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+set -e
+
+echo "[pre-commit] docs:auto"
+npm run docs:auto
+
+echo "[pre-commit] docs:check"
+npm run docs:check
+

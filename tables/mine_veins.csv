@@ -1,0 +1,12 @@
+id,blockId,depthMin,depthMax,spawnRate,veinSizeMin,veinSizeMax,forbidBlocks
+vein_coal_s,coal_vein,0.10,0.75,0.22,2,4,dirt
+vein_coal_m,coal_vein,0.20,0.85,0.12,4,7,dirt
+vein_coal_l,coal_vein,0.05,0.75,0.15,6,10,dirt
+vein_iron_s,iron_vein,0.30,1.00,0.10,2,4,dirt
+vein_iron_m,iron_vein,0.15,1.00,0.14,4,7,dirt
+vein_iron_l,iron_vein,0.10,1.00,0.12,6,10,dirt
+vein_copper_s,copper_vein,0.40,1.00,0.10,2,4,dirt
+vein_copper_m,copper_vein,0.25,0.90,0.11,3,6,dirt
+vein_tin,tin_vein,0.45,1.00,0.13,3,6,dirt
+vein_gold_s,gold_vein,0.65,1.00,0.07,2,4,dirt
+vein_gold_m,gold_vein,0.50,1.00,0.10,3,6,dirt

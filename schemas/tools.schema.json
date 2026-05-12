@@ -2,7 +2,7 @@
   "root": "array",
   "output": "src/config/tools.json",
   "fields": {
-    "id": "number",
+    "id": "string",
     "type": "string",
     "level": "number",
     "abilityId": "string",
@@ -17,6 +17,8 @@
       }
     },
     "locKey": "string",
-    "unlockedByChapter": "number"
+    "unlockedByChapter": "number",
+    "showCondType": "string",
+    "showCondPara": "string"
   }
 }

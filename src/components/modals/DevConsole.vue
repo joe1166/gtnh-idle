@@ -11,6 +11,10 @@
           <input type="checkbox" v-model="highlightHitAreas" />
           <span>高亮热区轮廓</span>
         </label>
+        <label class="dev-row">
+          <input type="checkbox" v-model="mineReveal" />
+          <span>矿透</span>
+        </label>
       </div>
     </div>
   </Teleport>
@@ -19,7 +23,7 @@
 <script setup lang="ts">
 import { useDevConsole } from '../../composables/useDevConsole'
 
-const { isOpen, highlightHitAreas } = useDevConsole()
+const { isOpen, highlightHitAreas, mineReveal } = useDevConsole()
 
 // 关闭按钮：在 script 中真实使用 isOpen，IDE 就不会报 "unused"
 function close() { isOpen.value = false }
@@ -38,7 +42,7 @@ function close() { isOpen.value = false }
   font-family: 'Consolas', 'Courier New', monospace;
   font-size: 12px;
   color: #ccc;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(74, 158, 255, 0.15);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7), 0 0 0 1px var(--info-soft);
   overflow: hidden;
 }
 
@@ -47,7 +51,7 @@ function close() { isOpen.value = false }
   align-items: center;
   justify-content: space-between;
   padding: 7px 10px;
-  background: rgba(74, 158, 255, 0.12);
+  background: var(--info-subtle);
   border-bottom: 1px solid rgba(74, 158, 255, 0.3);
   cursor: move;
   user-select: none;

@@ -21,6 +21,9 @@
     },
     "maxCount": "number",
     "showCondType": "string",
-    "showCondPara": "string"
+    "showCondPara": "string",
+    "instantMode": "number",
+    "maxVoltage":  "number",
+    "order":       "number"
   }
 }

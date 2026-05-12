@@ -10,8 +10,8 @@ import type { PlayerToolState, AbilityId, ResourceAmount, ToolDef } from '../dat
 export const useToolStore = defineStore('tool', {
   state: (): PlayerToolState => ({
     levels: {
-      stone_axe: 0,      // 初始 0 级（待制作）
-      stone_pickaxe: 0,
+      axe: 0,      // 初始 0 级（待制作）
+      pickaxe: 0,
     },
   }),
 

@@ -1,0 +1,12 @@
+{
+  "root": "array",
+  "output": "src/config/mine_blocks.json",
+  "fields": {
+    "id":                   "string",
+    "locKey":               "string",
+    "category":             "string",
+    "color":                "string",
+    "requiredMiningAbility":"number",
+    "rewardId":             "number"
+  }
+}

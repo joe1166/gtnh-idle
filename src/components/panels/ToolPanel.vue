@@ -1,6 +1,6 @@
 <template>
-  <div class="tool-grid-wrapper">
-    <div class="tool-grid">
+  <div class="tool-panel-wrapper">
+    <div class="tool-scroll-inner">
       <div
         v-for="toolType in toolTypes"
         :key="toolType"
@@ -56,13 +56,20 @@ import { useInventoryStore } from '../../stores/inventoryStore'
 import { db } from '../../data/db'
 import { t } from '../../data/i18n'
 import { useToast } from '../../composables/useToast'
+import { checkCondition } from '../../data/conditions'
 import type { ToolDef } from '../../data/types'
 
 const toolStore = useToolStore()
 const inventoryStore = useInventoryStore()
 const { show } = useToast()
 
-const toolTypes = computed(() => Object.keys(db.toolsByType()))
+const toolTypes = computed(() => {
+  const byType = db.toolsByType()
+  return Object.keys(byType).filter((type) => {
+    const def = byType[type][0]
+    return checkCondition(def.showCond)
+  })
+})
 
 function currentLevelDef(toolType: string): ToolDef | null {
   return toolStore.getLevelDef(toolType)
@@ -83,28 +90,50 @@ function handleUpgrade(toolType: string) {
   const ok = toolStore.upgradeTool(toolType)
   if (ok) {
     const newLevelDef = toolStore.getLevelDef(toolType)
-    show(`${t('toast.tool.upgraded')} ${t(newLevelDef?.locKey ?? '')}`, 'var(--accent-green)')
+    show(`${t('toast.tool.upgraded')} ${t(newLevelDef?.locKey ?? '')}`, 'var(--accent)')
   } else {
-    show(t('toast.craft.fail'), 'var(--accent-red)')
+    show(t('toast.craft.fail'), 'var(--danger)')
   }
 }
 </script>
 
 <style scoped>
-.tool-grid-wrapper {
+.tool-panel-wrapper {
   width: 100%;
+  height: 190px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 12px 16px;
+  box-sizing: border-box;
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) transparent;
 }
 
-.tool-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+.tool-panel-wrapper::-webkit-scrollbar {
+  height: 4px;
+}
+.tool-panel-wrapper::-webkit-scrollbar-track {
+  background: transparent;
+}
+.tool-panel-wrapper::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 2px;
+}
+
+.tool-scroll-inner {
+  display: flex;
+  flex-direction: row;
   gap: 12px;
-  padding: 14px 20px 16px;
+  height: 100%;
 }
 
 .tool-slot {
+  flex-shrink: 0;
+  width: 190px;
+  height: 100%;
+  box-sizing: border-box;
   background: rgba(30, 30, 30, 0.8);
-  border: 1px solid rgba(180, 180, 180, 0.2);
+  border: 1px solid var(--border);
   border-radius: 4px;
   padding: 10px 14px;
   display: flex;
@@ -131,7 +160,7 @@ function handleUpgrade(toolType: string) {
 
 .slot-ability {
   font-size: 11px;
-  color: var(--accent-green, #4caf50);
+  color: var(--accent);
 }
 
 .slot-upgrade-label {
@@ -153,8 +182,8 @@ function handleUpgrade(toolType: string) {
   white-space: nowrap;
 }
 
-.cost-chip--ok   { color: var(--accent-green, #4caf50);  border-color: #2a4a2a; }
-.cost-chip--lack { color: var(--accent-red, #f44336);    border-color: #4a2a2a; }
+.cost-chip--ok   { color: var(--accent);  border-color: var(--accent-bg-hover); }
+.cost-chip--lack { color: var(--danger);    border-color: var(--danger-border); }
 
 .cost-have {
   font-size: 9px;
@@ -163,7 +192,7 @@ function handleUpgrade(toolType: string) {
 }
 
 .upgrade-btn {
-  margin-top: 4px;
+  margin-top: auto;
   padding: 4px 10px;
   font-family: 'Consolas', 'Courier New', monospace;
   font-size: 12px;
@@ -174,25 +203,25 @@ function handleUpgrade(toolType: string) {
 }
 
 .upgrade-btn--ok {
-  background: #1e3a1e;
-  border-color: var(--accent-green, #4caf50);
-  color: var(--accent-green, #4caf50);
+  background: var(--accent-bg);
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
 .upgrade-btn--ok:hover:not(:disabled) {
-  background: #254a25;
+  background: var(--accent-bg-hover);
 }
 
 .upgrade-btn--lack {
-  background: #2a2020;
-  border-color: #4a3030;
-  color: #774444;
+  background: var(--danger-bg);
+  border-color: var(--danger-border);
+  color: var(--danger-text);
   cursor: not-allowed;
 }
 
 .slot-max {
   font-size: 11px;
   color: #555;
-  margin-top: 4px;
+  margin-top: auto;
 }
 </style>

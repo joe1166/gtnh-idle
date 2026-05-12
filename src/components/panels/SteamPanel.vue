@@ -150,7 +150,7 @@ function canBuild(def: MachineDef): boolean {
 
 .panel-card {
   background: var(--bg-panel);
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--border);
   padding: 14px 16px;
 }
 
@@ -197,8 +197,8 @@ function canBuild(def: MachineDef): boolean {
   border: 1px solid;
   white-space: nowrap;
 }
-.cost-chip--ok   { color: var(--accent-green); border-color: #2a4a2a; }
-.cost-chip--lack { color: var(--accent-red);   border-color: #4a2a2a; }
+.cost-chip--ok   { color: var(--accent); border-color: var(--accent-bg-hover); }
+.cost-chip--lack { color: var(--danger);   border-color: var(--danger-border); }
 .cost-have { font-size: 10px; opacity: 0.7; margin-left: 2px; }
 
 .build-btn {
@@ -211,15 +211,15 @@ function canBuild(def: MachineDef): boolean {
   white-space: nowrap;
 }
 .build-btn--ok {
-  background: #1e3a1e;
-  border-color: var(--accent-green);
-  color: var(--accent-green);
+  background: var(--accent-bg);
+  border-color: var(--accent);
+  color: var(--accent);
 }
-.build-btn--ok:hover { background: #254a25; }
+.build-btn--ok:hover { background: var(--accent-bg-hover); }
 .build-btn--lack {
-  background: #2a2020;
-  border-color: #4a3030;
-  color: #774444;
+  background: var(--danger-bg);
+  border-color: var(--danger-border);
+  color: var(--danger-text);
   cursor: not-allowed;
 }
 
@@ -238,11 +238,11 @@ function canBuild(def: MachineDef): boolean {
 
 .stat-label { color: #888; min-width: 30px; }
 .stat-value { font-weight: bold; }
-.stat-sep   { color: var(--border-color); }
+.stat-sep   { color: var(--border); }
 
-.color-green  { color: var(--accent-green); }
-.color-red    { color: var(--accent-red); }
-.color-yellow { color: var(--accent-yellow); }
+.color-green  { color: var(--accent); }
+.color-red    { color: var(--danger); }
+.color-yellow { color: var(--warn); }
 
 .machine-table {
   width: 100%;
@@ -255,7 +255,7 @@ function canBuild(def: MachineDef): boolean {
   text-align: left;
   color: #666;
   padding: 4px 8px;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border);
   font-weight: normal;
 }
 
@@ -282,7 +282,7 @@ function canBuild(def: MachineDef): boolean {
 
 .toggle-btn {
   background: #222;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--border);
   color: var(--text-primary);
   padding: 3px 10px;
   font-family: inherit;
@@ -294,14 +294,14 @@ function canBuild(def: MachineDef): boolean {
   transition: background 0.15s;
 }
 .toggle-btn:hover { background: #333; }
-.toggle-btn--running { border-color: var(--accent-red);   color: var(--accent-red); }
-.toggle-btn--running:hover { background: #3a2020; }
-.toggle-btn--stopped { border-color: var(--accent-green); color: var(--accent-green); }
-.toggle-btn--stopped:hover { background: #1e3a1e; }
+.toggle-btn--running { border-color: var(--danger);   color: var(--danger); }
+.toggle-btn--running:hover { background: var(--danger-bg); }
+.toggle-btn--stopped { border-color: var(--accent); color: var(--accent); }
+.toggle-btn--stopped:hover { background: var(--accent-bg); }
 
 .run-indicator {
   font-size: 10px;
-  color: var(--accent-green);
+  color: var(--accent);
   white-space: nowrap;
   margin-right: 4px;
 }
@@ -313,8 +313,8 @@ function canBuild(def: MachineDef): boolean {
   white-space: nowrap;
 }
 .status--no_fuel {
-  color: var(--accent-yellow);
-  border-color: var(--accent-yellow);
+  color: var(--warn);
+  border-color: var(--warn);
 }
 
 .empty-hint {

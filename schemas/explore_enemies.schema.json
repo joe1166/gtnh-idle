@@ -1,0 +1,14 @@
+{
+  "root": "array",
+  "output": "src/config/explore_enemies.json",
+  "fields": {
+    "id": "string",
+    "locKey": "string",
+    "descLocKey": "string",
+    "hp": "number",
+    "attack": "number",
+    "defense": "number",
+    "speed": "number",
+    "rewardId": "number"
+  }
+}

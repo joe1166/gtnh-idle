@@ -1,0 +1,14 @@
+{
+  "root": "array",
+  "output": "src/config/mine_veins.json",
+  "fields": {
+    "id":           "string",
+    "blockId":      "string",
+    "depthMin":     "number",
+    "depthMax":     "number",
+    "spawnRate":    "number",
+    "veinSizeMin":  "number",
+    "veinSizeMax":  "number",
+    "forbidBlocks": { "type": "array", "sep": "|", "item": "string" }
+  }
+}

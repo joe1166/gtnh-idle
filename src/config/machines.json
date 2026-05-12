@@ -8,13 +8,60 @@
     "euPerSec": 8,
     "buildCost": [
       {
-        "resourceId": "iron_plate",
-        "amount": 4
+        "resourceId": "cobblestone",
+        "amount": 8
       }
     ],
     "maxCount": 5,
-    "showCondType": "chapter",
-    "showCondPara": "99"
+    "showCondType": "resource_ever",
+    "showCondPara": "cobblestone",
+    "instantMode": 0,
+    "maxVoltage": -1,
+    "order": 1
+  },
+  {
+    "id": "alloy_furnace",
+    "locKey": "machine.alloy_furnace",
+    "category": 1,
+    "role": "alloy_furnace",
+    "tier": 1,
+    "euPerSec": 0,
+    "buildCost": [
+      {
+        "resourceId": "iron_plate",
+        "amount": 4
+      },
+      {
+        "resourceId": "cobblestone",
+        "amount": 8
+      }
+    ],
+    "maxCount": 3,
+    "showCondType": "resource_ever",
+    "showCondPara": "cobblestone",
+    "instantMode": 0,
+    "maxVoltage": -1,
+    "order": 1
+  },
+  {
+    "id": "electric_furnace",
+    "locKey": "machine.electric_furnace",
+    "category": 1,
+    "role": "furnace",
+    "tier": 2,
+    "euPerSec": 8,
+    "buildCost": [
+      {
+        "resourceId": "iron_plate",
+        "amount": 8
+      }
+    ],
+    "maxCount": 5,
+    "showCondType": "voltage",
+    "showCondPara": "1",
+    "instantMode": 0,
+    "maxVoltage": 1,
+    "order": 1
   },
   {
     "id": "forge_hammer",
@@ -31,7 +78,10 @@
     ],
     "maxCount": 5,
     "showCondType": "chapter",
-    "showCondPara": "99"
+    "showCondPara": "99",
+    "instantMode": 0,
+    "maxVoltage": 0,
+    "order": 2
   },
   {
     "id": "wire_cutter",
@@ -52,7 +102,10 @@
     ],
     "maxCount": 5,
     "showCondType": "chapter",
-    "showCondPara": "99"
+    "showCondPara": "99",
+    "instantMode": 0,
+    "maxVoltage": 0,
+    "order": 3
   },
   {
     "id": "assembler",
@@ -73,7 +126,10 @@
     ],
     "maxCount": 5,
     "showCondType": "chapter",
-    "showCondPara": "99"
+    "showCondPara": "99",
+    "instantMode": 0,
+    "maxVoltage": 1,
+    "order": 4
   },
   {
     "id": "basic_miner",
@@ -90,7 +146,10 @@
     ],
     "maxCount": 5,
     "showCondType": "chapter",
-    "showCondPara": "99"
+    "showCondPara": "99",
+    "instantMode": 0,
+    "maxVoltage": 1,
+    "order": 5
   },
   {
     "id": "steam_boiler",
@@ -113,7 +172,10 @@
     ],
     "maxCount": 5,
     "showCondType": "chapter",
-    "showCondPara": "99"
+    "showCondPara": "99",
+    "instantMode": 0,
+    "maxVoltage": 0,
+    "order": 6
   },
   {
     "id": "hand_assembly",
@@ -122,14 +184,63 @@
     "role": "assembler",
     "tier": 1,
     "euPerSec": 0,
+    "fuelPerSec": 0,
+    "buildCost": [],
+    "maxCount": 1,
+    "showCondType": "chapter",
+    "showCondPara": "1",
+    "instantMode": 1,
+    "maxVoltage": -1,
+    "order": 2
+  },
+  {
+    "id": "plate_press_1",
+    "locKey": "machine.plate_press",
+    "category": 1,
+    "role": "plate_press",
+    "tier": 1,
+    "euPerSec": 0,
+    "fuelPerSec": 0,
     "buildCost": [
       {
-        "resourceId": "weeds",
-        "amount": 0
+        "resourceId": "cobblestone",
+        "amount": 4
+      },
+      {
+        "resourceId": "iron_ingot",
+        "amount": 4
       }
     ],
     "maxCount": 1,
-    "showCondType": "chapter",
-    "showCondPara": "1"
+    "showCondType": "resource_ever",
+    "showCondPara": "iron_ingot",
+    "instantMode": 1,
+    "maxVoltage": -1,
+    "order": 3
+  },
+  {
+    "id": "workbench",
+    "locKey": "machine.workbench",
+    "category": 1,
+    "role": "assembler",
+    "tier": 1,
+    "euPerSec": 0,
+    "fuelPerSec": 0,
+    "buildCost": [
+      {
+        "resourceId": "flint",
+        "amount": 3
+      },
+      {
+        "resourceId": "log_wood",
+        "amount": 5
+      }
+    ],
+    "maxCount": 1,
+    "showCondType": "resource_ever",
+    "showCondPara": "flint",
+    "instantMode": 0,
+    "maxVoltage": -1,
+    "order": 4
   }
 ]

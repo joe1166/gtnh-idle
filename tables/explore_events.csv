@@ -1,0 +1,5 @@
+id,textLocKey,autoNextId,isTerminal,optionATextLocKey,optionANextId,optionARewardId,optionAHpDelta,optionBTextLocKey,optionBNextId,optionBRewardId,optionBHpDelta,optionCTextLocKey,optionCNextId,optionCRewardId,optionCHpDelta
+pharaoh_intro_001,explore.event.pharaoh_intro_001,pharaoh_intro_002,false,,,,,,,,,,,,
+pharaoh_intro_002,explore.event.pharaoh_intro_002,,false,explore.event.pharaoh_intro_002.opt_a,pharaoh_intro_003,24,0,explore.event.pharaoh_intro_002.opt_b,pharaoh_intro_004,0,-10,,,,
+pharaoh_intro_003,explore.event.pharaoh_intro_003,,true,,,,,,,,,,,,
+pharaoh_intro_004,explore.event.pharaoh_intro_004,,true,,,,,,,,,,,,

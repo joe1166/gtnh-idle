@@ -5,28 +5,50 @@
     </div>
 
     <div class="top-bar__center">
-      <div class="power-info">
-        <span class="power-icon">⚡</span>
-        <span class="eu-gen">+{{ fmt(powerStore.totalGenPerSec) }}</span>
-        <span class="eu-sep">/</span>
-        <span class="eu-con">-{{ fmt(powerStore.totalConsumePerSec) }}</span>
-        <span class="eu-unit">EU/s</span>
-      </div>
-
-      <div class="battery-info">
-        <span class="battery-icon">🔋</span>
-        <div class="battery-bar-wrap">
-          <div
-            class="battery-bar-fill"
-            :class="batteryColorClass"
-            :style="{ width: powerStore.batteryPercent + '%' }"
-          ></div>
+      <!-- 蒸汽时代：显示蒸汽产耗 -->
+      <template v-if="showSteam">
+        <div class="resource-info">
+          <span class="res-icon">♨</span>
+          <span class="res-gen">+{{ fmt(steamStore.genPerSec) }}</span>
+          <span class="res-sep">/</span>
+          <span class="res-con">-{{ fmt(steamStore.consumePerSec) }}</span>
+          <span class="res-unit">mb/s</span>
         </div>
-        <span class="battery-text" :class="batteryColorClass">
-          {{ fmt(powerStore.batteryCurrentEU) }} / {{ fmt(powerStore.batteryCapacityEU) }} EU
-          ({{ Math.round(powerStore.batteryPercent) }}%)
-        </span>
-      </div>
+        <div class="resource-bar-info">
+          <div class="res-bar-wrap">
+            <div class="res-bar-fill" :style="{ width: steamBarPct + '%' }"></div>
+          </div>
+          <span class="res-bar-text">
+            {{ fmt(steamStore.consumePerSec) }} / {{ fmt(steamStore.genPerSec) }} mb/s
+          </span>
+        </div>
+      </template>
+
+      <!-- LV 及以上：显示电力 -->
+      <template v-else-if="showPower">
+        <div class="resource-info">
+          <span class="res-icon">⚡</span>
+          <span class="res-gen">+{{ fmt(powerStore.totalGenPerSec) }}</span>
+          <span class="res-sep">/</span>
+          <span class="res-con">-{{ fmt(powerStore.totalConsumePerSec) }}</span>
+          <span class="res-unit">EU/s</span>
+        </div>
+        <div class="resource-bar-info">
+          <div class="res-bar-wrap">
+            <div
+              class="res-bar-fill"
+              :class="batteryColorClass"
+              :style="{ width: powerStore.batteryPercent + '%' }"
+            ></div>
+          </div>
+          <span class="res-bar-text" :class="batteryColorClass">
+            {{ fmt(powerStore.batteryCurrentEU) }} / {{ fmt(powerStore.batteryCapacityEU) }} EU
+            ({{ Math.round(powerStore.batteryPercent) }}%)
+          </span>
+        </div>
+      </template>
+
+      <!-- 蒸汽时代前：留空 -->
     </div>
 
     <div class="top-bar__right">
@@ -41,21 +63,33 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { usePowerStore } from '../../stores/powerStore'
+import { useSteamStore } from '../../stores/steamStore'
 import { useProgressionStore } from '../../stores/progressionStore'
 import { useDevConsole } from '../../composables/useDevConsole'
 import { t } from '../../data/i18n'
 import { fmt } from '../../utils/format'
 
 const powerStore = usePowerStore()
+const steamStore = useSteamStore()
 const progressionStore = useProgressionStore()
 const { toggle } = useDevConsole()
 function toggleDevConsole() { toggle() }
+
+const showPower = computed(() => progressionStore.era === 'lv')
+const showSteam = computed(() => progressionStore.era === 'steam')
 
 const batteryColorClass = computed(() => {
   const pct = powerStore.batteryPercent
   if (pct >= 60) return 'color-green'
   if (pct >= 25) return 'color-yellow'
   return 'color-red'
+})
+
+// 蒸汽消耗/产出比（用于进度条），产出为0时显示0%
+const steamBarPct = computed(() => {
+  const gen = steamStore.genPerSec
+  if (gen <= 0) return 0
+  return Math.min(100, (steamStore.consumePerSec / gen) * 100)
 })
 </script>
 
@@ -67,7 +101,7 @@ const batteryColorClass = computed(() => {
   right: 0;
   height: 48px;
   background: var(--bg-panel);
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -83,7 +117,7 @@ const batteryColorClass = computed(() => {
 .game-title {
   font-size: 18px;
   font-weight: bold;
-  color: var(--accent-green);
+  color: var(--accent);
   letter-spacing: 2px;
 }
 
@@ -95,7 +129,7 @@ const batteryColorClass = computed(() => {
   gap: 24px;
 }
 
-.power-info {
+.resource-info {
   display: flex;
   align-items: center;
   gap: 4px;
@@ -103,65 +137,46 @@ const batteryColorClass = computed(() => {
   color: var(--text-primary);
 }
 
-.power-icon {
-  font-size: 15px;
-}
+.res-icon { font-size: 15px; }
+.res-gen  { color: var(--accent); font-weight: bold; }
+.res-sep  { color: var(--border); }
+.res-con  { color: var(--danger); font-weight: bold; }
+.res-unit { color: var(--text-muted); margin-left: 2px; }
 
-.eu-gen {
-  color: var(--accent-green);
-  font-weight: bold;
-}
-
-.eu-sep {
-  color: var(--border-color);
-}
-
-.eu-con {
-  color: var(--accent-red);
-  font-weight: bold;
-}
-
-.eu-unit {
-  color: #888;
-  margin-left: 2px;
-}
-
-.battery-info {
+.resource-bar-info {
   display: flex;
   align-items: center;
   gap: 6px;
   font-size: 12px;
 }
 
-.battery-icon {
-  font-size: 14px;
-}
-
-.battery-bar-wrap {
+.res-bar-wrap {
   width: 80px;
   height: 8px;
   background: #333;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--border);
   overflow: hidden;
 }
 
-.battery-bar-fill {
+.res-bar-fill {
   height: 100%;
+  background: var(--accent);
   transition: width 0.3s ease;
 }
 
-.battery-text {
+.res-bar-text {
   font-size: 11px;
   white-space: nowrap;
+  color: var(--text-secondary);
 }
 
-.color-green { background-color: var(--accent-green); color: var(--accent-green); }
-.color-yellow { background-color: var(--accent-yellow); color: var(--accent-yellow); }
-.color-red { background-color: var(--accent-red); color: var(--accent-red); }
-
-.battery-text.color-green { background-color: transparent; }
-.battery-text.color-yellow { background-color: transparent; }
-.battery-text.color-red { background-color: transparent; }
+/* 电力面板进度条颜色跟随电量 */
+.color-green { background-color: var(--accent); color: var(--accent); }
+.color-yellow { background-color: var(--warn); color: var(--warn); }
+.color-red { background-color: var(--danger); color: var(--danger); }
+.res-bar-text.color-green  { background-color: transparent; }
+.res-bar-text.color-yellow { background-color: transparent; }
+.res-bar-text.color-red    { background-color: transparent; }
 
 .top-bar__right {
   flex: 0 0 auto;
@@ -198,15 +213,15 @@ const batteryColorClass = computed(() => {
 .dev-btn:hover {
   color: #4a9eff;
   border-color: #4a9eff;
-  background: rgba(74, 158, 255, 0.08);
+  background: var(--info-subtle);
 }
 .dev-btn:active {
-  background: rgba(74, 158, 255, 0.15);
+  background: var(--info-soft);
 }
 
 .save-btn {
   background: #333;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--border);
   color: var(--text-primary);
   padding: 4px 10px;
   font-family: inherit;
@@ -220,7 +235,7 @@ const batteryColorClass = computed(() => {
 
 .save-btn:hover {
   background: #444;
-  border-color: var(--accent-green);
+  border-color: var(--accent);
 }
 
 .save-btn:active {

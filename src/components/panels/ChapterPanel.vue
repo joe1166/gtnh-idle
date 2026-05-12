@@ -14,22 +14,6 @@
         </div>
       </div>
 
-      <!-- 章节解锁目标 -->
-      <div v-if="chapter.unlockCondition.type === 'eu_per_sec'" class="unlock-goal">
-        <div class="goal-label">{{ t('chapter.goal.eu_per_sec_prefix') }}{{ chapter.unlockCondition.value }} EU/s</div>
-        <div class="goal-progress-row">
-          <div class="goal-bar-wrap">
-            <div
-              class="goal-bar-fill"
-              :style="{ width: euProgressPct + '%' }"
-            ></div>
-          </div>
-          <span class="goal-nums">
-            {{ fmt(powerStore.totalGenPerSec) }} / {{ chapter.unlockCondition.value }} EU/s
-          </span>
-        </div>
-      </div>
-
       <!-- 任务清单 -->
       <div class="tasks-section">
         <div class="tasks-title">{{ t('chapter.tasks.title') }}</div>
@@ -44,7 +28,21 @@
             <span class="task-desc">{{ t(task.locKey) }}</span>
             <span class="task-progress">
               <template v-if="!task.completed">
-                [{{ getTaskCurrent(task) }}/{{ task.para2 ?? task.para1 }}]
+                <template v-if="isMultiResourceTask(task)">
+                  <span
+                    v-for="(p, i) in getMultiResourceProgress(task)"
+                    :key="i"
+                    class="sub-progress"
+                  >
+                    {{ t('res.' + p.resourceId) }}[{{ p.current }}/{{ p.target }}]
+                  </span>
+                </template>
+                <template v-else-if="task.type === TaskType.PRODUCE_STEAM">
+                  [{{ steamStore.totalProducedMb }}/{{ task.para1 }}]
+                </template>
+                <template v-else>
+                  [{{ getTaskCurrent(task) }}/{{ task.para2 ?? task.para1 }}]
+                </template>
               </template>
             </span>
           </div>
@@ -54,6 +52,9 @@
       <!-- 章节已完成 -->
       <div v-if="allTasksDone" class="chapter-complete">
         <span class="complete-icon">🎉</span> {{ t('chapter.tasks.all_done') }}
+        <button class="advance-btn" @click="progressionStore.advanceToNextChapter()">
+          {{ t('chapter.advance') }}
+        </button>
       </div>
     </div>
   </div>
@@ -64,16 +65,17 @@ import { computed } from 'vue'
 import { useProgressionStore } from '../../stores/progressionStore'
 import { useTaskStore } from '../../stores/taskStore'
 import { usePowerStore } from '../../stores/powerStore'
+import { useSteamStore } from '../../stores/steamStore'
 import { useInventoryStore } from '../../stores/inventoryStore'
 import { useMachineStore } from '../../stores/machineStore'
 import { t } from '../../data/i18n'
-import { fmt } from '../../utils/format'
 import { TaskType } from '../../data/types'
 import type { TaskWithStatus } from '../../stores/taskStore'
 
 const progressionStore = useProgressionStore()
 const taskStore        = useTaskStore()
 const powerStore       = usePowerStore()
+const steamStore       = useSteamStore()
 const inventoryStore   = useInventoryStore()
 const machineStore     = useMachineStore()
 
@@ -84,12 +86,6 @@ const currentTasks = computed<TaskWithStatus[]>(() => {
   return taskStore.getTasksWithStatus(chapter.value.taskIds)
 })
 
-const euProgressPct = computed(() => {
-  const goal = chapter.value?.unlockCondition?.value
-  if (!goal) return 0
-  return Math.min(100, (powerStore.totalGenPerSec / goal) * 100)
-})
-
 const allTasksDone = computed(() =>
   currentTasks.value.length > 0 && currentTasks.value.every((task: TaskWithStatus) => task.completed)
 )
@@ -97,10 +93,11 @@ const allTasksDone = computed(() =>
 function getTaskCurrent(task: TaskWithStatus): string | number {
   switch (task.type) {
     case TaskType.HAVE_ITEM:
-      return Math.floor(inventoryStore.getAmount(task.para1))
-
     case TaskType.PRODUCE_TOTAL:
-      return Math.floor(inventoryStore.totalProduced[task.para1] ?? 0)
+      if (task.para1.includes(',')) return 0 // 多资源走 getMultiResourceProgress
+      return Math.floor((task.type === TaskType.HAVE_ITEM
+        ? inventoryStore.getAmount(task.para1)
+        : inventoryStore.totalProduced[task.para1]) ?? 0)
 
     case TaskType.BUILD_MACHINE:
       return machineStore.instances.filter((m: { defId: string }) => m.defId === task.para1).length
@@ -108,9 +105,38 @@ function getTaskCurrent(task: TaskWithStatus): string | number {
     case TaskType.REACH_EU_PER_SEC:
       return Math.floor(powerStore.totalGenPerSec)
 
+    case TaskType.HAVE_TOOL:
+      return 0 // 工具等级任务不需要进度数字显示
+
+    case TaskType.OWN_MACHINE:
+      return machineStore.instances.filter((m: { defId: string }) => m.defId === task.para1).length
+
+    case TaskType.PRODUCE_STEAM:
+      return steamStore.totalProducedMb
+
     default:
       return 0
   }
+}
+
+function isMultiResourceTask(task: TaskWithStatus): boolean {
+  return task.type === TaskType.PRODUCE_TOTAL && task.para1.includes(',')
+}
+
+interface ResourceProgress {
+  resourceId: string
+  current: number
+  target: number
+}
+
+function getMultiResourceProgress(task: TaskWithStatus): ResourceProgress[] {
+  const resourceIds = task.para1.split(',')
+  const amounts = (task.para2 ?? '').split(',').map((v) => Number(v) || 0)
+  return resourceIds.map((rid, i) => ({
+    resourceId: rid,
+    current: Math.floor(inventoryStore.totalProduced[rid] ?? 0),
+    target: amounts[i] ?? 0,
+  }))
 }
 </script>
 
@@ -122,7 +148,7 @@ function getTaskCurrent(task: TaskWithStatus): string | number {
 
 .panel-card {
   background: var(--bg-panel);
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--border);
   padding: 16px 18px;
 }
 
@@ -145,7 +171,7 @@ function getTaskCurrent(task: TaskWithStatus): string | number {
 .chapter-name {
   font-size: 15px;
   font-weight: bold;
-  color: var(--accent-green);
+  color: var(--accent);
   margin-bottom: 4px;
 }
 
@@ -153,46 +179,6 @@ function getTaskCurrent(task: TaskWithStatus): string | number {
   font-size: 12px;
   color: #888;
   line-height: 1.5;
-}
-
-/* Unlock goal */
-.unlock-goal {
-  background: #222;
-  border: 1px solid var(--border-color);
-  padding: 10px 12px;
-  margin-bottom: 16px;
-}
-
-.goal-label {
-  font-size: 12px;
-  color: #aaa;
-  margin-bottom: 6px;
-}
-
-.goal-progress-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.goal-bar-wrap {
-  flex: 1 1 auto;
-  height: 8px;
-  background: #333;
-  border: 1px solid var(--border-color);
-  overflow: hidden;
-}
-
-.goal-bar-fill {
-  height: 100%;
-  background: var(--accent-green);
-  transition: width 0.4s ease;
-}
-
-.goal-nums {
-  font-size: 11px;
-  color: var(--accent-yellow);
-  white-space: nowrap;
 }
 
 /* Tasks */
@@ -242,23 +228,49 @@ function getTaskCurrent(task: TaskWithStatus): string | number {
 
 .task-progress {
   font-size: 11px;
-  color: var(--accent-yellow);
+  color: var(--warn);
+  white-space: nowrap;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1px;
+}
+
+.sub-progress {
   white-space: nowrap;
 }
 
 /* Chapter complete */
 .chapter-complete {
   margin-top: 16px;
-  padding: 10px 12px;
-  background: rgba(76, 175, 80, 0.1);
-  border: 1px solid var(--accent-green);
-  color: var(--accent-green);
+  padding: 12px 16px;
+  background: var(--accent-subtle);
+  border: 1px solid var(--accent);
+  color: var(--accent);
   font-size: 13px;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
 }
 
 .complete-icon {
-  margin-right: 6px;
+  margin-right: 4px;
+}
+
+.advance-btn {
+  background: var(--accent);
+  color: var(--bg-panel);
+  border: none;
+  padding: 6px 16px;
+  font-size: 13px;
+  font-family: inherit;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.advance-btn:hover {
+  opacity: 0.85;
 }
 
 .empty-hint {

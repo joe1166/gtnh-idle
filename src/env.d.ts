@@ -7,3 +7,7 @@ declare module '*.vue' {
   const component: any
   export default component
 }
+
+interface Window {
+  debugTasks: () => void
+}

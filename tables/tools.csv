@@ -1,7 +1,10 @@
-id,type,level,abilityId,abilityValue,upgradeCost,locKey,unlockedByChapter
-1001,stone_axe,0,wood_ability,1,log_wood:5|coarse_rope:2,tool.stone_axe.level_0,1
-1002,stone_axe,1,wood_ability,2,log_wood:10|cobblestone:8,tool.stone_axe.level_1,1
-1003,stone_axe,2,wood_ability,3,,tool.stone_axe.level_2,1
-1004,stone_pickaxe,0,mining_ability,1,log_wood:5|coarse_rope:2,tool.stone_pickaxe.level_0,1
-1005,stone_pickaxe,1,mining_ability,2,log_wood:10|cobblestone:8,tool.stone_pickaxe.level_1,1
-1006,stone_pickaxe,2,mining_ability,3,,tool.stone_pickaxe.level_2,1
+id,type,level,abilityId,abilityValue,upgradeCost,locKey,unlockedByChapter,showCondType,showCondPara
+stone_axe_0,axe,0,wood_ability,1,log_wood:5|coarse_rope:2,tool.stone_axe.level_0,1,,
+stone_axe_1,axe,1,wood_ability,2,log_wood:10|cobblestone:8,tool.stone_axe.level_1,1,,
+stone_axe_2,axe,2,wood_ability,3,,tool.stone_axe.level_2,1,,
+stone_pickaxe_0,pickaxe,0,mining_ability,1,log_wood:5|coarse_rope:2,tool.stone_pickaxe.level_0,1,,
+stone_pickaxe_1,pickaxe,1,mining_ability,2,log_wood:10|cobblestone:8,tool.stone_pickaxe.level_1,1,,
+stone_pickaxe_2,pickaxe,2,mining_ability,3,,tool.stone_pickaxe.level_2,1,,
+prospector_1,prospector,1,prospector_ability,3,iron_plate:2|basic_circuit:1,tool.prospector.level_1,1,resource_ever,basic_circuit
+prospector_2,prospector,2,prospector_ability,5,iron_ingot:12|copper_wire:5,tool.prospector.level_2,1,tool,prospector:1
+prospector_3,prospector,3,prospector_ability,8,iron_ingot:25|basic_circuit:2,tool.prospector.level_3,1,tool,prospector:2

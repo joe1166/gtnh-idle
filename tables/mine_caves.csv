@@ -1,0 +1,4 @@
+id,locKey,rows,cols,maxStamina,tunnelCountMin,tunnelCountMax,veinIds,strata
+plains_cave,mine.cave.small,50,20,50,2,3,vein_coal_s|vein_coal_m|vein_iron_s|vein_copper_s,0.00:0.15:dirt|0.10:1.00:stone
+medium_cave,mine.cave.medium,100,30,80,3,5,vein_coal_l|vein_iron_m|vein_copper_m|vein_tin|vein_gold_s,0.00:0.10:dirt|0.05:1.00:stone|0.80:1.00:deep_stone
+large_cave,mine.cave.large,200,40,150,4,7,vein_coal_l|vein_iron_l|vein_copper_m|vein_tin|vein_gold_m,0.00:0.10:dirt|0.05:0.50:stone|0.40:1.00:deep_stone

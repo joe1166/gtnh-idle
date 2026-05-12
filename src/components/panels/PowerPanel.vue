@@ -178,7 +178,7 @@ function getVoltTierName(voltage: number): string {
 
 .panel-card {
   background: var(--bg-panel);
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--border);
   padding: 14px 16px;
 }
 
@@ -225,8 +225,8 @@ function getVoltTierName(voltage: number): string {
   border: 1px solid;
   white-space: nowrap;
 }
-.cost-chip--ok   { color: var(--accent-green); border-color: #2a4a2a; }
-.cost-chip--lack { color: var(--accent-red);   border-color: #4a2a2a; }
+.cost-chip--ok   { color: var(--accent); border-color: var(--accent-bg-hover); }
+.cost-chip--lack { color: var(--danger);   border-color: var(--danger-border); }
 .cost-have { font-size: 10px; opacity: 0.7; margin-left: 2px; }
 
 .build-btn {
@@ -240,16 +240,16 @@ function getVoltTierName(voltage: number): string {
 }
 
 .build-btn--ok {
-  background: #1e3a1e;
-  border-color: var(--accent-green);
-  color: var(--accent-green);
+  background: var(--accent-bg);
+  border-color: var(--accent);
+  color: var(--accent);
 }
-.build-btn--ok:hover { background: #254a25; }
+.build-btn--ok:hover { background: var(--accent-bg-hover); }
 
 .build-btn--lack {
-  background: #2a2020;
-  border-color: #4a3030;
-  color: #774444;
+  background: var(--danger-bg);
+  border-color: var(--danger-border);
+  color: var(--danger-text);
   cursor: not-allowed;
 }
 
@@ -272,7 +272,7 @@ function getVoltTierName(voltage: number): string {
 }
 
 .stat-value { font-weight: bold; }
-.stat-sep { color: var(--border-color); }
+.stat-sep { color: var(--border); }
 
 .battery-row { gap: 8px; }
 
@@ -280,7 +280,7 @@ function getVoltTierName(voltage: number): string {
   flex: 0 0 120px;
   height: 8px;
   background: #333;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--border);
   overflow: hidden;
 }
 
@@ -295,12 +295,12 @@ function getVoltTierName(voltage: number): string {
   white-space: nowrap;
 }
 
-.fill-green  { background-color: var(--accent-green); }
-.fill-yellow { background-color: var(--accent-yellow); }
-.fill-red    { background-color: var(--accent-red); }
+.fill-green  { background-color: var(--accent); }
+.fill-yellow { background-color: var(--warn); }
+.fill-red    { background-color: var(--danger); }
 
-.color-green { color: var(--accent-green); }
-.color-red   { color: var(--accent-red); }
+.color-green { color: var(--accent); }
+.color-red   { color: var(--danger); }
 
 .machine-table {
   width: 100%;
@@ -313,7 +313,7 @@ function getVoltTierName(voltage: number): string {
   text-align: left;
   color: #666;
   padding: 4px 8px;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border);
   font-weight: normal;
 }
 
@@ -331,7 +331,7 @@ function getVoltTierName(voltage: number): string {
 
 .toggle-btn {
   background: #222;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--border);
   color: var(--text-primary);
   padding: 3px 10px;
   font-family: inherit;
@@ -345,14 +345,14 @@ function getVoltTierName(voltage: number): string {
 
 .toggle-btn:hover { background: #333; }
 
-.toggle-btn--running { border-color: var(--accent-red);   color: var(--accent-red); }
-.toggle-btn--running:hover { background: #3a2020; }
-.toggle-btn--stopped { border-color: var(--accent-green); color: var(--accent-green); }
-.toggle-btn--stopped:hover { background: #1e3a1e; }
+.toggle-btn--running { border-color: var(--danger);   color: var(--danger); }
+.toggle-btn--running:hover { background: var(--danger-bg); }
+.toggle-btn--stopped { border-color: var(--accent); color: var(--accent); }
+.toggle-btn--stopped:hover { background: var(--accent-bg); }
 
 .run-indicator {
   font-size: 10px;
-  color: var(--accent-green);
+  color: var(--accent);
   white-space: nowrap;
   margin-right: 4px;
 }
@@ -368,11 +368,11 @@ function getVoltTierName(voltage: number): string {
   margin-left: 4px;
 }
 .oc-btn--up {
-  background: #2a2a10;
-  border-color: var(--accent-yellow);
-  color: var(--accent-yellow);
+  background: var(--warn-bg);
+  border-color: var(--warn);
+  color: var(--warn);
 }
-.oc-btn--up:hover { background: #3a3a18; }
+.oc-btn--up:hover { background: var(--warn-bg-hover); }
 .oc-btn--down {
   background: #252525;
   border-color: #666;
@@ -399,8 +399,8 @@ function getVoltTierName(voltage: number): string {
 .volt-badge {
   font-size: 10px;
   padding: 1px 5px;
-  border: 1px solid var(--accent-yellow);
-  color: var(--accent-yellow);
+  border: 1px solid var(--warn);
+  color: var(--warn);
   margin-left: 4px;
 }
 
@@ -411,7 +411,7 @@ function getVoltTierName(voltage: number): string {
   white-space: nowrap;
 }
 .status--no_fuel {
-  color: var(--accent-yellow);
-  border-color: var(--accent-yellow);
+  color: var(--warn);
+  border-color: var(--warn);
 }
 </style>

@@ -21,11 +21,11 @@
 // ============================================================
 
 import rawPanels from '../config/panels.json'
-import { Condition, evaluateCondition } from './conditions'
+import { Condition, checkCondition } from './conditions'
 
 export type { Condition } from './conditions'
 
-// panel 类型仅在 hideCond 中使用，不走通用 evaluateCondition（需两轮计算）
+// panel 类型仅在 hideCond 中使用，不走通用 checkCondition（需两轮计算）
 export type PanelHideCondType = 'panel'
 
 export interface PanelShowCondition extends Condition {}
@@ -70,4 +70,4 @@ function buildPanelDef(raw: {
 
 export const PANEL_DEFS: PanelDef[] = (rawPanels as Parameters<typeof buildPanelDef>[0][]).map(buildPanelDef)
 
-export { evaluateCondition }
+export { checkCondition }

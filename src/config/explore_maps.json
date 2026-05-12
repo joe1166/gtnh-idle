@@ -1,0 +1,37 @@
+[
+  {
+    "id": "pyramid",
+    "locKey": "explore.map.pyramid",
+    "rows": 9,
+    "cols": 9,
+    "voidRate": 0.15,
+    "cycleEdgeRate": 0.25,
+    "mergeProb": 0.35,
+    "maxMergeSize": 4,
+    "generatableRoomIds": [
+      "corridor",
+      "side_chamber",
+      "storage",
+      "guard_room"
+    ],
+    "requiredRoomIds": [
+      "burial_chamber",
+      "antechamber"
+    ],
+    "entryPos": "8:4",
+    "fixedRooms": [
+      {
+        "roomDefId": "burial_chamber",
+        "anchorRow": 0,
+        "anchorCol": 3,
+        "allowedDoors": "S"
+      },
+      {
+        "roomDefId": "antechamber",
+        "anchorRow": 4,
+        "anchorCol": 3,
+        "allowedDoors": "N,S"
+      }
+    ]
+  }
+]

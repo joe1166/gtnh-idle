@@ -8,6 +8,24 @@
           <button class="close-x" @click="emit('close')">✕</button>
         </div>
 
+        <!-- 主题切换 -->
+        <div class="settings-section-title">{{ t('settings.theme_section') }}</div>
+        <div class="theme-row">
+          <button
+            v-for="theme in THEMES"
+            :key="theme.id"
+            class="theme-btn"
+            :class="{ 'theme-btn--active': currentTheme === theme.id }"
+            :style="{ '--swatch': theme.accent }"
+            @click="setTheme(theme.id)"
+          >
+            <span class="theme-swatch" />
+            <span class="theme-name">{{ t(theme.nameKey) }}</span>
+          </button>
+        </div>
+
+        <div class="divider"></div>
+
         <!-- 存档区块标题 -->
         <div class="settings-section-title">{{ t('settings.save_section') }}</div>
 
@@ -96,6 +114,8 @@
 import { ref, computed, watch } from 'vue'
 import { useGameStore } from '../../stores/gameStore'
 import { useSaveLoad } from '../../composables/useSaveLoad'
+import { useNewGame } from '../../composables/useNewGame'
+import { useTheme, THEMES } from '../../composables/useTheme'
 import { t } from '../../data/i18n'
 import { fmtTime } from '../../utils/format'
 
@@ -108,7 +128,9 @@ const emit = defineEmits<{
 }>()
 
 const gameStore = useGameStore()
-const { save, exportSave, importSave, deleteSave } = useSaveLoad()
+const { save, exportSave, importSave } = useSaveLoad()
+const { startNewGame } = useNewGame()
+const { currentTheme, setTheme } = useTheme()
 
 const exportedCode = ref('')
 const importCode = ref('')
@@ -177,10 +199,9 @@ function handleImport() {
 }
 
 function handleDelete() {
-  deleteSave()
   confirmDelete.value = false
   emit('close')
-  location.reload()
+  startNewGame()
 }
 </script>
 
@@ -188,7 +209,7 @@ function handleDelete() {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.72);
+  background: var(--bg-overlay);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -198,7 +219,7 @@ function handleDelete() {
 
 .modal-box {
   background: var(--bg-panel);
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--border);
   padding: 20px 24px;
   min-width: 380px;
   max-width: 520px;
@@ -237,7 +258,7 @@ function handleDelete() {
   color: #555;
   text-transform: uppercase;
   letter-spacing: 1px;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border);
   padding-bottom: 6px;
   margin-bottom: 4px;
 }
@@ -254,7 +275,7 @@ function handleDelete() {
 
 .divider {
   height: 1px;
-  background: var(--border-color);
+  background: var(--border);
   margin: 14px 0;
 }
 
@@ -271,12 +292,12 @@ function handleDelete() {
 }
 
 .delete-title {
-  color: var(--accent-red);
+  color: var(--danger);
 }
 
 .action-btn {
   background: #333;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--border);
   color: var(--text-primary);
   padding: 6px 14px;
   font-family: inherit;
@@ -296,23 +317,23 @@ function handleDelete() {
 }
 
 .action-btn--primary {
-  background: #2a3a2a;
-  border-color: var(--accent-green);
-  color: var(--accent-green);
+  background: var(--accent-bg);
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
 .action-btn--primary:hover:not(:disabled) {
-  background: #334433;
+  background: var(--accent-bg-hover);
 }
 
 .action-btn--danger {
-  background: #3a2020;
-  border-color: var(--accent-red);
-  color: var(--accent-red);
+  background: var(--danger-bg);
+  border-color: var(--danger);
+  color: var(--danger);
 }
 
 .action-btn--danger:hover:not(:disabled) {
-  background: #4a2a2a;
+  background: var(--danger-border);
 }
 
 .action-btn--small {
@@ -328,8 +349,8 @@ function handleDelete() {
 }
 
 .code-textarea {
-  background: #1a1a1a;
-  border: 1px solid var(--border-color);
+  background: var(--bg-base);
+  border: 1px solid var(--border);
   color: #aaa;
   font-family: 'Consolas', 'Courier New', monospace;
   font-size: 10px;
@@ -342,7 +363,7 @@ function handleDelete() {
 }
 
 .code-textarea:focus {
-  border-color: var(--accent-green);
+  border-color: var(--accent);
 }
 
 .code-textarea::placeholder {
@@ -358,12 +379,12 @@ function handleDelete() {
 
 .import-error {
   font-size: 11px;
-  color: var(--accent-red);
+  color: var(--danger);
 }
 
 .save-ok {
   font-size: 12px;
-  color: var(--accent-green);
+  color: var(--accent);
   align-self: center;
 }
 
@@ -372,8 +393,8 @@ function handleDelete() {
   flex-direction: column;
   gap: 8px;
   padding: 10px;
-  background: rgba(244, 67, 54, 0.08);
-  border: 1px solid rgba(244, 67, 54, 0.3);
+  background: var(--danger-subtle);
+  border: 1px solid var(--danger-subtle-border);
 }
 
 .confirm-text {
@@ -384,5 +405,46 @@ function handleDelete() {
 .confirm-buttons {
   display: flex;
   gap: 8px;
+}
+
+/* ── 主题切换 ────────────────────────────────── */
+.theme-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 4px 0 2px;
+}
+
+.theme-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  font-family: inherit;
+  font-size: 12px;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.theme-btn:hover {
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+}
+
+.theme-btn--active {
+  border-color: var(--swatch);
+  color: var(--text-primary);
+}
+
+.theme-swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--swatch);
+  flex-shrink: 0;
 }
 </style>

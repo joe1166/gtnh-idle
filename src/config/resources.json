@@ -3,119 +3,236 @@
     "id": "log_wood",
     "locKey": "res.log_wood",
     "defaultCap": 500,
-    "category": "wood",
-    "unlockedByChapter": 1
-  },
-  {
-    "id": "cobblestone",
-    "locKey": "res.cobblestone",
-    "defaultCap": 500,
-    "category": "stone",
-    "unlockedByChapter": 1
-  },
-  {
-    "id": "flint",
-    "locKey": "res.flint",
-    "defaultCap": 200,
-    "category": "stone",
-    "unlockedByChapter": 1
-  },
-  {
-    "id": "coal",
-    "locKey": "res.coal",
-    "defaultCap": 1000,
-    "category": "fuel",
-    "unlockedByChapter": 1
-  },
-  {
-    "id": "iron_ore",
-    "locKey": "res.iron_ore",
-    "defaultCap": 1000,
-    "category": "ore",
-    "unlockedByChapter": 1
-  },
-  {
-    "id": "copper_ore",
-    "locKey": "res.copper_ore",
-    "defaultCap": 1000,
-    "category": "ore",
-    "unlockedByChapter": 1
-  },
-  {
-    "id": "tin_ore",
-    "locKey": "res.tin_ore",
-    "defaultCap": 1000,
-    "category": "ore",
-    "unlockedByChapter": 1
-  },
-  {
-    "id": "iron_ingot",
-    "locKey": "res.iron_ingot",
-    "defaultCap": 500,
-    "category": "ingot",
-    "unlockedByChapter": 1
-  },
-  {
-    "id": "copper_ingot",
-    "locKey": "res.copper_ingot",
-    "defaultCap": 500,
-    "category": "ingot",
-    "unlockedByChapter": 1
-  },
-  {
-    "id": "tin_ingot",
-    "locKey": "res.tin_ingot",
-    "defaultCap": 500,
-    "category": "ingot",
-    "unlockedByChapter": 1
-  },
-  {
-    "id": "copper_wire",
-    "locKey": "res.copper_wire",
-    "defaultCap": 500,
-    "category": "component",
-    "unlockedByChapter": 1
-  },
-  {
-    "id": "iron_plate",
-    "locKey": "res.iron_plate",
-    "defaultCap": 200,
-    "category": "component",
-    "unlockedByChapter": 1
-  },
-  {
-    "id": "vacuum_tube",
-    "locKey": "res.vacuum_tube",
-    "defaultCap": 100,
-    "category": "component",
-    "unlockedByChapter": 1
-  },
-  {
-    "id": "wrench",
-    "locKey": "res.wrench",
-    "defaultCap": 10,
-    "category": "component",
-    "unlockedByChapter": 1
-  },
-  {
-    "id": "basic_circuit",
-    "locKey": "res.basic_circuit",
-    "defaultCap": 50,
-    "category": "circuit",
-    "unlockedByChapter": 1
-  },
-  {
-    "id": "coarse_rope",
-    "locKey": "res.coarse_rope",
-    "defaultCap": 200,
-    "category": "component",
+    "category": "raw",
+    "tags": [
+      "organic",
+      "flammable"
+    ],
     "unlockedByChapter": 1
   },
   {
     "id": "weeds",
     "locKey": "res.weeds",
     "defaultCap": 500,
-    "category": "wood",
+    "category": "raw",
+    "tags": [
+      "organic"
+    ],
+    "unlockedByChapter": 1
+  },
+  {
+    "id": "cobblestone",
+    "locKey": "res.cobblestone",
+    "defaultCap": 500,
+    "category": "raw",
+    "tags": [],
+    "unlockedByChapter": 1
+  },
+  {
+    "id": "flint",
+    "locKey": "res.flint",
+    "defaultCap": 200,
+    "category": "raw",
+    "tags": [],
+    "unlockedByChapter": 1
+  },
+  {
+    "id": "coal",
+    "locKey": "res.coal",
+    "defaultCap": 1000,
+    "category": "raw",
+    "tags": [
+      "flammable"
+    ],
+    "unlockedByChapter": 1
+  },
+  {
+    "id": "iron_ore",
+    "locKey": "res.iron_ore",
+    "defaultCap": 1000,
+    "category": "raw",
+    "tags": [
+      "ore"
+    ],
+    "unlockedByChapter": 1
+  },
+  {
+    "id": "copper_ore",
+    "locKey": "res.copper_ore",
+    "defaultCap": 1000,
+    "category": "raw",
+    "tags": [
+      "ore"
+    ],
+    "unlockedByChapter": 1
+  },
+  {
+    "id": "tin_ore",
+    "locKey": "res.tin_ore",
+    "defaultCap": 1000,
+    "category": "raw",
+    "tags": [
+      "ore"
+    ],
+    "unlockedByChapter": 1
+  },
+  {
+    "id": "iron_ingot",
+    "locKey": "res.iron_ingot",
+    "defaultCap": 500,
+    "category": "mat",
+    "tags": [
+      "metal"
+    ],
+    "unlockedByChapter": 1
+  },
+  {
+    "id": "copper_ingot",
+    "locKey": "res.copper_ingot",
+    "defaultCap": 500,
+    "category": "mat",
+    "tags": [
+      "metal"
+    ],
+    "unlockedByChapter": 1
+  },
+  {
+    "id": "tin_ingot",
+    "locKey": "res.tin_ingot",
+    "defaultCap": 500,
+    "category": "mat",
+    "tags": [
+      "metal"
+    ],
+    "unlockedByChapter": 1
+  },
+  {
+    "id": "bronze_ingot",
+    "locKey": "res.bronze_ingot",
+    "defaultCap": 500,
+    "category": "mat",
+    "tags": [
+      "metal"
+    ],
+    "unlockedByChapter": 1
+  },
+  {
+    "id": "copper_wire",
+    "locKey": "res.copper_wire",
+    "defaultCap": 500,
+    "category": "mat",
+    "tags": [],
+    "unlockedByChapter": 1
+  },
+  {
+    "id": "iron_plate",
+    "locKey": "res.iron_plate",
+    "defaultCap": 200,
+    "category": "mat",
+    "tags": [],
+    "unlockedByChapter": 1
+  },
+  {
+    "id": "vacuum_tube",
+    "locKey": "res.vacuum_tube",
+    "defaultCap": 100,
+    "category": "mat",
+    "tags": [],
+    "unlockedByChapter": 1
+  },
+  {
+    "id": "coarse_rope",
+    "locKey": "res.coarse_rope",
+    "defaultCap": 200,
+    "category": "mat",
+    "tags": [],
+    "unlockedByChapter": 1
+  },
+  {
+    "id": "torch",
+    "locKey": "res.torch",
+    "defaultCap": 500,
+    "category": "mat",
+    "tags": [
+      "flammable"
+    ],
+    "unlockedByChapter": 1
+  },
+  {
+    "id": "gold_ore",
+    "locKey": "res.gold_ore",
+    "defaultCap": 1000,
+    "category": "raw",
+    "tags": [
+      "ore"
+    ],
+    "unlockedByChapter": 1
+  },
+  {
+    "id": "apple",
+    "locKey": "res.apple",
+    "defaultCap": 200,
+    "category": "raw",
+    "tags": [
+      "food"
+    ],
+    "unlockedByChapter": 1,
+    "foodPoints": 5
+  },
+  {
+    "id": "wrench",
+    "locKey": "res.wrench",
+    "defaultCap": 10,
+    "category": "prod",
+    "tags": [],
+    "unlockedByChapter": 1
+  },
+  {
+    "id": "basic_circuit",
+    "locKey": "res.basic_circuit",
+    "defaultCap": 50,
+    "category": "prod",
+    "tags": [],
+    "unlockedByChapter": 1
+  },
+  {
+    "id": "cactus_fruit",
+    "locKey": "res.cactus_fruit",
+    "defaultCap": 100,
+    "category": "raw",
+    "tags": [
+      "food"
+    ],
+    "unlockedByChapter": 1,
+    "foodPoints": 8
+  },
+  {
+    "id": "reed",
+    "locKey": "res.reed",
+    "defaultCap": 300,
+    "category": "raw",
+    "tags": [
+      "organic"
+    ],
+    "unlockedByChapter": 1
+  },
+  {
+    "id": "mushroom",
+    "locKey": "res.mushroom",
+    "defaultCap": 200,
+    "category": "raw",
+    "tags": [
+      "food"
+    ],
+    "unlockedByChapter": 1,
+    "foodPoints": 10
+  },
+  {
+    "id": "ancient_coin",
+    "locKey": "res.ancient_coin",
+    "defaultCap": 50,
+    "category": "special",
+    "tags": [],
     "unlockedByChapter": 1
   }
 ]

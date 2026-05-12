@@ -1,0 +1,7 @@
+id,locKey,layoutType,type,shape,minCells,maxCells,weight,rewardId,descLocKey,eventStartNodeId,enemyPool,enemyCountMin,enemyCountMax
+burial_chamber,explore.room.burial_chamber,fixed,event,0:0|0:1|0:2,,,0,24,explore.room.burial_chamber.desc,pharaoh_intro_001,,,
+antechamber,explore.room.antechamber,fixed,normal,0:0|1:0,,,0,25,explore.room.antechamber.desc,,,,
+corridor,explore.room.corridor,generatable,normal,,1,2,60,0,explore.room.corridor.desc,,,,
+side_chamber,explore.room.side_chamber,generatable,combat,,1,3,30,26,explore.room.side_chamber.desc,,scarab:70|mummy_guard:30,1,2
+storage,explore.room.storage,generatable,combat,,1,2,20,27,explore.room.storage.desc,,scarab:50|mummy_guard:50,1,2
+guard_room,explore.room.guard_room,generatable,combat,,2,4,15,27,explore.room.guard_room.desc,,mummy_guard:70|mummy_elite:30,2,3

@@ -5,6 +5,9 @@ import { useGameLoop } from './composables/useGameLoop'
 import { useSaveLoad } from './composables/useSaveLoad'
 import { useOfflineProgress } from './composables/useOfflineProgress'
 import { useGameStore } from './stores/gameStore'
+import { useMineStore } from './stores/mineStore'
+import { useExploreStore } from './stores/exploreStore'
+import { useDevConsole } from './composables/useDevConsole'
 import { PANEL_DEFS } from './data/panelConfig'
 import type { OfflineReport } from './composables/useOfflineProgress'
 
@@ -22,12 +25,18 @@ import TechPanel from './components/panels/TechPanel.vue'
 import OfflineModal from './components/modals/OfflineModal.vue'
 import SaveModal from './components/modals/SaveModal.vue'
 import StatsModal from './components/modals/StatsModal.vue'
+import IncompatibleSaveModal from './components/modals/IncompatibleSaveModal.vue'
 import DevConsole from './components/modals/DevConsole.vue'
+import MineOverlay from './components/mine/MineOverlay.vue'
+import ExploreOverlay from './components/overlays/ExploreOverlay.vue'
 
 const { initGame, start } = useGameLoop()
 const { load, save } = useSaveLoad()
 const { simulate } = useOfflineProgress()
 const gameStore = useGameStore()
+const mineStore    = useMineStore()
+const exploreStore = useExploreStore()
+const { toggle: toggleDevConsole } = useDevConsole()
 
 // 默认激活 order 最小的面板（由配置决定，不硬编码具体 id）
 const defaultPanelId = PANEL_DEFS.reduce((min, p) => p.order < min.order ? p : min).id
@@ -40,18 +49,32 @@ const isPanelFullBleed = computed(() => activePanel.value === 'world')
 const showOfflineModal = ref(false)
 const offlineReport = ref<OfflineReport | null>(null)
 
+// 存档不兼容弹窗
+const showIncompatibleModal = ref(false)
+
 // 统计弹窗 & 设置弹窗
 const showStatsModal    = ref(false)
 const showSettingsModal = ref(false)
 
+function onGlobalKeydown(e: KeyboardEvent) {
+  if (e.key === '`') toggleDevConsole()
+}
+
 let loopId: ReturnType<typeof setInterval>
 
 onMounted(async () => {
+  window.addEventListener('keydown', onGlobalKeydown)
   // 1. 初始化游戏数据（注册静态数据到各store）
   initGame()
 
   // 2. 尝试加载存档
   const saveResult = load()
+
+  // 版本不兼容：显示提示弹窗，不启动游戏循环
+  if (saveResult.incompatible) {
+    showIncompatibleModal.value = true
+    return
+  }
 
   // 3. 启动游戏循环
   loopId = start()
@@ -65,6 +88,7 @@ onMounted(async () => {
 })
 
 onUnmounted(() => {
+  window.removeEventListener('keydown', onGlobalKeydown)
   clearInterval(loopId)
   save()  // 退出时保存
 })
@@ -118,7 +142,14 @@ onUnmounted(() => {
       :show="showSettingsModal"
       @close="showSettingsModal = false"
     />
+    <IncompatibleSaveModal :show="showIncompatibleModal" />
     <DevConsole />
+
+    <!-- 矿洞小游戏全屏覆盖层 -->
+    <MineOverlay v-if="mineStore.entered" />
+
+    <!-- 遗迹探索全屏覆盖层 -->
+    <ExploreOverlay v-if="exploreStore.entered" />
   </div>
 </template>
 
@@ -128,7 +159,7 @@ onUnmounted(() => {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background: var(--bg-primary);
+  background: var(--bg-base);
   color: var(--text-primary);
   padding-top: 48px; /* TopBar height */
 }
@@ -157,7 +188,7 @@ onUnmounted(() => {
 }
 .sim-box {
   background: var(--bg-panel);
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--border);
   padding: 32px; border-radius: 8px; text-align: center;
   min-width: 300px;
 }
@@ -165,6 +196,6 @@ onUnmounted(() => {
   height: 8px; background: #333; border-radius: 4px; margin: 12px 0; overflow: hidden;
 }
 .sim-bar > div {
-  height: 100%; background: var(--accent-green); transition: width 0.3s;
+  height: 100%; background: var(--accent); transition: width 0.3s;
 }
 </style>

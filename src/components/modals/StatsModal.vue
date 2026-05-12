@@ -82,7 +82,7 @@ const lastSaveLabel = computed(() => {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.72);
+  background: var(--bg-overlay);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -92,7 +92,7 @@ const lastSaveLabel = computed(() => {
 
 .modal-box {
   background: var(--bg-panel);
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--border);
   padding: 20px 24px;
   min-width: 320px;
   max-width: 420px;
@@ -155,12 +155,12 @@ const lastSaveLabel = computed(() => {
   letter-spacing: 0.5px;
 }
 
-.accent-green { color: var(--accent-green); }
-.accent-yellow { color: var(--accent-yellow); }
+.accent-green { color: var(--accent); }
+.accent-yellow { color: var(--warn); }
 
 .divider {
   height: 1px;
-  background: var(--border-color);
+  background: var(--border);
   margin: 4px 0;
 }
 
@@ -173,7 +173,7 @@ const lastSaveLabel = computed(() => {
 
 .btn-close {
   background: none;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--border);
   color: #888;
   padding: 6px 16px;
   font-family: inherit;

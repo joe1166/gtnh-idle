@@ -109,7 +109,7 @@ function getResourceName(resourceId: string): string {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.72);
+  background: var(--bg-overlay);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -119,7 +119,7 @@ function getResourceName(resourceId: string): string {
 
 .modal-box {
   background: var(--bg-panel);
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--border);
   padding: 24px 28px;
   min-width: 360px;
   max-width: 480px;
@@ -143,7 +143,7 @@ function getResourceName(resourceId: string): string {
 .header-title {
   font-size: 18px;
   font-weight: bold;
-  color: var(--accent-green);
+  color: var(--accent);
 }
 
 .offline-time {
@@ -153,7 +153,7 @@ function getResourceName(resourceId: string): string {
 }
 
 .offline-time strong {
-  color: var(--accent-yellow);
+  color: var(--warn);
 }
 
 .sim-cap-hint {
@@ -169,7 +169,7 @@ function getResourceName(resourceId: string): string {
   gap: 10px;
   margin-bottom: 16px;
   background: #222;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--border);
   padding: 10px 12px;
 }
 
@@ -183,19 +183,19 @@ function getResourceName(resourceId: string): string {
   flex: 1 1 auto;
   height: 8px;
   background: #333;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--border);
   overflow: hidden;
 }
 
 .sim-bar-fill {
   height: 100%;
-  background: var(--accent-green);
+  background: var(--accent);
   transition: width 0.3s linear;
 }
 
 .sim-pct {
   font-size: 11px;
-  color: var(--accent-green);
+  color: var(--accent);
   white-space: nowrap;
   min-width: 36px;
   text-align: right;
@@ -227,7 +227,7 @@ function getResourceName(resourceId: string): string {
 }
 
 .produced-plus {
-  color: var(--accent-green);
+  color: var(--accent);
   font-weight: bold;
 }
 
@@ -236,7 +236,7 @@ function getResourceName(resourceId: string): string {
 }
 
 .produced-amount {
-  color: var(--accent-yellow);
+  color: var(--warn);
   font-size: 12px;
   white-space: nowrap;
 }
@@ -255,12 +255,12 @@ function getResourceName(resourceId: string): string {
   gap: 8px;
   font-size: 12px;
   padding: 5px 8px;
-  background: rgba(244, 67, 54, 0.08);
-  border: 1px solid rgba(244, 67, 54, 0.25);
+  background: var(--danger-subtle);
+  border: 1px solid var(--danger-subtle-border);
 }
 
 .event-icon {
-  color: var(--accent-yellow);
+  color: var(--warn);
   flex-shrink: 0;
 }
 
@@ -275,7 +275,7 @@ function getResourceName(resourceId: string): string {
 }
 
 .close-btn {
-  background: var(--accent-green);
+  background: var(--accent);
   border: none;
   color: #111;
   padding: 8px 28px;
@@ -287,7 +287,7 @@ function getResourceName(resourceId: string): string {
 }
 
 .close-btn:hover:not(:disabled) {
-  background: #5dcf61;
+  background: var(--accent);
 }
 
 .close-btn:disabled {

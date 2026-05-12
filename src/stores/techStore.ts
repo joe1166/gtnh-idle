@@ -34,13 +34,13 @@ function evalCondition(
     case 'tech':
       return researchedTechIds.includes(parts[1])
     case 'task':
-      return useTaskStore().isComplete(Number(parts[1]))
+      return useTaskStore().isComplete(parts[1])
     case 'eu_per_sec':
       return usePowerStore().totalGenPerSec >= Number(parts[1])
     case 'have_item':
       return useInventoryStore().getAmount(parts[1]) >= Number(parts[2])
     case 'chapter':
-      return useProgressionStore().chapterUnlocked.includes(Number(parts[1]))
+      return useProgressionStore().currentChapterId >= Number(parts[1])
     default:
       console.warn('[techStore] Unknown condition type:', type)
       return false

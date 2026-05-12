@@ -1,0 +1,32 @@
+{
+  "root": "array",
+  "output": "src/config/explore_maps.json",
+  "fields": {
+    "id": "string",
+    "locKey": "string",
+    "rows": "number",
+    "cols": "number",
+    "voidRate": "number",
+    "cycleEdgeRate": "number",
+    "mergeProb": "number",
+    "maxMergeSize": "number",
+    "generatableRoomIds": { "type": "array", "sep": "|", "item": "string" },
+    "requiredRoomIds": { "type": "array", "sep": "|", "item": "string" },
+    "entryPos": "string",
+    "fixedRooms": {
+      "type": "array",
+      "sep": "|",
+      "item": {
+        "type": "object",
+        "sep": ":",
+        "omitIfEmpty": true,
+        "fields": [
+          { "name": "roomDefId", "type": "string" },
+          { "name": "anchorRow", "type": "number" },
+          { "name": "anchorCol", "type": "number" },
+          { "name": "allowedDoors", "type": "string" }
+        ]
+      }
+    }
+  }
+}

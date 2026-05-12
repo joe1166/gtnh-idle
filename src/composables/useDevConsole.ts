@@ -2,9 +2,10 @@ import { ref } from 'vue'
 
 const isOpen            = ref(false)
 const highlightHitAreas = ref(false)
+const mineReveal        = ref(false)
 
 function toggle() { isOpen.value = !isOpen.value }
 
 export function useDevConsole() {
-  return { isOpen, highlightHitAreas, toggle }
+  return { isOpen, highlightHitAreas, mineReveal, toggle }
 }

@@ -8,15 +8,7 @@
     "biomeIds":         { "type": "array", "sep": "|", "item": "string" },
     "startBiomeId":     "string",
     "unlockCondition":  "string",
-    "exploreCost":     {
-      "type": "array", "sep": "|",
-      "item": { "type": "object", "sep": ":",
-        "fields": [
-          {"name": "resourceId", "type": "string"},
-          {"name": "amount",     "type": "number"}
-        ]
-      }
-    },
+    "exploreFoodCost":  "number",
     "explorePool":     {
       "type": "array", "sep": "|",
       "item": { "type": "object", "sep": ":",

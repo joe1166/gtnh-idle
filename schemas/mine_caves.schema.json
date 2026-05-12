@@ -1,0 +1,24 @@
+{
+  "root": "array",
+  "output": "src/config/mine_caves.json",
+  "fields": {
+    "id":              "string",
+    "locKey":          "string",
+    "rows":            "number",
+    "cols":            "number",
+    "maxStamina":      "number",
+    "tunnelCountMin":  "number",
+    "tunnelCountMax":  "number",
+    "veinIds":         { "type": "array", "sep": "|", "item": "string" },
+    "strata":          {
+      "type": "array", "sep": "|",
+      "item": { "type": "object", "sep": ":",
+        "fields": [
+          { "name": "depthMin", "type": "number" },
+          { "name": "depthMax", "type": "number" },
+          { "name": "blockId",  "type": "string" }
+        ]
+      }
+    }
+  }
+}

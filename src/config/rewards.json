@@ -1,0 +1,328 @@
+[
+  {
+    "id": 1,
+    "fixed": [
+      {
+        "resourceId": "log_wood",
+        "amount": 1
+      }
+    ],
+    "pool": [
+      {
+        "resourceId": "apple",
+        "amount": 1,
+        "weight": 10
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "fixed": [
+      {
+        "resourceId": "log_wood",
+        "amount": 2
+      }
+    ],
+    "pool": [
+      {
+        "resourceId": "apple",
+        "amount": 1,
+        "weight": 15
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "fixed": [
+      {
+        "resourceId": "cobblestone",
+        "amount": 1
+      }
+    ],
+    "pool": []
+  },
+  {
+    "id": 4,
+    "fixed": [
+      {
+        "resourceId": "flint",
+        "amount": 1
+      }
+    ],
+    "pool": []
+  },
+  {
+    "id": 5,
+    "fixed": [
+      {
+        "resourceId": "weeds",
+        "amount": 1
+      }
+    ],
+    "pool": []
+  },
+  {
+    "id": 6,
+    "fixed": [
+      {
+        "resourceId": "weeds",
+        "amount": 2
+      }
+    ],
+    "pool": []
+  },
+  {
+    "id": 7,
+    "fixed": [
+      {
+        "resourceId": "cobblestone",
+        "amount": 1
+      }
+    ],
+    "pool": []
+  },
+  {
+    "id": 8,
+    "fixed": [
+      {
+        "resourceId": "cobblestone",
+        "amount": 2
+      }
+    ],
+    "pool": []
+  },
+  {
+    "id": 9,
+    "fixed": [
+      {
+        "resourceId": "coal",
+        "amount": 2
+      }
+    ],
+    "pool": []
+  },
+  {
+    "id": 10,
+    "fixed": [
+      {
+        "resourceId": "iron_ore",
+        "amount": 1
+      }
+    ],
+    "pool": []
+  },
+  {
+    "id": 11,
+    "fixed": [
+      {
+        "resourceId": "copper_ore",
+        "amount": 1
+      }
+    ],
+    "pool": []
+  },
+  {
+    "id": 12,
+    "fixed": [
+      {
+        "resourceId": "tin_ore",
+        "amount": 1
+      }
+    ],
+    "pool": []
+  },
+  {
+    "id": 13,
+    "fixed": [
+      {
+        "resourceId": "gold_ore",
+        "amount": 1
+      }
+    ],
+    "pool": []
+  },
+  {
+    "id": 14,
+    "fixed": [
+      {
+        "resourceId": "cactus_fruit",
+        "amount": 2
+      }
+    ],
+    "pool": []
+  },
+  {
+    "id": 15,
+    "fixed": [
+      {
+        "resourceId": "flint",
+        "amount": 2
+      }
+    ],
+    "pool": []
+  },
+  {
+    "id": 16,
+    "fixed": [
+      {
+        "resourceId": "iron_ore",
+        "amount": 2
+      }
+    ],
+    "pool": []
+  },
+  {
+    "id": 17,
+    "fixed": [
+      {
+        "resourceId": "log_wood",
+        "amount": 2
+      }
+    ],
+    "pool": []
+  },
+  {
+    "id": 18,
+    "fixed": [
+      {
+        "resourceId": "mushroom",
+        "amount": 2
+      }
+    ],
+    "pool": []
+  },
+  {
+    "id": 19,
+    "fixed": [
+      {
+        "resourceId": "reed",
+        "amount": 2
+      }
+    ],
+    "pool": []
+  },
+  {
+    "id": 20,
+    "fixed": [
+      {
+        "resourceId": "cobblestone",
+        "amount": 2
+      }
+    ],
+    "pool": [
+      {
+        "resourceId": "coal",
+        "amount": 2,
+        "weight": 50
+      },
+      {
+        "resourceId": "nothing",
+        "amount": 1,
+        "weight": 50
+      }
+    ]
+  },
+  {
+    "id": 21,
+    "fixed": [
+      {
+        "resourceId": "cobblestone",
+        "amount": 3
+      }
+    ],
+    "pool": []
+  },
+  {
+    "id": 22,
+    "fixed": [
+      {
+        "resourceId": "flint",
+        "amount": 2
+      }
+    ],
+    "pool": []
+  },
+  {
+    "id": 23,
+    "fixed": [
+      {
+        "resourceId": "cobblestone",
+        "amount": 3
+      }
+    ],
+    "pool": [
+      {
+        "resourceId": "gold_ore",
+        "amount": 1,
+        "weight": 8
+      },
+      {
+        "resourceId": "nothing",
+        "amount": 1,
+        "weight": 92
+      }
+    ]
+  },
+  {
+    "id": 24,
+    "fixed": [
+      {
+        "resourceId": "ancient_coin",
+        "amount": 1
+      }
+    ],
+    "pool": [
+      {
+        "resourceId": "gold_ore",
+        "amount": 1,
+        "weight": 30
+      },
+      {
+        "resourceId": "nothing",
+        "amount": 1,
+        "weight": 70
+      }
+    ]
+  },
+  {
+    "id": 25,
+    "fixed": [
+      {
+        "resourceId": "iron_ore",
+        "amount": 3
+      }
+    ],
+    "pool": [
+      {
+        "resourceId": "copper_ore",
+        "amount": 2,
+        "weight": 50
+      },
+      {
+        "resourceId": "nothing",
+        "amount": 1,
+        "weight": 50
+      }
+    ]
+  },
+  {
+    "id": 26,
+    "fixed": [
+      {
+        "resourceId": "iron_ore",
+        "amount": 1
+      }
+    ],
+    "pool": []
+  },
+  {
+    "id": 27,
+    "fixed": [
+      {
+        "resourceId": "flint",
+        "amount": 2
+      }
+    ],
+    "pool": []
+  }
+]

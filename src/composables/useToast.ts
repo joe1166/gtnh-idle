@@ -10,7 +10,7 @@ const toasts = reactive<Toast[]>([])
 let nextId = 0
 
 export function useToast() {
-  function show(message: string, color = 'var(--accent-green)') {
+  function show(message: string, color = 'var(--accent)') {
     const id = nextId++
     toasts.push({ id, message, color })
     setTimeout(() => {
