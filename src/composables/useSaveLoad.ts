@@ -9,8 +9,8 @@ import { useWorldStore } from '../stores/worldStore'
 import { useToolStore } from '../stores/toolStore'
 import { useMineStore } from '../stores/mineStore'
 import { useExploreStore } from '../stores/exploreStore'
+import { SAVE_VERSION } from '../data/version'
 
-const SAVE_VERSION = '6.0.0'
 const SAVE_KEY = 'gtnh_idle_save'
 
 interface SaveData {

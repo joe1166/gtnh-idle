@@ -76,7 +76,8 @@ gtnh-idle/
 
 ### 3.4 存档版本管理
 
-- 当前版本 `6.0.0`
+- 存档版本 `SAVE_VERSION` 定义在 `src/data/version.ts`
+- 应用版本 `APP_VERSION` 同在一个文件
 - 版本不兼容时不做迁移，直接走新开档流程
 - 存档结构：`{ version, savedAt, state: { game, inventory, power, machines, progression, tasks, tech, world, tools, mine?, explore? } }`
 - `mine`、`explore` 由各自 store 状态持久化；版本不一致时不兼容
