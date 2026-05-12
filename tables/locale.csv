@@ -1,10 +1,10 @@
 ﻿key,zh,en
 attr.mining_ability,Mining Ability,Mining Ability
 attr.wood_ability,Wood Ability,Wood Ability
-biome.desert,,
+biome.desert,沙漠,Desert
 biome.forest,森林,Forest
 biome.plains,平原,Plains
-biome.swamp,,
+biome.swamp,沼泽,Swamp
 btn.build,建造,Build
 btn.cancel,取消,Cancel
 btn.craft,制作,Craft
@@ -21,9 +21,9 @@ category.circuit,电路,Circuits
 category.component,零件,Components
 category.fuel,燃料,Fuel
 category.ingot,金属锭,Ingots
-category.mat,,
+category.mat,工业材料,Materials
 category.ore,矿石,Ores
-category.raw,,
+category.raw,自然资源,Natural Resources
 category.stone,石材,Stone
 category.wood,木材,Wood
 chapter.1.desc,用煤炭和蒸汽驱动第一批机器，迈出工业化的第一步。,Power your first machines with coal and steam.
@@ -39,13 +39,39 @@ crafting.time_suffix,s,s left
 dim.overworld.desc,主世界，一切的起点,The Overworld — where it all begins
 dim.overworld.name,主世界,Overworld
 empty.no_techs,暂无科技,No Technologies Yet
-explore.food.cancel,,
-explore.food.confirm,,
-explore.food.modal_title,,
-explore.food.required,,
-explore.food.select_btn,,
-explore.food.selected,,
-explore.food.unit,,
+explore.action.exit,离开遗迹,Leave Ruins
+explore.action.loot,搜刮,Loot
+explore.combat.enemies,敌方单位,Enemies
+explore.combat.flee,撤退,Flee
+explore.combat.running,战斗进行中...,Combat in progress...
+explore.enemy.mummy_guard,木乃伊守卫,Mummy Guard
+explore.enemy.scarab,圣甲虫,Scarab
+explore.exit.defeat_confirm,确认,Confirm
+explore.exit.defeat_desc,你被击败了，获得的物资会丢失。,You were defeated. Loot is lost.
+explore.exit.defeat_title,探索失败,Exploration Failed
+explore.food.cancel,取消,Cancel
+explore.food.confirm,确认,Confirm
+explore.food.modal_title,选择消耗食物,Select Food
+explore.food.required,所需食物,Required
+explore.food.select_btn,选择食物,Select Food
+explore.food.selected,已选,Selected
+explore.food.unit,点,pt
+explore.loot.room_title,房间奖励,Room Loot
+explore.loot.title,探索奖励,Loot
+explore.map.pyramid,金字塔,Pyramid
+explore.mode.combat,战斗,Combat
+explore.mode.explore,探索,Explore
+explore.mode.result,结算,Result
+explore.panel.role,职责,Role
+explore.panel.room,房间,Room
+explore.role.hp,生命值,HP
+explore.room.corridor,走廊,Corridor
+explore.room.corridor.desc,一条阴暗的走廊，尽头隐约透着光。,"A dark corridor, faint light ahead."
+explore.room.entry_desc,进入,Enter
+explore.room.side_chamber,侧室,Side Chamber
+explore.room.side_chamber.desc,墙壁上刻满了古老的符文。,Ancient runes cover the walls.
+explore.room.storage,储藏室,Storage
+explore.room.storage.desc,落满灰尘的房间，角落堆着破旧的箱子。,Dusty room with broken chests.
 feature.auto_miner_eu,矿机EU化,Miner EU Mode
 feature.overclock,超频,Overclock
 feature.parallel_2x,并行处理,Parallel Processing
@@ -70,7 +96,7 @@ label.output,输出,Output
 label.status,状态,Status
 label.steam_generator,蒸汽锅炉,Steam Generator
 label.waste,浪费,Waste
-machine.alloy_furnace,,
+machine.alloy_furnace,合金炉,Alloy Furnace
 machine.assembler,组装台,Assembler
 machine.coal_miner,煤矿采掘机,Coal Miner
 machine.copper_miner,铜矿采掘机,Copper Miner
@@ -81,29 +107,32 @@ machine.iron_miner,铁矿采掘机,Iron Miner
 machine.steam_boiler,蒸汽锅炉,Steam Boiler
 machine.tin_miner,锡矿采掘机,Tin Miner
 machine.wire_cutter,切线机,Wire Cutter
-machine.workbench,,
-mine.block.bedrock,,
-mine.block.coal,,
-mine.block.copper,,
-mine.block.dirt,,
-mine.block.iron,,
-mine.block.stone,,
-mine.btn.exit,,
-mine.exit.cancel,,
-mine.exit.confirm,,
-mine.exit.loot_title,,
-mine.exit.title,,
-mine.hint.not_visible,,
+machine.workbench,工作台,Workbench
+mine.block.bedrock,基岩,Bedrock
+mine.block.coal,煤矿,Coal Ore
+mine.block.copper,铜矿,Copper Ore
+mine.block.dirt,泥土,Dirt
+mine.block.iron,铁矿,Iron Ore
+mine.block.stone,岩石,Stone
+mine.btn.exit,离开矿洞,Exit Mine
+mine.exit.cancel,取消,Cancel
+mine.exit.confirm,确认离开,Confirm
+mine.exit.loot_title,本次收获,Loot This Run
+mine.exit.no_loot,无战利品,No Loot
+mine.exit.title,离开矿洞,Leave Mine
+mine.hint.not_visible,未发现任何东西,Nothing found
+mine.node.desert_cave,沙漠矿洞,Desert Cave
+mine.node.entrance,矿洞入口,Mine Entrance
 mine.node.medium_cave,中型矿洞,Medium Cave
 mine.node.small_cave,小型矿洞,Small Cave
-mine.node.swamp_cave,,
-mine.prospector.no_tool,,
-mine.prospector.title,,
-mine.stamina.add,,
-mine.stamina.close,,
-mine.stamina.eat,,
-mine.stamina.food_modal_title,,
-mine.stamina.label,,
+mine.node.swamp_cave,沼泽矿洞,Swamp Cave
+mine.prospector.no_tool,需要探矿仪,Prospector Required
+mine.prospector.title,探矿仪,Prospector
+mine.stamina.add,增加体力,Add Stamina
+mine.stamina.close,关闭,Close
+mine.stamina.eat,吃,Eat
+mine.stamina.food_modal_title,吃食物恢复体力,Eat to Restore Stamina
+mine.stamina.label,体力,Stamina
 nav.chapter,章节,Chapter
 nav.crafting,合成,Crafting
 nav.inventory,仓库,Inventory
@@ -145,9 +174,9 @@ recipe.mine_tin_ore,采掘锡矿石,Mine Tin Ore
 recipe.smelt_copper,冶炼铜锭,Smelt Copper Ingot
 recipe.smelt_iron,冶炼铁锭,Smelt Iron Ingot
 recipe.smelt_tin,冶炼锡锭,Smelt Tin Ingot
-res.apple,,
+res.apple,苹果,Apple
 res.basic_circuit,基础电路板,Basic Circuit
-res.cactus_fruit,,
+res.cactus_fruit,仙人掌果,Cactus Fruit
 res.coal,煤炭,Coal
 res.coarse_rope,粗绳,Coarse Rope
 res.cobblestone,鹅卵石,Cobblestone
@@ -155,15 +184,15 @@ res.copper_ingot,铜锭,Copper Ingot
 res.copper_ore,铜矿石,Copper Ore
 res.copper_wire,铜线,Copper Wire
 res.flint,燧石,Flint
-res.gold_ore,,
+res.gold_ore,金矿,Gold Ore
 res.iron_ingot,铁锭,Iron Ingot
 res.iron_ore,铁矿石,Iron Ore
 res.iron_plate,铁板,Iron Plate
 res.log_wood,原木,Log
-res.mushroom,,
+res.mushroom,蘑菇,Mushroom
 res.tin_ingot,锡锭,Tin Ingot
 res.tin_ore,锡矿石,Tin Ore
-res.torch,,
+res.torch,火把,Torch
 res.vacuum_tube,真空管,Vacuum Tube
 res.weeds,杂草,Weeds
 res.wrench,扳手,Wrench
@@ -186,7 +215,7 @@ save.last_save_prefix,上次存档：,Last save:
 save.time_ago_suffix,前,ago
 save.title,💾 存档管理,💾 Save Management
 settings.save_section,存档,Save
-settings.theme_section,,
+settings.theme_section,主题,Theme
 settings.title,设置,Settings
 stats.last_save,上次存档,Last Save
 stats.offline_time,离线时间,Offline Time
@@ -204,16 +233,16 @@ task.build_furnace,建造第一台冶炼炉,Build your first Furnace
 task.gather_coal,探索洞穴收集 5 块煤炭,Gather 5 Coal from the cave
 task.gather_flint,收集 3 块燧石,Gather 3 Flint
 task.gather_more_wood,收集共 20 块原木,Gather 20 Logs total
-task.gather_ore,,
+task.gather_ore,采集矿石,Gather Ore
 task.gather_resources,捡起第一块原木,Pick up your first Log
 task.gather_stone,收集 10 块鹅卵石,Gather 10 Cobblestone
-task.gather_weeds,,
+task.gather_weeds,采集杂草,Gather Weeds
 task.gather_wood,收集 5 块原木,Gather 5 Logs
 task.make_circuit,合成基础电路板 × 4,Craft Basic Circuit × 4
-task.make_coarse_rope,,
-task.make_stone_pickaxe,,
+task.make_coarse_rope,制作粗绳,Make Coarse Rope
+task.make_stone_pickaxe,制作石镐,Make Stone Pickaxe
 task.make_wire,合成铜线 × 10,Craft Copper Wire × 10
-task.make_wooden_pickaxe,,
+task.make_wooden_pickaxe,制作木镐,Make Wooden Pickaxe
 task.reach_power,发电量达到 32 EU/s,Reach 32 EU/s power output
 tech.basic_automation.desc,解锁矿机的 EU 消耗与自动化基础,Unlock EU consumption for miners
 tech.basic_automation.name,基础自动化,Basic Automation
@@ -238,11 +267,11 @@ tech.unlocks.label,解锁：,Unlocks:
 tech.unlocks.machines,机器,Machines
 tech.unlocks.recipes,配方,Recipes
 tech_tree.automation,自动化,Automation
-theme.amber,,
-theme.cobalt,,
-theme.cyan,,
-theme.green,,
-theme.violet,,
+theme.amber,琥珀,Amber
+theme.cobalt,钴蓝,Cobalt
+theme.cyan,青色,Cyan
+theme.green,绿色,Green
+theme.violet,紫罗兰,Violet
 toast.build.fail,建造失败,Build Failed
 toast.build.success,建造成功,Build Success
 toast.deploy.fail,部署失败,Deploy Failed
@@ -257,16 +286,21 @@ tool.stone_pickaxe.level_1,木镐,Wooden Pickaxe
 tool.stone_pickaxe.level_2,石镐,Stone Pickaxe
 topbar.save_btn,存档,Save
 world.action.chop,砍树,Chop Tree
-world.action.chop_willow,,
+world.action.chop_cactus,砍仙人掌,Chop Cactus
+world.action.chop_willow,砍柳树,Chop Willow
 world.action.explore_cave,探索洞穴,Explore Cave
+world.action.explore_ruins,探索遗迹,Explore Ruins
 world.action.gather_flint,拾取燧石,Gather Flint
-world.action.gather_mushroom,,
-world.action.gather_reeds,,
+world.action.gather_mushroom,采蘑菇,Gather Mushroom
+world.action.gather_reeds,采芦苇,Gather Reeds
+world.action.gather_sand,挖沙子,Gather Sand
 world.action.gather_weeds,采集杂草,Gather Weeds
 world.action.mine_stone,凿取石块,Break Rock
 world.node.cave,洞穴入口 — 派人探索（30秒后获得煤炭）,Cave Entrance — Send someone in (returns coal in 30s)
 world.node.flint,燧石堆 — 点击采集,Flint Deposit — Click to gather
 world.node.oak_tree,橡树 — 点击砍伐,Oak Tree — Click to chop
 world.node.ready,点击领取,Claim
+world.node.ruins,遗迹,Ruins
+world.node.sand_pile,沙堆,Sand Pile
 world.node.stone,石块 — 点击敲击,Stone Rock — Click to break
 world.node.weeds,杂草丛 — 点击采集,Weeds — Click to gather
