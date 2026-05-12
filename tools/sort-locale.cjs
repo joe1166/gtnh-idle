@@ -61,5 +61,5 @@ const outLines = [headers.join(',')]
 for (const r of sorted)
   outLines.push(headers.map(h => stringifyField(r[h] ?? '')).join(','))
 
-fs.writeFileSync(csvPath, outLines.join('\n') + '\n', 'utf-8')
+fs.writeFileSync(csvPath, '﻿' + (outLines.join('\n') + '\n'), 'utf-8')
 console.log(`locale.csv 已排序（${sorted.length} 行）`)

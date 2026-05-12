@@ -1,27 +1,272 @@
 ﻿key,zh,en
-attr.mining_ability,,
-attr.wood_ability,,
-biome.plains,,
-btn.craft,,
-btn.max_level,,
-chapter.1.name,,
-mine.node.medium_cave,,
-mine.node.small_cave,,
-nav.chapter,,
-nav.crafting,,
-nav.inventory,,
-nav.playtime,,
-nav.settings_btn,,
-nav.stats_btn,,
-nav.world,,
-panel.biome.title,,
-panel.tool.title,,
-res.coarse_rope,,
-res.log_wood,,
-tool.stone_axe.level_0,,
-tool.stone_pickaxe.level_0,,
-tool.stone_pickaxe.level_2,,
-world.action.chop,,
-world.action.gather_flint,,
-world.action.gather_weeds,,
-world.action.mine_stone,,
+attr.mining_ability,Mining Ability,Mining Ability
+attr.wood_ability,Wood Ability,Wood Ability
+biome.desert,,
+biome.forest,森林,Forest
+biome.plains,平原,Plains
+biome.swamp,,
+btn.build,建造,Build
+btn.cancel,取消,Cancel
+btn.craft,制作,Craft
+btn.deploy_miner,部署矿机,Deploy Miner
+btn.explore,探索,Explore
+btn.max_level,已满级,Max Level
+btn.needs,需要,Needs
+btn.research,研究,Research
+btn.start,▶ 开启,▶ Start
+btn.stop,■ 停止,■ Stop
+btn.switch_biome,切换,Switch
+btn.upgrade,升级,Upgrade
+category.circuit,电路,Circuits
+category.component,零件,Components
+category.fuel,燃料,Fuel
+category.ingot,金属锭,Ingots
+category.mat,,
+category.ore,矿石,Ores
+category.raw,,
+category.stone,石材,Stone
+category.wood,木材,Wood
+chapter.1.desc,用煤炭和蒸汽驱动第一批机器，迈出工业化的第一步。,Power your first machines with coal and steam.
+chapter.1.name,第一章：蒸汽时代,Chapter 1: Steam Age
+chapter.empty,暂无章节数据。,No chapter data.
+chapter.goal.eu_per_sec_prefix,章节目标：发电量达到,Chapter Goal: Reach
+chapter.tasks.all_done,本章所有任务已完成！,All tasks complete!
+chapter.tasks.title,任务清单：,Tasks:
+crafting.no_inputs,无材料需求,No inputs
+crafting.recipe.select_placeholder,── 选择配方 ──,── Select Recipe ──
+crafting.time_prefix,剩,Left
+crafting.time_suffix,s,s left
+dim.overworld.desc,主世界，一切的起点,The Overworld — where it all begins
+dim.overworld.name,主世界,Overworld
+empty.no_techs,暂无科技,No Technologies Yet
+explore.food.cancel,,
+explore.food.confirm,,
+explore.food.modal_title,,
+explore.food.required,,
+explore.food.select_btn,,
+explore.food.selected,,
+explore.food.unit,,
+feature.auto_miner_eu,矿机EU化,Miner EU Mode
+feature.overclock,超频,Overclock
+feature.parallel_2x,并行处理,Parallel Processing
+hint.biome_discovered,发现新群系：,New biome discovered:
+hint.explore_cost,探索消耗：,Explore cost:
+hint.explore_fail,探索失败！,Explore failed!
+hint.explore_success,探索成功！,Explore success!
+hint.no_cost,材料不足！,Not enough materials!
+hint.no_generator,没有发电机,No Generator
+hint.no_machine,没有机器,No Machine
+hint.no_steam_generator,没有蒸汽锅炉,No Steam Generator
+hint.tool.not_enough_ability,工具等级不足！,Tool level not enough!
+inventory.empty,仓库为空。开始采集或合成资源。,Inventory empty. Start mining or crafting.
+inventory.title,📦 仓库,📦 Inventory
+label.battery,电池,Battery
+label.consume,消耗,Consume
+label.fuel,燃料,Fuel
+label.generator,发电机,Generator
+label.name,名字,Name
+label.net,网络,Net
+label.output,输出,Output
+label.status,状态,Status
+label.steam_generator,蒸汽锅炉,Steam Generator
+label.waste,浪费,Waste
+machine.alloy_furnace,,
+machine.assembler,组装台,Assembler
+machine.coal_miner,煤矿采掘机,Coal Miner
+machine.copper_miner,铜矿采掘机,Copper Miner
+machine.forge_hammer,锻造锤,Forge Hammer
+machine.furnace,冶炼炉,Furnace
+machine.hand_assembly,徒手组装,Hand Assembly
+machine.iron_miner,铁矿采掘机,Iron Miner
+machine.steam_boiler,蒸汽锅炉,Steam Boiler
+machine.tin_miner,锡矿采掘机,Tin Miner
+machine.wire_cutter,切线机,Wire Cutter
+machine.workbench,,
+mine.block.bedrock,,
+mine.block.coal,,
+mine.block.copper,,
+mine.block.dirt,,
+mine.block.iron,,
+mine.block.stone,,
+mine.btn.exit,,
+mine.exit.cancel,,
+mine.exit.confirm,,
+mine.exit.loot_title,,
+mine.exit.title,,
+mine.hint.not_visible,,
+mine.node.medium_cave,中型矿洞,Medium Cave
+mine.node.small_cave,小型矿洞,Small Cave
+mine.node.swamp_cave,,
+mine.prospector.no_tool,,
+mine.prospector.title,,
+mine.stamina.add,,
+mine.stamina.close,,
+mine.stamina.eat,,
+mine.stamina.food_modal_title,,
+mine.stamina.label,,
+nav.chapter,章节,Chapter
+nav.crafting,合成,Crafting
+nav.inventory,仓库,Inventory
+nav.mining,采集,Mining
+nav.playtime,游玩时间,Playtime
+nav.settings_btn,设置,Settings
+nav.stats_btn,统计,Stats
+nav.steam,蒸汽,Steam
+nav.tech,科技,Tech
+nav.world,探索,Explore
+offline.btn_close,好的，继续！,"OK, Let's Go!"
+offline.btn_simulating,模拟中…,Simulating…
+offline.produced_label,期间生产了：,Produced while away:
+offline.sim_cap,（最多计算 {time}）,(up to {time})
+offline.sim_overlay_label,正在模拟离线进度…,Simulating offline progress…
+offline.sim_progress_label,模拟进度,Sim Progress
+offline.time_prefix,你离线了,You were offline for
+offline.title,欢迎回来！,Welcome Back!
+overclock.indicator.normal,正常,Normal
+panel.biome.title,群系,Biomes
+panel.crafting.hint,合成各种工业零件,Craft various industrial parts
+panel.crafting.title,合成,Crafting
+panel.mining.hint,获取原材料,Gather raw materials
+panel.mining.title,采集,Mining
+panel.power.title,电力,Power
+panel.steam.title,蒸汽,Steam
+panel.tech.hint,研究先进技术,Research advanced technology
+panel.tech.title,科技,Tech
+panel.tool.title,工具,Tools
+recipe.make_basic_circuit,合成基础电路板,Assemble Basic Circuit
+recipe.make_coarse_rope,制作粗绳,Make Coarse Rope
+recipe.make_copper_wire,制作铜线,Make Copper Wire
+recipe.make_iron_plate,制作铁板,Make Iron Plate
+recipe.make_vacuum_tube,制作真空管,Make Vacuum Tube
+recipe.mine_coal,采掘煤炭,Mine Coal
+recipe.mine_copper_ore,采掘铜矿石,Mine Copper Ore
+recipe.mine_iron_ore,采掘铁矿石,Mine Iron Ore
+recipe.mine_tin_ore,采掘锡矿石,Mine Tin Ore
+recipe.smelt_copper,冶炼铜锭,Smelt Copper Ingot
+recipe.smelt_iron,冶炼铁锭,Smelt Iron Ingot
+recipe.smelt_tin,冶炼锡锭,Smelt Tin Ingot
+res.apple,,
+res.basic_circuit,基础电路板,Basic Circuit
+res.cactus_fruit,,
+res.coal,煤炭,Coal
+res.coarse_rope,粗绳,Coarse Rope
+res.cobblestone,鹅卵石,Cobblestone
+res.copper_ingot,铜锭,Copper Ingot
+res.copper_ore,铜矿石,Copper Ore
+res.copper_wire,铜线,Copper Wire
+res.flint,燧石,Flint
+res.gold_ore,,
+res.iron_ingot,铁锭,Iron Ingot
+res.iron_ore,铁矿石,Iron Ore
+res.iron_plate,铁板,Iron Plate
+res.log_wood,原木,Log
+res.mushroom,,
+res.tin_ingot,锡锭,Tin Ingot
+res.tin_ore,锡矿石,Tin Ore
+res.torch,,
+res.vacuum_tube,真空管,Vacuum Tube
+res.weeds,杂草,Weeds
+res.wrench,扳手,Wrench
+save.btn_confirm_delete,确认删除,Confirm Delete
+save.btn_copied,✓ 已复制,✓ Copied
+save.btn_copy,复制,Copy
+save.btn_delete,删除存档,Delete Save
+save.btn_generate,生成存档码,Generate Code
+save.btn_import,导入并刷新,Import & Reload
+save.btn_save_now,立即存档,Save Now
+save.btn_saved,✓ 已保存,✓ Saved
+save.code_placeholder,在此粘贴存档码...,Paste save code here...
+save.confirm_text,确定要删除所有存档吗？此操作不可撤销。,Delete all saves? This cannot be undone.
+save.danger_title,危险操作,Danger Zone
+save.export_title,导出存档,Export Save
+save.import_title,导入存档,Import Save
+save.invalid_code,存档码无效，请检查后重试。,Invalid save code. Please check and try again.
+save.just_now,刚刚,just now
+save.last_save_prefix,上次存档：,Last save:
+save.time_ago_suffix,前,ago
+save.title,💾 存档管理,💾 Save Management
+settings.save_section,存档,Save
+settings.theme_section,,
+settings.title,设置,Settings
+stats.last_save,上次存档,Last Save
+stats.offline_time,离线时间,Offline Time
+stats.online_time,在线时间,Online Time
+stats.started_at,开始于,Started At
+stats.ticks,刻,Ticks
+stats.title,统计,Stats
+stats.total_time,总时间,Total Time
+status.no_fuel,缺少燃料,No Fuel
+status.no_material,缺材料,No Material
+status.paused,已暂停,Paused
+status.running,运行中,Running
+task.build_boiler,建造蒸汽锅炉,Build a Steam Boiler
+task.build_furnace,建造第一台冶炼炉,Build your first Furnace
+task.gather_coal,探索洞穴收集 5 块煤炭,Gather 5 Coal from the cave
+task.gather_flint,收集 3 块燧石,Gather 3 Flint
+task.gather_more_wood,收集共 20 块原木,Gather 20 Logs total
+task.gather_ore,,
+task.gather_resources,捡起第一块原木,Pick up your first Log
+task.gather_stone,收集 10 块鹅卵石,Gather 10 Cobblestone
+task.gather_weeds,,
+task.gather_wood,收集 5 块原木,Gather 5 Logs
+task.make_circuit,合成基础电路板 × 4,Craft Basic Circuit × 4
+task.make_coarse_rope,,
+task.make_stone_pickaxe,,
+task.make_wire,合成铜线 × 10,Craft Copper Wire × 10
+task.make_wooden_pickaxe,,
+task.reach_power,发电量达到 32 EU/s,Reach 32 EU/s power output
+tech.basic_automation.desc,解锁矿机的 EU 消耗与自动化基础,Unlock EU consumption for miners
+tech.basic_automation.name,基础自动化,Basic Automation
+tech.cost.label,花费,Cost
+tech.detail.close,关闭,Close
+tech.detail.cost_label,研究消耗：,Research Cost:
+tech.detail.prereq_label,前置：,Requires:
+tech.detail.unlock_cond_unmet,解锁条件未满足,Unlock condition not met
+tech.machine_overclock.desc,允许机器以 2 倍速运行但消耗 4 倍 EU,Allow machines to run at 2x speed with 4x EU cost
+tech.machine_overclock.name,机器超频,Machine Overclock
+tech.node.available,可研究,Available
+tech.node.locked,锁定,Locked
+tech.node.researched,已研究,Researched
+tech.parallel_processing.desc,允许同类机器同时运行 2 个配方,Allow same-type machines to run 2 recipes simultaneously
+tech.parallel_processing.name,并行处理,Parallel Processing
+tech.prereq.implicit_unmet,隐藏前置未满足,Hidden prereq unmet
+tech.prereq.label,前置科技,Prerequisites
+tech.status.locked,锁定,Locked
+tech.status.researched,已研究,Researched
+tech.unlocks.features,功能,Features
+tech.unlocks.label,解锁：,Unlocks:
+tech.unlocks.machines,机器,Machines
+tech.unlocks.recipes,配方,Recipes
+tech_tree.automation,自动化,Automation
+theme.amber,,
+theme.cobalt,,
+theme.cyan,,
+theme.green,,
+theme.violet,,
+toast.build.fail,建造失败,Build Failed
+toast.build.success,建造成功,Build Success
+toast.deploy.fail,部署失败,Deploy Failed
+toast.deploy.success,部署成功,Deploy Success
+toast.research.fail,研究失败,Research Failed
+toast.research.success,研究成功,Research Success
+tool.stone_axe.level_0,木斧（待制作）,Wooden Axe (To Craft)
+tool.stone_axe.level_1,木斧,Wooden Axe
+tool.stone_axe.level_2,石斧,Stone Axe
+tool.stone_pickaxe.level_0,木镐（待制作）,Wooden Pickaxe (To Craft)
+tool.stone_pickaxe.level_1,木镐,Wooden Pickaxe
+tool.stone_pickaxe.level_2,石镐,Stone Pickaxe
+topbar.save_btn,存档,Save
+world.action.chop,砍树,Chop Tree
+world.action.chop_willow,,
+world.action.explore_cave,探索洞穴,Explore Cave
+world.action.gather_flint,拾取燧石,Gather Flint
+world.action.gather_mushroom,,
+world.action.gather_reeds,,
+world.action.gather_weeds,采集杂草,Gather Weeds
+world.action.mine_stone,凿取石块,Break Rock
+world.node.cave,洞穴入口 — 派人探索（30秒后获得煤炭）,Cave Entrance — Send someone in (returns coal in 30s)
+world.node.flint,燧石堆 — 点击采集,Flint Deposit — Click to gather
+world.node.oak_tree,橡树 — 点击砍伐,Oak Tree — Click to chop
+world.node.ready,点击领取,Claim
+world.node.stone,石块 — 点击敲击,Stone Rock — Click to break
+world.node.weeds,杂草丛 — 点击采集,Weeds — Click to gather

@@ -4,41 +4,35 @@
  *
  * 用法：
  *   node tools/i18n-add.cjs <key> <zh> <en>
- *   node tools/i18n-add.cjs <key> <zh> <en> [--csv locale.csv] [--dry]
  *
  * 示例：
- *   node tools/i18n-add.cjs "mine.stamina.eat" "吃" "Eat"
  *   node tools/i18n-add.cjs "panel.tool.title" "工具" "Tools"
  */
+
+'use strict'
 
 const fs   = require('fs')
 const path = require('path')
 
-const ROOT      = path.resolve(__dirname, '..')
-const CSV_PATH  = path.join(ROOT, 'tables', 'locale.csv')
-const SCHEMA    = path.join(ROOT, 'schemas', 'locale.schema.json')
+const ROOT     = path.resolve(__dirname, '..')
+const CSV_PATH = path.join(ROOT, 'tables', 'locale.csv')
 
-function parseCSVLine(line) {
+// ── 解析 ──────────────────────────────────────────────────────────
+
+function parseRow(line) {
   const result = []
-  let cur = ''
-  let inQuotes = false
+  let cur = '', inQ = false
   for (let i = 0; i < line.length; i++) {
-    const ch = line[i]
-    if (ch === '"') {
-      if (inQuotes && line[i + 1] === '"') { cur += '"'; i++ }
-      else { inQuotes = !inQuotes }
-    } else if (ch === ',' && !inQuotes) {
-      result.push(cur)
-      cur = ''
-    } else {
-      cur += ch
-    }
+    const c = line[i]
+    if (c === '"') { if (inQ && line[i+1] === '"') { cur += '"'; i++ } else { inQ = !inQ } }
+    else if (c === ',' && !inQ) { result.push(cur); cur = '' }
+    else cur += c
   }
   result.push(cur)
   return result
 }
 
-function escapeCSV(s) {
+function escape(s) {
   s = String(s ?? '')
   if (s.includes('"') || s.includes(',') || s.includes('\n') || s.includes('\r')) {
     return '"' + s.replace(/"/g, '""') + '"'
@@ -46,90 +40,68 @@ function escapeCSV(s) {
   return s
 }
 
-function getPrefix(key) {
-  const idx = key.indexOf('.')
-  return idx === -1 ? key : key.slice(0, idx)
-}
-
-function sortRowsPrefixGrouped(rows) {
-  const byPrefix = new Map()
-  for (const r of rows) {
-    const k = String(r.key ?? '').trim()
-    if (!k) continue
-    const p = getPrefix(k)
-    if (!byPrefix.has(p)) byPrefix.set(p, [])
-    byPrefix.get(p).push(r)
-  }
-  const prefixes = Array.from(byPrefix.keys()).sort((a, b) => a.localeCompare(b))
-  const sorted = []
-  for (const p of prefixes) {
-    const group = byPrefix.get(p)
-    group.sort((a, b) => String(a.key).localeCompare(String(b.key)))
-    sorted.push(...group)
-  }
-  return sorted
+function getPrefix(k) {
+  const i = k.indexOf('.')
+  return i === -1 ? k : k.slice(0, i)
 }
 
 // ── CLI ────────────────────────────────────────────────────────────
 
 const args = process.argv.slice(2)
-
 if (args.length < 3) {
-  console.error('用法: node i18n-add.cjs <key> <zh> <en> [--dry]')
-  console.error('示例: node i18n-add.cjs "panel.tool.title" "工具" "Tools"')
+  console.error('用法: node i18n-add.cjs <key> <zh> <en>')
   process.exit(1)
 }
 
-const dryRun    = args.includes('--dry')
-const cleanArgs  = args.filter(a => !a.startsWith('--'))
-const [key, zh, en] = cleanArgs
-
+const [key, zh, en] = args
 if (!key || !zh || !en) {
   console.error('key / zh / en 三个参数都不能省略')
   process.exit(1)
 }
 
-if (dryRun) console.log('[dry-run] 仅预览，不写入文件')
+// ── 读取 ──────────────────────────────────────────────────────────
 
-// ── 读取 & 解析 CSV ────────────────────────────────────────────────
+const raw    = fs.readFileSync(CSV_PATH, 'utf-8')
+const lines  = raw.replace(/^﻿/, '').split('\n')
+const dataRows = lines.slice(1).filter(l => l.trim()).map(l => parseRow(l))
 
-const rawText = fs.readFileSync(CSV_PATH, 'utf-8').replace(/^﻿/, '')
-const lines   = rawText.split('\n').filter(l => l.trim())
-const headers = parseCSVLine(lines[0])
-const dataRows = lines.slice(1).map(l => parseCSVLine(l))
-
-// ── 查找或新建行 ───────────────────────────────────────────────────
+// ── 查找或新建 ────────────────────────────────────────────────────
 
 let row = dataRows.find(r => String(r[0]).trim() === key)
 let isNew = false
 
 if (!row) {
-  row = []
-  for (const h of headers) row.push('')
-  row[0] = key
+  row = [key, '', '']
   dataRows.push(row)
   isNew = true
 }
 
-const zhIdx = headers.indexOf('zh')
-const enIdx = headers.indexOf('en')
+row[1] = zh
+row[2] = en
 
-if (zhIdx >= 0) row[zhIdx] = zh
-if (enIdx >= 0) row[enIdx] = en
+// ── 排序 ─────────────────────────────────────────────────────────
 
-// ── 排序 & 写入 ────────────────────────────────────────────────────
-
-const sorted = sortRowsPrefixGrouped(dataRows)
-const newCSV = ['﻿' + headers.join(',') + '\n']
-for (const r of sorted) {
-  newCSV.push(r.map(escapeCSV).join(','))
+const byPrefix = new Map()
+for (const r of dataRows) {
+  const k = String(r[0] ?? '').trim()
+  if (!k) continue
+  const p = getPrefix(k)
+  if (!byPrefix.has(p)) byPrefix.set(p, [])
+  byPrefix.get(p).push(r)
 }
 
-if (!dryRun) {
-  fs.writeFileSync(CSV_PATH, newCSV.join('\n'), 'utf-8')
-  console.log(`✓ ${isNew ? '新增' : '更新'}: ${key} → zh="${zh}" en="${en}"`)
-} else {
-  console.log(`[dry-run] ${isNew ? '新增' : '更新'}: ${key} → zh="${zh}" en="${en}"`)
+const prefixes = Array.from(byPrefix.keys()).sort()
+const sorted   = []
+for (const p of prefixes) {
+  const g = byPrefix.get(p)
+  g.sort((a, b) => String(a[0]).localeCompare(String(b[0])))
+  sorted.push(...g)
 }
 
-process.exit(0)
+// ── 写回（带 BOM）────────────────────────────────────────────────
+
+const outLines = ['key,zh,en']
+for (const r of sorted) outLines.push([r[0], r[1], r[2]].map(escape).join(','))
+
+fs.writeFileSync(CSV_PATH, '﻿' + outLines.join('\n') + '\n', 'utf-8')
+console.log(`✓ ${isNew ? '新增' : '更新'}: ${key} → zh="${zh}" en="${en}"`)
