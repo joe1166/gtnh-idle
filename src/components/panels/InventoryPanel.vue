@@ -48,7 +48,10 @@ import { fmt } from '../../utils/format'
 const inventoryStore = useInventoryStore()
 
 /** 仓库面板显示的大类顺序 */
-const CATEGORY_ORDER = ['raw', 'mat', 'prod', 'misc']
+const CATEGORY_ORDER = ['raw', 'mat', 'prod', 'special', 'misc']
+
+/** 已知的大类（不在上面的归为未分类） */
+const KNOWN_CATS = new Set(['raw', 'mat', 'prod', 'special', 'misc'])
 
 interface ResourceRow {
   id: string
@@ -71,11 +74,9 @@ function topCategory(category: string): string {
 
 const resourceGroups = computed((): ResourceGroup[] => {
   const groups: ResourceGroup[] = []
-  const allResources = db.table('resources')
 
   for (const cat of CATEGORY_ORDER) {
-    // 筛选该大类的所有资源（category 以 cat. 开头或是顶级分类）
-    const resources = allResources.filter((r) => topCategory(r.category) === cat)
+    const resources = db.table('resources').filter((r) => topCategory(r.category) === cat)
     if (resources.length === 0) continue
 
     const items: ResourceRow[] = resources
@@ -89,12 +90,24 @@ const resourceGroups = computed((): ResourceGroup[] => {
 
     if (items.length === 0) continue
 
-    groups.push({
-      category: cat,
-      label: t(`category.${cat}`),
-      items,
-    })
+    groups.push({ category: cat, label: t(`category.${cat}`), items })
   }
+
+  // 未分类：不在 KNOWN_CATS 的所有资源
+  const uncategorized = db.table('resources')
+    .filter((r) => !KNOWN_CATS.has(topCategory(r.category)))
+    .filter((r) => (inventoryStore.getAmount(r.id) > 0) || (inventoryStore.totalProduced[r.id] ?? 0) > 0)
+    .map((r) => {
+      const amount = inventoryStore.getAmount(r.id)
+      const cap = inventoryStore.getCap(r.id) || r.defaultCap
+      const pct = cap > 0 ? Math.min(100, (amount / cap) * 100) : 0
+      return { id: r.id, name: t(r.locKey), amount, cap, pct }
+    })
+
+  if (uncategorized.length > 0) {
+    groups.push({ category: 'uncategorized', label: t('category.uncategorized'), items: uncategorized })
+  }
+
   return groups
 })
 
