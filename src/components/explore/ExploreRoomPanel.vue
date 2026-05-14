@@ -96,10 +96,41 @@
             :key="enemy.id + '-' + enemy.hp"
             class="enemy-row"
           >
-            <span>{{ t(enemy.nameLocKey) }}</span>
-            <span>{{ enemy.hp }}/{{ enemy.maxHp }}</span>
+            <div class="enemy-head">
+              <span>{{ t(enemy.nameLocKey) }}</span>
+              <span>{{ enemy.hp }}/{{ enemy.maxHp }}</span>
+            </div>
+            <div class="enemy-hp-bar">
+              <div class="enemy-hp-fill" :style="{ width: `${enemyHpPercent(enemy)}%` }" />
+            </div>
           </div>
-          <div class="combat-log">{{ store.currentRoundLog || t('explore.combat.running') }}</div>
+          <div class="combat-log-wrap">
+            <div class="combat-log-panel" :class="{ 'is-expanded': combatLogExpanded }">
+              <div class="combat-log-title">战斗日志</div>
+              <div class="combat-log-list">
+              <div
+                v-for="(line, idx) in visibleCombatLogs"
+                :key="line + '-' + idx"
+                class="combat-log-line"
+              >
+                {{ line }}
+              </div>
+              </div>
+              <div class="log-handler-wrap">
+                <div
+                  class="log-handler"
+                  :class="{ 'is-expanded': combatLogExpanded }"
+                  role="button"
+                  tabindex="0"
+                  @click="toggleCombatLogExpanded"
+                  @keydown.enter.prevent="toggleCombatLogExpanded"
+                  @keydown.space.prevent="toggleCombatLogExpanded"
+                >
+                  <span class="log-handler-chevron" />
+                </div>
+              </div>
+            </div>
+          </div>
           <button class="btn-flee" @click="store.fleeCombat()">
             {{ t('explore.combat.flee') }}
           </button>
@@ -108,14 +139,11 @@
     </div>
     <AppTooltip :visible="tooltip.visible" :x="tooltip.x" :y="tooltip.y" :lines="tooltip.lines" />
 
-    <button class="btn-exit" :disabled="store.mode === 'combat'" @click="store.openExitDialog()">
-      {{ t('explore.action.exit') }}
-    </button>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, ref, onBeforeUnmount } from 'vue'
+import { computed, ref, onBeforeUnmount, watch } from 'vue'
 import { useExploreStore } from '../../stores/exploreStore'
 import { db } from '../../data/db'
 import { t } from '../../data/i18n'
@@ -133,6 +161,7 @@ const tooltip = ref<{ visible: boolean; x: number; y: number; lines: string[] }>
   y: 0,
   lines: [],
 })
+const combatLogExpanded = ref(false)
 
 const groundCols = 6
 const groundRows = 4
@@ -186,6 +215,13 @@ const aliveEnemies = computed(() => {
   const room = currentRoom.value
   if (!room?.enemies) return []
   return room.enemies.filter(e => e.hp > 0)
+})
+
+const visibleCombatLogs = computed(() => {
+  const logs = store.combatLogLines
+  if (logs.length === 0) return [t('explore.combat.running')]
+  if (combatLogExpanded.value) return logs
+  return logs.slice(-1)
 })
 
 function lootItemDef(itemId: string): ExploreLootItemDef | undefined {
@@ -314,6 +350,15 @@ function isDraggingGroundSource(instanceId: string): boolean {
   return drag.item.instanceId === instanceId
 }
 
+function enemyHpPercent(enemy: { hp: number; maxHp: number }): number {
+  if (enemy.maxHp <= 0) return 0
+  return Math.max(0, Math.min(100, Math.round((enemy.hp / enemy.maxHp) * 100)))
+}
+
+function toggleCombatLogExpanded(): void {
+  combatLogExpanded.value = !combatLogExpanded.value
+}
+
 function clearLootTimer(): void {
   if (lootTimer != null) {
     window.clearInterval(lootTimer)
@@ -348,6 +393,15 @@ onBeforeUnmount(() => {
   clearLootTimer()
   tooltip.value.visible = false
 })
+
+watch(
+  () => store.mode,
+  mode => {
+    if (mode !== 'combat') {
+      combatLogExpanded.value = false
+    }
+  },
+)
 </script>
 
 <style scoped>
@@ -440,37 +494,103 @@ onBeforeUnmount(() => {
 }
 
 .enemy-row {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.84rem;
-  padding: 4px 0;
+  padding: 7px 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.combat-log {
-  margin-top: 10px;
-  font-size: 0.78rem;
-  color: var(--accent);
+.enemy-head {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.84rem;
+  margin-bottom: 4px;
 }
 
-.btn-flee {
-  margin-top: 10px;
+.enemy-hp-bar {
   width: 100%;
-  border-radius: 6px;
-  border: 1px solid var(--danger-border);
-  color: var(--danger);
-  background: var(--danger-bg);
-  font-family: var(--font-mono);
+  height: 8px;
+  border-radius: 4px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.enemy-hp-fill {
+  height: 100%;
+  background: var(--accent);
+  transition: width 0.2s ease;
+}
+
+.combat-log-wrap {
+  margin-top: 10px;
+}
+
+.combat-log-panel {
+  border: 1px solid var(--border-subtle);
+  background: rgba(255, 255, 255, 0.02);
+  display: flex;
+  flex-direction: column;
+}
+
+.combat-log-title {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  padding: 6px 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.combat-log-list {
+  max-height: 26px;
+  overflow: auto;
+}
+
+.combat-log-panel.is-expanded .combat-log-list {
+  max-height: 130px;
+}
+
+.combat-log-line {
+  font-size: 0.76rem;
+  color: var(--accent);
+  padding: 5px 6px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  line-height: 1.4;
+}
+
+.log-handler-wrap {
+  display: flex;
+  justify-content: center;
+  padding: 6px 0 5px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.log-handler {
+  width: 30px;
+  height: 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--bg-base);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  padding: 8px 10px;
 }
 
-.btn-flee:hover {
-  background: var(--danger-border);
+.log-handler:hover {
+  background: var(--bg-hover);
 }
 
-.btn-loot,
-.btn-exit {
+.log-handler-chevron {
+  width: 7px;
+  height: 7px;
+  border-right: 1.5px solid var(--text-secondary);
+  border-bottom: 1.5px solid var(--text-secondary);
+  transform: rotate(45deg) translateY(-1px);
+  transition: transform 0.15s ease;
+}
+
+.log-handler.is-expanded .log-handler-chevron {
+  transform: rotate(-135deg) translateY(-1px);
+}
+
+.btn-loot {
   width: 100%;
   border-radius: 6px;
   border: 1px solid var(--border);
@@ -487,11 +607,6 @@ onBeforeUnmount(() => {
 
 .btn-loot:hover {
   background: var(--accent-subtle);
-}
-
-.btn-exit:disabled {
-  opacity: 0.45;
-  cursor: not-allowed;
 }
 
 .loot-progress-wrap {
@@ -579,14 +694,19 @@ onBeforeUnmount(() => {
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
 }
 
-.btn-exit {
-  margin-top: auto;
+.btn-flee {
+  margin-top: 10px;
+  width: 100%;
+  border-radius: 6px;
+  border: 1px solid var(--danger-border);
   color: var(--danger);
-  border-color: var(--danger-border);
   background: var(--danger-bg);
+  font-family: var(--font-mono);
+  cursor: pointer;
+  padding: 8px 10px;
 }
 
-.btn-exit:hover {
+.btn-flee:hover {
   background: var(--danger-border);
 }
 </style>

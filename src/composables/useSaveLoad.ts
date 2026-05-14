@@ -96,6 +96,16 @@ export function useSaveLoad() {
     if (data.state.explore)     useExploreStore().$patch(data.state.explore)
     if (data.state.equipment)   useEquipmentStore().$patch(data.state.equipment)
 
+    // 矿洞会话不跨刷新延续：重登时按“未带走任何物品直接退出”处理。
+    if (useMineStore().entered) {
+      useMineStore().abandonSessionOnReload()
+    }
+
+    // 遗迹探索会话不跨刷新延续：重登时按“未带走任何物品直接退出”处理。
+    if (useExploreStore().entered) {
+      useExploreStore().abandonSessionOnReload()
+    }
+
     return { success: true, incompatible: false, offlineSeconds: (Date.now() - data.savedAt) / 1000 }
   }
 

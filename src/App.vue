@@ -44,7 +44,7 @@ const defaultPanelId = PANEL_DEFS.reduce((min, p) => p.order < min.order ? p : m
 const activePanel = ref(defaultPanelId)
 
 // 世界面板全屏，不需要内边距
-const isPanelFullBleed = computed(() => activePanel.value === 'world')
+const isPanelFullBleed = computed(() => activePanel.value === 'world' || activePanel.value === 'role')
 
 // 离线弹窗
 const showOfflineModal = ref(false)

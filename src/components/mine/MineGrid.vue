@@ -57,10 +57,15 @@ function rowCol(idx: number): [number, number] {
 function cellClass(idx: number): Record<string, boolean> {
   const cell = store.grid[idx]
   const [row, col] = rowCol(idx)
+  const center = store.prospectorCenter
+  const isCenter = !!center && center.row === row && center.col === col
 
   // 已挖且可到达：显示为空洞（黑底）
   if (cell.dug && cell.reachable) {
-    return { 'mine-cell--dug': true }
+    return {
+      'mine-cell--dug': true,
+      'mine-cell--prospector-center': isCenter,
+    }
   }
 
   // 与可到达已挖格相邻：显示方块颜色，可挖或不可挖
@@ -146,7 +151,12 @@ function handleClick(idx: number): void {
   const cell = store.grid[idx]
 
   // 已挖通格：无操作
-  if (cell.dug && cell.reachable) return
+  if (cell.dug && cell.reachable) {
+    if (store.moveToCell(row, col)) {
+      autoScroll(row)
+    }
+    return
+  }
 
   // 不可见区域（未与可达格相邻）
   if (!store.isAdjacent(row, col)) {
@@ -263,6 +273,19 @@ function autoScroll(row: number) {
 .mine-cell--prospector-ping {
   outline: 2px solid var(--warn) !important;
   animation: mine-ping 0.8s ease-in-out infinite alternate;
+}
+
+.mine-cell--prospector-center {
+  box-shadow: inset 0 0 0 2px rgba(120, 180, 255, 0.9);
+  position: relative;
+}
+
+.mine-cell--prospector-center::after {
+  content: '';
+  position: absolute;
+  inset: 30%;
+  border-radius: 50%;
+  background: rgba(120, 180, 255, 0.95);
 }
 
 @keyframes mine-ping {

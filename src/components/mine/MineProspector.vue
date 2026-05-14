@@ -5,7 +5,7 @@
       <span v-if="prospectorLevel > 0" class="prospector-level">Lv.{{ prospectorLevel }}</span>
     </div>
 
-    <template v-if="prospectorLevel <= 0">
+    <template v-if="prospectorAbility <= 0">
       <p class="prospector-hint">{{ t('mine.prospector.no_tool') }}</p>
     </template>
 
@@ -55,7 +55,14 @@ import { t } from '../../data/i18n'
 const store     = useMineStore()
 const toolStore = useToolStore()
 
-const prospectorLevel = computed(() => toolStore.levels['prospector'] ?? 0)
+const prospectorAbility = computed(() => toolStore.getAbility('prospector_ability'))
+const prospectorLevel = computed(() => {
+  const ability = prospectorAbility.value
+  if (ability >= 8) return 3
+  if (ability >= 5) return 2
+  if (ability > 0) return 1
+  return 0
+})
 
 const nearestBlockName = computed(() => {
   const blockId = store.prospectorResult?.nearestBlockId

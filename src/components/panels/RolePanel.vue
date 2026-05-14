@@ -18,8 +18,12 @@
     </div>
 
     <div class="panel-body">
-      <ToolPanel v-if="activeTab === 'tools'" />
-      <EquipmentPanel v-else />
+      <div v-if="activeTab === 'tools'" class="panel-fill panel-fill--tools">
+        <ToolPanel />
+      </div>
+      <div v-else class="panel-fill panel-fill--equip">
+        <EquipmentPanel />
+      </div>
     </div>
   </div>
 </template>
@@ -39,26 +43,33 @@ const activeTab = ref<'tools' | 'equip'>('tools')
   height: 100%;
   display: flex;
   flex-direction: column;
+  min-height: 0;
 }
 
 .tab-bar {
   display: flex;
-  gap: 4px;
-  margin-bottom: 10px;
+  width: 100%;
+  background: var(--bg-panel);
 }
 
 .tab-btn {
-  border: 1px solid var(--border);
-  background: var(--bg-base);
+  flex: 1;
+  border: none;
+  border-right: 1px solid var(--border);
+  background: transparent;
   color: var(--text-secondary);
-  padding: 6px 10px;
+  padding: 10px 12px;
   cursor: pointer;
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 13px;
+  text-transform: uppercase;
+}
+
+.tab-btn:last-child {
+  border-right: none;
 }
 
 .tab-btn--active {
-  border-color: var(--accent);
   color: var(--accent);
   background: var(--accent-bg);
 }
@@ -66,5 +77,17 @@ const activeTab = ref<'tools' | 'equip'>('tools')
 .panel-body {
   flex: 1;
   min-height: 0;
+  background: transparent;
+  overflow: auto;
+}
+
+.panel-fill {
+  width: 100%;
+  height: auto;
+  min-height: 0;
+}
+
+.panel-fill--equip {
+  height: 100%;
 }
 </style>

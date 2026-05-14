@@ -198,6 +198,17 @@ export const useExploreStore = defineStore('explore', {
   },
 
   actions: {
+    abandonSessionOnReload(): void {
+      this.bagPlacedItems = []
+      this.roomGroundLootByRoomId = {}
+      this.roomPendingLootByRoomId = {}
+      this.draggingLoot = null
+      this.exitDialogOpen = false
+      this.defeatDialogOpen = false
+      this.entered = false
+      this.mode = 'explore'
+    },
+
     initBagCapacity(): void {
       const toolStore = useToolStore()
       const bagLevel = Math.max(0, toolStore.levels.bag ?? 0)

@@ -209,15 +209,27 @@ function setStatus(setId: string): { pieces: number; active2: boolean; active4: 
 
 <style scoped>
 .equip-panel {
+  height: 100%;
+  box-sizing: border-box;
+  padding: 10px;
   display: grid;
   grid-template-columns: 260px minmax(420px, 1fr) 300px;
   gap: 12px;
 }
 
 .slots-pane, .list-pane, .set-pane {
+  min-height: 0;
+  height: 100%;
+  box-sizing: border-box;
   border: 1px solid var(--border);
   background: rgba(255, 255, 255, 0.02);
   padding: 10px;
+  overflow: auto;
+}
+
+.list-pane {
+  display: flex;
+  flex-direction: column;
 }
 
 .pane-title {
@@ -252,6 +264,7 @@ function setStatus(setId: string): { pieces: number; active2: boolean; active4: 
   justify-content: space-between;
   align-items: center;
   gap: 10px;
+  flex-wrap: wrap;
 }
 
 .filter-row {
@@ -275,7 +288,9 @@ function setStatus(setId: string): { pieces: number; active2: boolean; active4: 
 }
 
 .item-list {
-  max-height: 520px;
+  margin-top: 6px;
+  min-height: 0;
+  flex: 1;
   overflow: auto;
   display: flex;
   flex-direction: column;

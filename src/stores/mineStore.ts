@@ -35,6 +35,8 @@ export const useMineStore = defineStore('mine', {
     seed:    0,
     prospectorResult: null as ProspectorResult | null,
     prospectorCooldown: 0,
+    playerRow: 0,
+    playerCol: 0,
     sessionLoot:    {} as Record<string, number>,
     exitDialogOpen: false,
   }),
@@ -76,10 +78,29 @@ export const useMineStore = defineStore('mine', {
       }
       return result
     },
+
+    /** 探矿仪扫描中心：当前最深的已挖可达格 */
+    prospectorCenter(): { row: number; col: number } | null {
+      const playerCell = this.getCell(this.playerRow, this.playerCol)
+      if (playerCell?.dug && playerCell.reachable) {
+        return { row: this.playerRow, col: this.playerCol }
+      }
+      const cells = this.dugCells
+      if (cells.length === 0) return null
+      return cells.reduce((a, b) => (a.row > b.row ? a : b))
+    },
   },
 
   actions: {
     /** 进入矿洞：从 cave config 读取参数，生成新地图，重置体力 */
+    abandonSessionOnReload(): void {
+      this.sessionLoot = {}
+      this.prospectorResult = null
+      this.prospectorCooldown = 0
+      this.exitDialogOpen = false
+      this.entered = false
+    },
+
     enter(caveId: string): void {
       const caveDef = db.get('mine_caves', caveId)
       if (!caveDef) return
@@ -94,6 +115,8 @@ export const useMineStore = defineStore('mine', {
       this.prospectorCooldown = 0
       this.sessionLoot        = {}
       this.exitDialogOpen     = false
+      this.playerRow          = 0
+      this.playerCol          = Math.floor(this.cols / 2)
       this.generateMap()
     },
 
@@ -241,6 +264,8 @@ export const useMineStore = defineStore('mine', {
 
       cell.dug       = true
       cell.reachable = true
+      this.playerRow = row
+      this.playerCol = col
       this.stamina--
 
       // BFS 传播可到达性：挖通到废弃通道时打通连通性
@@ -270,6 +295,14 @@ export const useMineStore = defineStore('mine', {
       }
     },
 
+    moveToCell(row: number, col: number): boolean {
+      const cell = this.getCell(row, col)
+      if (!cell || !cell.dug || !cell.reachable) return false
+      this.playerRow = row
+      this.playerCol = col
+      return true
+    },
+
     /** 使用道具回复体力（resourceId 为背包中的道具） */
     useStaminaItem(resourceId: string, restoreAmount: number): void {
       const inv = useInventoryStore()
@@ -292,16 +325,16 @@ export const useMineStore = defineStore('mine', {
     /** 使用探矿仪扫描 */
     useProspector(): void {
       if (this.prospectorCooldown > 0) return
-      const prospectorLevel = useToolStore().levels['prospector'] ?? 0
-      if (prospectorLevel <= 0) return
-
-      const radii = [0, 3, 5, 8]
-      const radius = radii[prospectorLevel] ?? 3
+      const prospectorAbility = useToolStore().getAbility('prospector_ability')
+      if (prospectorAbility <= 0) return
+      const radius =
+        prospectorAbility >= 8 ? 8 :
+        prospectorAbility >= 5 ? 5 :
+        3
 
       // 找最深已挖格作为扫描中心
-      const dugged = this.dugCells
-      if (dugged.length === 0) return
-      const center = dugged.reduce((a, b) => (a.row > b.row ? a : b))
+      const center = this.prospectorCenter
+      if (!center) return
 
       // 扫描半径内未挖矿石格
       const oreBlocks: { row: number; col: number; blockId: string; dist: number }[] = []

@@ -56,6 +56,9 @@
         </div>
       </div>
     </div>
+    <button class="btn-exit" :disabled="store.mode === 'combat'" @click="store.openExitDialog()">
+      {{ t('explore.action.exit') }}
+    </button>
     <AppTooltip :visible="tooltip.visible" :x="tooltip.x" :y="tooltip.y" :lines="tooltip.lines" />
   </div>
 </template>
@@ -271,6 +274,26 @@ onUnmounted(() => {
   height: 100%;
   background: var(--accent);
   transition: width 0.2s ease;
+}
+
+.btn-exit {
+  width: 100%;
+  border-radius: 6px;
+  border: 1px solid var(--danger-border);
+  color: var(--danger);
+  background: var(--danger-bg);
+  font-family: var(--font-mono);
+  cursor: pointer;
+  padding: 9px 12px;
+}
+
+.btn-exit:hover {
+  background: var(--danger-border);
+}
+
+.btn-exit:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
 }
 
 .section-title {
