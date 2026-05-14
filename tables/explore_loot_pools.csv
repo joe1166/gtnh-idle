@@ -1,0 +1,14 @@
+id,sourceType,sourceId,itemId,weight,minCount,maxCount
+room_antechamber_coin,room,antechamber,relic_coin_stack,55,1,3
+room_antechamber_scroll,room,antechamber,dusty_scroll_bundle,25,1,1
+room_antechamber_slab,room,antechamber,stone_relic_slab,20,1,1
+room_burial_coin,room,burial_chamber,relic_coin_stack,35,2,4
+room_burial_jar,room,burial_chamber,sealed_canopic_jar,45,1,2
+room_burial_ornament,room,burial_chamber,pharaoh_ornament,20,1,1
+enemy_scarab_coin,enemy,scarab,relic_coin_stack,70,1,2
+enemy_scarab_scroll,enemy,scarab,dusty_scroll_bundle,30,1,1
+enemy_guard_slab,enemy,mummy_guard,stone_relic_slab,45,1,2
+enemy_guard_jar,enemy,mummy_guard,sealed_canopic_jar,55,1,1
+enemy_elite_jar,enemy,mummy_elite,sealed_canopic_jar,40,1,2
+enemy_elite_ornament,enemy,mummy_elite,pharaoh_ornament,60,1,1
+event_intro_a,event,pharaoh_intro_002:A,pharaoh_ornament,100,1,1

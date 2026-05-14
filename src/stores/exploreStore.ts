@@ -1,13 +1,17 @@
 import { defineStore } from 'pinia'
 import { db } from '../data/db'
 import { useInventoryStore } from './inventoryStore'
-import { applyReward } from '../utils/rewards'
+import { useToolStore } from './toolStore'
 import { t } from '../data/i18n'
 import type {
   ExploreRoom,
   ExploreConnection,
   ExploreCombatEnemy,
   ExploreEventNodeDef,
+  ExploreLootItemDef,
+  ExploreLootPoolDef,
+  ExploreLootInstance,
+  ExploreBagPlacedItem,
 } from '../data/types'
 
 function makePRNG(seed: number) {
@@ -81,6 +85,21 @@ function sampleByWeight<T extends { weight: number }>(items: T[], rng: () => num
   return items[0] ?? null
 }
 
+function randInt(min: number, max: number): number {
+  if (max <= min) return min
+  return min + Math.floor(Math.random() * (max - min + 1))
+}
+
+function cloneLootInstance(def: ExploreLootItemDef, instanceId: string): ExploreLootInstance {
+  return {
+    instanceId,
+    itemId: def.id,
+    width: Math.max(1, def.sizeW),
+    height: Math.max(1, def.sizeH),
+    rotated: false,
+  }
+}
+
 let roomCounter = 0
 
 export const useExploreStore = defineStore('explore', {
@@ -105,7 +124,20 @@ export const useExploreStore = defineStore('explore', {
     previousRoomId: null as string | null,
     seed: 0,
     visitedRoomIds: [] as string[],
-    sessionLoot: {} as Record<string, number>,
+    bagCols: 6,
+    bagRows: 5,
+    bagPlacedItems: [] as ExploreBagPlacedItem[],
+    roomGroundLootByRoomId: {} as Record<string, ExploreLootInstance[]>,
+    roomPendingLootByRoomId: {} as Record<string, ExploreLootInstance[]>,
+    draggingLoot: null as null | {
+      item: ExploreLootInstance
+      from: 'ground' | 'bag'
+      sourceRoomId?: string
+      sourcePlacedId?: string
+      grabOffsetX: number
+      grabOffsetY: number
+    },
+    lootSeq: 0,
     exitDialogOpen: false,
     defeatDialogOpen: false,
   }),
@@ -123,7 +155,29 @@ export const useExploreStore = defineStore('explore', {
     },
 
     hasLoot(state): boolean {
-      return Object.keys(state.sessionLoot).length > 0
+      return state.bagPlacedItems.length > 0
+    },
+    currentRoomGroundLoot(state): ExploreLootInstance[] {
+      if (!state.currentRoomId) return []
+      return state.roomGroundLootByRoomId[state.currentRoomId] ?? []
+    },
+    bagLootSummary(state): Record<string, number> {
+      const summary: Record<string, number> = {}
+      for (const it of state.bagPlacedItems) {
+        summary[it.itemId] = (summary[it.itemId] ?? 0) + 1
+      }
+      return summary
+    },
+    bagResourceSummary(state): Record<string, number> {
+      const summary: Record<string, number> = {}
+      for (const placed of state.bagPlacedItems) {
+        const def = db.get('explore_loot_items', placed.itemId)
+        if (!def) continue
+        for (const out of def.convertOutputs) {
+          summary[out.resourceId] = (summary[out.resourceId] ?? 0) + out.amount
+        }
+      }
+      return summary
     },
 
     visibleRoomIds(state): string[] {
@@ -142,6 +196,82 @@ export const useExploreStore = defineStore('explore', {
   },
 
   actions: {
+    initBagCapacity(): void {
+      const toolStore = useToolStore()
+      const bagLevel = Math.max(0, toolStore.levels.bag ?? 0)
+      const misc = db.get('global_misc', 'explore_bag_grid')
+      const raw = misc?.k1 ?? ''
+      const pairs = raw
+        .split('|')
+        .map(s => s.trim())
+        .filter(Boolean)
+        .map(part => {
+          const [w, h] = part.split(',').map(v => Number(v.trim()))
+          return { cols: Number.isFinite(w) ? w : 0, rows: Number.isFinite(h) ? h : 0 }
+        })
+        .filter(p => p.cols > 0 && p.rows > 0)
+
+      if (pairs.length === 0) {
+        this.bagCols = 6
+        this.bagRows = 5
+        return
+      }
+
+      const idx = Math.min(bagLevel, pairs.length - 1)
+      this.bagCols = pairs[idx].cols
+      this.bagRows = pairs[idx].rows
+    },
+
+    nextLootInstanceId(): string {
+      this.lootSeq += 1
+      return `loot_${this.lootSeq}`
+    },
+
+    getLootItemDef(itemId: string): ExploreLootItemDef | undefined {
+      return db.get('explore_loot_items', itemId)
+    },
+
+    rollLootBySource(sourceType: ExploreLootPoolDef['sourceType'], sourceId: string): ExploreLootInstance[] {
+      const pool = db.table('explore_loot_pools').filter(p => p.sourceType === sourceType && p.sourceId === sourceId)
+      if (pool.length === 0) return []
+      const totalWeight = pool.reduce((sum, p) => sum + p.weight, 0)
+      if (totalWeight <= 0) return []
+
+      const rollTimes = randInt(1, 2)
+      const out: ExploreLootInstance[] = []
+      for (let k = 0; k < rollTimes; k++) {
+        let roll = Math.random() * totalWeight
+        let picked: ExploreLootPoolDef | null = null
+        for (const entry of pool) {
+          roll -= entry.weight
+          if (roll <= 0) {
+            picked = entry
+            break
+          }
+        }
+        if (!picked) picked = pool[0]
+        const itemDef = picked ? this.getLootItemDef(picked.itemId) : undefined
+        if (!picked || !itemDef) continue
+        const count = randInt(picked.minCount, picked.maxCount)
+        for (let i = 0; i < count; i++) {
+          out.push(cloneLootInstance(itemDef, this.nextLootInstanceId()))
+        }
+      }
+      return out
+    },
+
+    appendGroundLoot(roomId: string, items: ExploreLootInstance[]): void {
+      if (items.length === 0) return
+      const current = this.roomGroundLootByRoomId[roomId] ?? []
+      this.roomGroundLootByRoomId[roomId] = [...current, ...items]
+    },
+
+    queuePendingLoot(roomId: string, items: ExploreLootInstance[]): void {
+      if (items.length === 0) return
+      const current = this.roomPendingLootByRoomId[roomId] ?? []
+      this.roomPendingLootByRoomId[roomId] = [...current, ...items]
+    },
+
     enter(mapId: string): void {
       const mapDef = db.get('explore_maps', mapId)
       if (!mapDef) return
@@ -162,7 +292,12 @@ export const useExploreStore = defineStore('explore', {
       this.currentRoundLog = ''
       this.previousRoomId = null
       this.visitedRoomIds = []
-      this.sessionLoot = {}
+      this.initBagCapacity()
+      this.bagPlacedItems = []
+      this.roomGroundLootByRoomId = {}
+      this.roomPendingLootByRoomId = {}
+      this.draggingLoot = null
+      this.lootSeq = 0
       this.exitDialogOpen = false
       this.defeatDialogOpen = false
 
@@ -462,16 +597,22 @@ export const useExploreStore = defineStore('explore', {
       const room = this.rooms.find(r => r.instanceId === instanceId)
       if (!room || room.looted) return
       const def = db.get('explore_rooms', room.defId)
-      if (!def || !def.rewardId) {
+      if (!def || room.defId === 'entry') {
         room.looted = true
         return
       }
-      const gains = applyReward(def.rewardId)
-      room.roomLoot = {}
-      for (const [resId, amount] of Object.entries(gains)) {
-        this.sessionLoot[resId] = (this.sessionLoot[resId] ?? 0) + amount
-        room.roomLoot[resId] = (room.roomLoot[resId] ?? 0) + amount
+      const pending = this.roomPendingLootByRoomId[room.instanceId] ?? []
+      let drops = [...this.rollLootBySource('room', def.id), ...pending]
+      // 保底：房间搜刮至少产出 1 个遗迹掉落物
+      if (drops.length === 0) {
+        const allLootDefs = db.table('explore_loot_items')
+        if (allLootDefs.length > 0) {
+          const picked = allLootDefs[Math.floor(Math.random() * allLootDefs.length)]
+          drops = [cloneLootInstance(picked, this.nextLootInstanceId())]
+        }
       }
+      this.appendGroundLoot(room.instanceId, drops)
+      delete this.roomPendingLootByRoomId[room.instanceId]
       room.looted = true
     },
 
@@ -503,15 +644,10 @@ export const useExploreStore = defineStore('explore', {
       if (!node) return
 
       const nextId = option === 'A' ? node.optionANextId : option === 'B' ? node.optionBNextId : node.optionCNextId
-      const rewardId = option === 'A' ? node.optionARewardId : option === 'B' ? node.optionBRewardId : node.optionCRewardId
       const hpDelta = option === 'A' ? node.optionAHpDelta : option === 'B' ? node.optionBHpDelta : node.optionCHpDelta
 
-      if (rewardId && rewardId > 0) {
-        const gains = applyReward(rewardId)
-        for (const [resId, amount] of Object.entries(gains)) {
-          this.sessionLoot[resId] = (this.sessionLoot[resId] ?? 0) + amount
-        }
-      }
+      const eventDrops = this.rollLootBySource('event', `${node.id}:${option}`)
+      this.queuePendingLoot(room.instanceId, eventDrops)
       if (hpDelta && hpDelta !== 0) {
         this.hp = Math.max(0, Math.min(this.maxHp, this.hp + hpDelta))
       }
@@ -587,13 +723,9 @@ export const useExploreStore = defineStore('explore', {
       room.dangerKnown = true
       room.escapedFromCombat = true
 
-      const lootEntries = Object.entries(this.sessionLoot).filter(([, amount]) => amount > 0)
-      if (lootEntries.length > 0) {
-        const dropCount = 1 + Math.floor(Math.random() * lootEntries.length)
-        const shuffled = [...lootEntries].sort(() => Math.random() - 0.5)
-        for (const [resId] of shuffled.slice(0, dropCount)) {
-          delete this.sessionLoot[resId]
-        }
+      if (this.bagPlacedItems.length > 0) {
+        const index = Math.floor(Math.random() * this.bagPlacedItems.length)
+        this.bagPlacedItems.splice(index, 1)
       }
 
       const fallbackRoomId = this.previousRoomId
@@ -650,15 +782,9 @@ export const useExploreStore = defineStore('explore', {
 
       const remaining = room.enemies.filter(e => e.hp > 0)
       if (remaining.length === 0) {
-        const rewardMap: Record<number, boolean> = {}
         for (const e of room.enemies) {
-          if (e.rewardId > 0) rewardMap[e.rewardId] = true
-        }
-        for (const rewardIdStr of Object.keys(rewardMap)) {
-          const gains = applyReward(Number(rewardIdStr))
-          for (const [resId, amount] of Object.entries(gains)) {
-            this.sessionLoot[resId] = (this.sessionLoot[resId] ?? 0) + amount
-          }
+          const drops = this.rollLootBySource('enemy', e.id)
+          this.queuePendingLoot(room.instanceId, drops)
         }
         room.combatResolved = true
         room.dangerKnown = !!room.escapedFromCombat
@@ -666,8 +792,109 @@ export const useExploreStore = defineStore('explore', {
       }
     },
 
+    canPlaceInBag(item: ExploreLootInstance, x: number, y: number, ignoreId?: string): boolean {
+      if (x < 0 || y < 0) return false
+      if (x + item.width > this.bagCols) return false
+      if (y + item.height > this.bagRows) return false
+
+      for (const placed of this.bagPlacedItems) {
+        if (ignoreId && placed.instanceId === ignoreId) continue
+        const overlapX = x < placed.x + placed.width && x + item.width > placed.x
+        const overlapY = y < placed.y + placed.height && y + item.height > placed.y
+        if (overlapX && overlapY) return false
+      }
+      return true
+    },
+
+    beginDragFromGround(instanceId: string, grabOffsetX = 0, grabOffsetY = 0): void {
+      if (this.mode !== 'explore' || !this.currentRoomId) return
+      const ground = this.roomGroundLootByRoomId[this.currentRoomId] ?? []
+      const item = ground.find(i => i.instanceId === instanceId)
+      if (!item) return
+      this.draggingLoot = {
+        item: { ...item },
+        from: 'ground',
+        sourceRoomId: this.currentRoomId,
+        grabOffsetX,
+        grabOffsetY,
+      }
+    },
+
+    beginDragFromBag(instanceId: string, grabOffsetX = 0, grabOffsetY = 0): void {
+      if (this.mode !== 'explore') return
+      const placed = this.bagPlacedItems.find(i => i.instanceId === instanceId)
+      if (!placed) return
+      this.draggingLoot = {
+        item: {
+          instanceId: placed.instanceId,
+          itemId: placed.itemId,
+          width: placed.width,
+          height: placed.height,
+          rotated: placed.rotated,
+        },
+        from: 'bag',
+        sourcePlacedId: placed.instanceId,
+        grabOffsetX,
+        grabOffsetY,
+      }
+    },
+
+    rotateDraggingLoot(): void {
+      if (!this.draggingLoot) return
+      const cur = this.draggingLoot.item
+      this.draggingLoot.item = {
+        ...cur,
+        width: cur.height,
+        height: cur.width,
+        rotated: !cur.rotated,
+      }
+    },
+
+    cancelDraggingLoot(): void {
+      this.draggingLoot = null
+    },
+
+    placeDraggingLoot(x: number, y: number): boolean {
+      const drag = this.draggingLoot
+      if (!drag) return false
+      if (!this.canPlaceInBag(drag.item, x, y, drag.from === 'bag' ? drag.sourcePlacedId : undefined)) return false
+
+      if (drag.from === 'ground' && drag.sourceRoomId) {
+        const ground = this.roomGroundLootByRoomId[drag.sourceRoomId] ?? []
+        this.roomGroundLootByRoomId[drag.sourceRoomId] = ground.filter(i => i.instanceId !== drag.item.instanceId)
+      } else if (drag.from === 'bag' && drag.sourcePlacedId) {
+        this.bagPlacedItems = this.bagPlacedItems.filter(i => i.instanceId !== drag.sourcePlacedId)
+      }
+
+      this.bagPlacedItems.push({
+        ...drag.item,
+        x,
+        y,
+      })
+      this.draggingLoot = null
+      return true
+    },
+
+    returnBagItemToGround(instanceId: string): void {
+      if (this.mode !== 'explore' || !this.currentRoomId) return
+      const index = this.bagPlacedItems.findIndex(i => i.instanceId === instanceId)
+      if (index < 0) return
+      const [item] = this.bagPlacedItems.splice(index, 1)
+      const plain: ExploreLootInstance = {
+        instanceId: item.instanceId,
+        itemId: item.itemId,
+        width: item.width,
+        height: item.height,
+        rotated: item.rotated,
+      }
+      this.appendGroundLoot(this.currentRoomId, [plain])
+    },
+
     handleDefeat(): void {
-      this.sessionLoot = {}
+      this.bagPlacedItems = []
+      this.roomGroundLootByRoomId = {}
+      this.roomPendingLootByRoomId = {}
+      this.draggingLoot = null
       this.exitDialogOpen = true
       this.defeatDialogOpen = true
       this.mode = 'result'
@@ -686,10 +913,17 @@ export const useExploreStore = defineStore('explore', {
 
     confirmExit(): void {
       const inv = useInventoryStore()
-      for (const [resId, amount] of Object.entries(this.sessionLoot)) {
-        inv.addItem(resId, amount)
+      for (const placed of this.bagPlacedItems) {
+        const def = this.getLootItemDef(placed.itemId)
+        if (!def) continue
+        for (const out of def.convertOutputs) {
+          inv.addItem(out.resourceId, out.amount)
+        }
       }
-      this.sessionLoot = {}
+      this.bagPlacedItems = []
+      this.roomGroundLootByRoomId = {}
+      this.roomPendingLootByRoomId = {}
+      this.draggingLoot = null
       this.exitDialogOpen = false
       this.defeatDialogOpen = false
       this.entered = false

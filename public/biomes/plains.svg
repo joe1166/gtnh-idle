@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900" role="img" aria-label="Plains biome illustration">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#8fd0ff"/>
+      <stop offset="62%" stop-color="#c7ebff"/>
+      <stop offset="100%" stop-color="#e7f7ff"/>
+    </linearGradient>
+    <linearGradient id="farHills" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#94c77a"/>
+      <stop offset="100%" stop-color="#79ab62"/>
+    </linearGradient>
+    <linearGradient id="nearGrass" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#8dcf5b"/>
+      <stop offset="100%" stop-color="#5f9738"/>
+    </linearGradient>
+    <linearGradient id="path" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#cfb57a"/>
+      <stop offset="100%" stop-color="#b39358"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="900" fill="url(#sky)"/>
+
+  <circle cx="1020" cy="130" r="58" fill="#fff8bf" opacity="0.9"/>
+  <ellipse cx="250" cy="150" rx="92" ry="30" fill="#ffffff" opacity="0.72"/>
+  <ellipse cx="375" cy="165" rx="66" ry="22" fill="#ffffff" opacity="0.68"/>
+  <ellipse cx="650" cy="120" rx="104" ry="34" fill="#ffffff" opacity="0.74"/>
+  <ellipse cx="795" cy="140" rx="74" ry="26" fill="#ffffff" opacity="0.66"/>
+
+  <path d="M0 500 C140 430 260 440 400 505 C540 565 690 560 840 510 C960 470 1080 465 1200 495 L1200 900 L0 900 Z" fill="url(#farHills)"/>
+  <path d="M0 610 C160 550 320 560 510 650 C650 715 800 710 980 640 C1080 600 1140 596 1200 620 L1200 900 L0 900 Z" fill="url(#nearGrass)"/>
+
+  <path d="M560 900 C600 770 662 700 760 620 C700 632 648 660 600 710 C542 770 502 835 470 900 Z" fill="url(#path)" opacity="0.95"/>
+
+  <g opacity="0.7" fill="#5a8f37">
+    <circle cx="124" cy="710" r="12"/><circle cx="138" cy="698" r="8"/><circle cx="114" cy="699" r="7"/>
+    <circle cx="1006" cy="724" r="11"/><circle cx="1020" cy="712" r="8"/><circle cx="995" cy="713" r="7"/>
+    <circle cx="890" cy="680" r="10"/><circle cx="903" cy="670" r="7"/><circle cx="880" cy="671" r="6"/>
+  </g>
+</svg>

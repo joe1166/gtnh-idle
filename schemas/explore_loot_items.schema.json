@@ -1,0 +1,23 @@
+{
+  "root": "array",
+  "output": "src/config/explore_loot_items.json",
+  "fields": {
+    "id": "string",
+    "locKey": "string",
+    "iconPath": "string",
+    "sizeW": "number",
+    "sizeH": "number",
+    "convertOutputs": {
+      "type": "array",
+      "sep": "|",
+      "item": {
+        "type": "object",
+        "sep": ":",
+        "fields": [
+          { "name": "resourceId", "type": "string" },
+          { "name": "amount", "type": "number" }
+        ]
+      }
+    }
+  }
+}

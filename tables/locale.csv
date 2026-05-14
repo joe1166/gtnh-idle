@@ -1,4 +1,5 @@
 ﻿key,zh,en
+attr.bag_capacity,背包容量,Bag Capacity
 attr.mining_ability,Mining Ability,Mining Ability
 attr.wood_ability,Wood Ability,Wood Ability
 biome.desert,沙漠,Desert
@@ -58,11 +59,20 @@ explore.exit.defeat_title,探索失败,Exploration Failed
 explore.food.cancel,取消,Cancel
 explore.food.confirm,确认,Confirm
 explore.food.modal_title,选择消耗食物,Select Food
+explore.food.no_food,,
 explore.food.required,所需食物,Required
 explore.food.select_btn,选择食物,Select Food
 explore.food.selected,已选,Selected
 explore.food.unit,点,pt
+explore.loot.bag_title,背包,Backpack
+explore.loot.ground_title,房间物资,Ground Loot
+explore.loot.item.dusty_scroll_bundle,风化卷轴束,Dusty Scroll Bundle
+explore.loot.item.pharaoh_ornament,法老饰件,Pharaoh Ornament
+explore.loot.item.relic_coin_stack,遗迹钱币袋,Ruins Coin Pouch
+explore.loot.item.sealed_canopic_jar,密封陶罐,Sealed Canopic Jar
+explore.loot.item.stone_relic_slab,石质遗物板,Stone Relic Slab
 explore.loot.room_title,房间奖励,Room Loot
+explore.loot.rotate_hint,拖拽时按 R 旋转,Press R to rotate while dragging
 explore.loot.title,探索奖励,Loot
 explore.map.pyramid,金字塔,Pyramid
 explore.mode.combat,战斗,Combat
@@ -72,6 +82,7 @@ explore.panel.role,职责,Role
 explore.panel.room,房间,Room
 explore.role.hp,生命值,HP
 explore.room.antechamber,前厅,Antechamber
+explore.room.antechamber.desc,,
 explore.room.burial_chamber,墓室,Burial Chamber
 explore.room.corridor,走廊,Corridor
 explore.room.corridor.desc,一条阴暗的走廊，尽头隐约透着光。,"A dark corridor, faint light ahead."
@@ -142,6 +153,7 @@ mine.exit.no_loot,无战利品,No Loot
 mine.exit.title,离开矿洞,Leave Mine
 mine.hint.not_visible,未发现任何东西,Nothing found
 mine.node.desert_cave,沙漠矿洞,Desert Cave
+mine.node.enter_cave,进入矿洞,Enter Cave
 mine.node.entrance,矿洞入口,Mine Entrance
 mine.node.medium_cave,中型矿洞,Medium Cave
 mine.node.mountain_cave,山地矿洞,Mountain Cave
@@ -211,6 +223,7 @@ res.copper_ore,铜矿石,Copper Ore
 res.copper_wire,铜线,Copper Wire
 res.flint,燧石,Flint
 res.gold_ore,金矿,Gold Ore
+res.golden_apple,金苹果,Golden Apple
 res.iron_ingot,铁锭,Iron Ingot
 res.iron_ore,铁矿石,Iron Ore
 res.iron_plate,铁板,Iron Plate
@@ -317,6 +330,10 @@ toast.deploy.fail,部署失败,Deploy Failed
 toast.deploy.success,部署成功,Deploy Success
 toast.research.fail,研究失败,Research Failed
 toast.research.success,研究成功,Research Success
+tool.bag.level_0,野外背包（待制作）,Field Pack (To Craft)
+tool.bag.level_1,野外背包 Mk.1,Field Pack Mk.1
+tool.bag.level_2,野外背包 Mk.2,Field Pack Mk.2
+tool.bag.level_3,野外背包 Mk.3,Field Pack Mk.3
 tool.prospector.level_1,探矿仪 Lv1,Prospector Lv1
 tool.prospector.level_2,探矿仪 Lv2,Prospector Lv2
 tool.prospector.level_3,探矿仪 Lv3,Prospector Lv3
@@ -328,29 +345,31 @@ tool.stone_pickaxe.level_1,木镐,Wooden Pickaxe
 tool.stone_pickaxe.level_2,石镐,Stone Pickaxe
 topbar.save_btn,存档,Save
 world.action.chop,砍树,Chop Tree
-world.action.chop_cactus,砍仙人掌,Chop Cactus
-world.action.chop_willow,砍柳树,Chop Willow
+world.action.chop_cactus,砍树,Chop Tree
+world.action.chop_willow,砍树,Chop Tree
 world.action.explore_cave,探索洞穴,Explore Cave
-world.action.explore_ruins,探索遗迹,Explore Ruins
+world.action.explore_pyramid,点击探索,Click to Explore
+world.action.explore_ruins,探索,Explore
 world.action.gather_flint,拾取燧石,Gather Flint
-world.action.gather_mushroom,采蘑菇,Gather Mushroom
-world.action.gather_reeds,采芦苇,Gather Reeds
-world.action.gather_sand,挖沙子,Gather Sand
-world.action.gather_weeds,采集杂草,Gather Weeds
-world.action.mine_stone,凿取石块,Break Rock
+world.action.gather_mushroom,采集,Gather
+world.action.gather_reeds,采集,Gather
+world.action.gather_sand,挖沙,Dig
+world.action.gather_weeds,采集,Gather
+world.action.mine_stone,开采,Mine
 world.node.cactus,仙人掌,Cactus
-world.node.cave,洞穴入口 — 派人探索（30秒后获得煤炭）,Cave Entrance — Send someone in (returns coal in 30s)
+world.node.cave,矿洞,Cave
 world.node.coal_outcrop,煤矿露出,Coal Outcrop
-world.node.flint,燧石堆 — 点击采集,Flint Deposit — Click to gather
+world.node.flint,燧石,Flint
 world.node.flint_vein,燧石矿脉,Flint Vein
 world.node.mushroom_patch,蘑菇丛,Mushroom Patch
-world.node.oak_tree,橡树 — 点击砍伐,Oak Tree — Click to chop
+world.node.oak_tree,橡树,Oak Tree
+world.node.pyramid,金字塔,Pyramid
 world.node.ready,点击领取,Claim
 world.node.reeds,芦苇丛,Reeds
 world.node.rock,岩石,Rock
 world.node.rubble,碎石堆,Rubble
 world.node.ruins,遗迹,Ruins
 world.node.sand_pile,沙堆,Sand Pile
-world.node.stone,石块 — 点击敲击,Stone Rock — Click to break
-world.node.weeds,杂草丛 — 点击采集,Weeds — Click to gather
+world.node.stone,石块,Stone
+world.node.weeds,杂草,Weeds
 world.node.willow_tree,柳树,Willow Tree

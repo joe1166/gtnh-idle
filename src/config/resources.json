@@ -180,6 +180,17 @@
     "foodPoints": 5
   },
   {
+    "id": "golden_apple",
+    "locKey": "res.golden_apple",
+    "defaultCap": 50,
+    "category": "raw",
+    "tags": [
+      "food"
+    ],
+    "unlockedByChapter": 1,
+    "foodPoints": 20
+  },
+  {
     "id": "wrench",
     "locKey": "res.wrench",
     "defaultCap": 10,

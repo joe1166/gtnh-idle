@@ -1,0 +1,13 @@
+{
+  "root": "array",
+  "output": "src/config/explore_loot_pools.json",
+  "fields": {
+    "id": "string",
+    "sourceType": "string",
+    "sourceId": "string",
+    "itemId": "string",
+    "weight": "number",
+    "minCount": "number",
+    "maxCount": "number"
+  }
+}

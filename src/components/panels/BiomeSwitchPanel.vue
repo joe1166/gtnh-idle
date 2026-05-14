@@ -140,9 +140,10 @@ const canExplore = computed(() =>
 
 function biomeCardBg(biomeId: string): Record<string, string> {
   const biome = db.get('biomes', biomeId)
-  if (biome?.imagePath) {
+  const cardImage = biome?.cardImagePath || biome?.imagePath
+  if (cardImage) {
     return {
-      backgroundImage: `url(${biome.imagePath})`,
+      backgroundImage: `url(${cardImage})`,
       backgroundSize: 'cover',
       backgroundPosition: 'center',
     }
@@ -248,8 +249,10 @@ function handleExplore() {
   aspect-ratio: 4 / 3;
   position: relative;
   border-radius: 5px;
-  border: 2px solid var(--border);
+  border: 2px solid transparent;
+  box-shadow: inset 0 0 0 2px var(--border);
   background: rgba(30, 30, 30, 0.9);
+  background-clip: padding-box;
   cursor: pointer;
   overflow: hidden;
   display: flex;
@@ -261,12 +264,12 @@ function handleExplore() {
 }
 
 .biome-card:hover {
-  border-color: var(--accent);
+  box-shadow: inset 0 0 0 2px var(--accent);
   transform: scale(1.02);
 }
 
 .biome-card--active {
-  border-color: var(--accent);
+  box-shadow: inset 0 0 0 2px var(--accent);
 }
 
 /* 渐变遮罩，让文字在背景图上清晰可读 */

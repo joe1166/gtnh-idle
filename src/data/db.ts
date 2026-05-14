@@ -41,11 +41,14 @@ import type {
   MineBlockDef,
   MineCaveDef,
   MineVeinDef,
+  GlobalMiscDef,
   RewardDef,
   ExploreMapDef,
   ExploreRoomDef,
   ExploreEnemyDef,
   ExploreEventNodeDef,
+  ExploreLootItemDef,
+  ExploreLootPoolDef,
 } from './types'
 
 import resourcesData   from '../config/resources.json'
@@ -67,6 +70,9 @@ import exploreMapsData  from '../config/explore_maps.json'
 import exploreRoomsData from '../config/explore_rooms.json'
 import exploreEnemiesData from '../config/explore_enemies.json'
 import exploreEventsData from '../config/explore_events.json'
+import exploreLootItemsData from '../config/explore_loot_items.json'
+import exploreLootPoolsData from '../config/explore_loot_pools.json'
+import globalMiscData from '../config/global_misc.json'
 
 /** 将 showCondType + showCondPara 合并为 Condition 对象 */
 function buildShowCond(raw: { showCondType?: string; showCondPara?: string }): Condition | undefined {
@@ -89,11 +95,14 @@ interface TableMap {
   mine_blocks:   MineBlockDef
   mine_veins:    MineVeinDef
   mine_caves:    MineCaveDef
+  global_misc:   GlobalMiscDef
   rewards:       RewardDef
   explore_maps:  ExploreMapDef
   explore_rooms: ExploreRoomDef
   explore_enemies: ExploreEnemyDef
   explore_events: ExploreEventNodeDef
+  explore_loot_items: ExploreLootItemDef
+  explore_loot_pools: ExploreLootPoolDef
 }
 
 export type TableName = keyof TableMap
@@ -139,11 +148,14 @@ const RAW: Record<TableName, unknown[]> = {
   mine_blocks: mineBlocksData as MineBlockDef[],
   mine_veins:  mineVeinsData  as MineVeinDef[],
   mine_caves:  mineCavesData  as MineCaveDef[],
+  global_misc: globalMiscData as GlobalMiscDef[],
   rewards:       rewardsData      as RewardDef[],
   explore_maps:  exploreMapsData  as ExploreMapDef[],
   explore_rooms: exploreRoomsData as ExploreRoomDef[],
   explore_enemies: exploreEnemiesData as ExploreEnemyDef[],
   explore_events: exploreEventsData as ExploreEventNodeDef[],
+  explore_loot_items: exploreLootItemsData as ExploreLootItemDef[],
+  explore_loot_pools: exploreLootPoolsData as ExploreLootPoolDef[],
 }
 
 const INDEX_CACHE: Partial<Record<TableName, Map<string | number, unknown>>> = {}

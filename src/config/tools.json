@@ -157,5 +157,87 @@
     "unlockedByChapter": 1,
     "showCondType": "tool",
     "showCondPara": "prospector:2"
+  },
+  {
+    "id": "field_pack_0",
+    "type": "bag",
+    "level": 0,
+    "abilityId": "bag_capacity",
+    "abilityValue": 0,
+    "upgradeCost": [
+      {
+        "resourceId": "coarse_rope",
+        "amount": 5
+      },
+      {
+        "resourceId": "log_wood",
+        "amount": 12
+      }
+    ],
+    "locKey": "tool.bag.level_0",
+    "unlockedByChapter": 1
+  },
+  {
+    "id": "field_pack_1",
+    "type": "bag",
+    "level": 1,
+    "abilityId": "bag_capacity",
+    "abilityValue": 1,
+    "upgradeCost": [
+      {
+        "resourceId": "coarse_rope",
+        "amount": 8
+      },
+      {
+        "resourceId": "copper_wire",
+        "amount": 4
+      }
+    ],
+    "locKey": "tool.bag.level_1",
+    "unlockedByChapter": 1,
+    "showCondType": "tool",
+    "showCondPara": "pickaxe:1"
+  },
+  {
+    "id": "field_pack_2",
+    "type": "bag",
+    "level": 2,
+    "abilityId": "bag_capacity",
+    "abilityValue": 2,
+    "upgradeCost": [
+      {
+        "resourceId": "iron_plate",
+        "amount": 4
+      },
+      {
+        "resourceId": "basic_circuit",
+        "amount": 1
+      }
+    ],
+    "locKey": "tool.bag.level_2",
+    "unlockedByChapter": 1,
+    "showCondType": "tool",
+    "showCondPara": "prospector:1"
+  },
+  {
+    "id": "field_pack_3",
+    "type": "bag",
+    "level": 3,
+    "abilityId": "bag_capacity",
+    "abilityValue": 3,
+    "upgradeCost": [
+      {
+        "resourceId": "iron_plate",
+        "amount": 8
+      },
+      {
+        "resourceId": "basic_circuit",
+        "amount": 2
+      }
+    ],
+    "locKey": "tool.bag.level_3",
+    "unlockedByChapter": 1,
+    "showCondType": "tool",
+    "showCondPara": "prospector:2"
   }
 ]

@@ -4,6 +4,7 @@
   "fields": {
     "id":           "string",
     "locKey":       "string",
+    "cardImagePath":"string",
     "imagePath":    "string",
     "ambientColor": "string",
     "nodeIds":      { "type": "array", "sep": "|", "item": "string" }

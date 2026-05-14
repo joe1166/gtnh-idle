@@ -1,0 +1,119 @@
+[
+  {
+    "id": "room_antechamber_coin",
+    "sourceType": "room",
+    "sourceId": "antechamber",
+    "itemId": "relic_coin_stack",
+    "weight": 55,
+    "minCount": 1,
+    "maxCount": 3
+  },
+  {
+    "id": "room_antechamber_scroll",
+    "sourceType": "room",
+    "sourceId": "antechamber",
+    "itemId": "dusty_scroll_bundle",
+    "weight": 25,
+    "minCount": 1,
+    "maxCount": 1
+  },
+  {
+    "id": "room_antechamber_slab",
+    "sourceType": "room",
+    "sourceId": "antechamber",
+    "itemId": "stone_relic_slab",
+    "weight": 20,
+    "minCount": 1,
+    "maxCount": 1
+  },
+  {
+    "id": "room_burial_coin",
+    "sourceType": "room",
+    "sourceId": "burial_chamber",
+    "itemId": "relic_coin_stack",
+    "weight": 35,
+    "minCount": 2,
+    "maxCount": 4
+  },
+  {
+    "id": "room_burial_jar",
+    "sourceType": "room",
+    "sourceId": "burial_chamber",
+    "itemId": "sealed_canopic_jar",
+    "weight": 45,
+    "minCount": 1,
+    "maxCount": 2
+  },
+  {
+    "id": "room_burial_ornament",
+    "sourceType": "room",
+    "sourceId": "burial_chamber",
+    "itemId": "pharaoh_ornament",
+    "weight": 20,
+    "minCount": 1,
+    "maxCount": 1
+  },
+  {
+    "id": "enemy_scarab_coin",
+    "sourceType": "enemy",
+    "sourceId": "scarab",
+    "itemId": "relic_coin_stack",
+    "weight": 70,
+    "minCount": 1,
+    "maxCount": 2
+  },
+  {
+    "id": "enemy_scarab_scroll",
+    "sourceType": "enemy",
+    "sourceId": "scarab",
+    "itemId": "dusty_scroll_bundle",
+    "weight": 30,
+    "minCount": 1,
+    "maxCount": 1
+  },
+  {
+    "id": "enemy_guard_slab",
+    "sourceType": "enemy",
+    "sourceId": "mummy_guard",
+    "itemId": "stone_relic_slab",
+    "weight": 45,
+    "minCount": 1,
+    "maxCount": 2
+  },
+  {
+    "id": "enemy_guard_jar",
+    "sourceType": "enemy",
+    "sourceId": "mummy_guard",
+    "itemId": "sealed_canopic_jar",
+    "weight": 55,
+    "minCount": 1,
+    "maxCount": 1
+  },
+  {
+    "id": "enemy_elite_jar",
+    "sourceType": "enemy",
+    "sourceId": "mummy_elite",
+    "itemId": "sealed_canopic_jar",
+    "weight": 40,
+    "minCount": 1,
+    "maxCount": 2
+  },
+  {
+    "id": "enemy_elite_ornament",
+    "sourceType": "enemy",
+    "sourceId": "mummy_elite",
+    "itemId": "pharaoh_ornament",
+    "weight": 60,
+    "minCount": 1,
+    "maxCount": 1
+  },
+  {
+    "id": "event_intro_a",
+    "sourceType": "event",
+    "sourceId": "pharaoh_intro_002:A",
+    "itemId": "pharaoh_ornament",
+    "weight": 100,
+    "minCount": 1,
+    "maxCount": 1
+  }
+]

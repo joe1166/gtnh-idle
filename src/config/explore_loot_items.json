@@ -1,0 +1,83 @@
+[
+  {
+    "id": "relic_coin_stack",
+    "locKey": "explore.loot.item.relic_coin_stack",
+    "iconPath": "/loot/relic_coin_stack.svg",
+    "sizeW": 1,
+    "sizeH": 1,
+    "convertOutputs": [
+      {
+        "resourceId": "ancient_coin",
+        "amount": 1
+      }
+    ]
+  },
+  {
+    "id": "dusty_scroll_bundle",
+    "locKey": "explore.loot.item.dusty_scroll_bundle",
+    "iconPath": "/loot/dusty_scroll_bundle.svg",
+    "sizeW": 1,
+    "sizeH": 2,
+    "convertOutputs": [
+      {
+        "resourceId": "reed",
+        "amount": 8
+      },
+      {
+        "resourceId": "weeds",
+        "amount": 6
+      }
+    ]
+  },
+  {
+    "id": "stone_relic_slab",
+    "locKey": "explore.loot.item.stone_relic_slab",
+    "iconPath": "/loot/stone_relic_slab.svg",
+    "sizeW": 2,
+    "sizeH": 1,
+    "convertOutputs": [
+      {
+        "resourceId": "cobblestone",
+        "amount": 24
+      },
+      {
+        "resourceId": "flint",
+        "amount": 4
+      }
+    ]
+  },
+  {
+    "id": "sealed_canopic_jar",
+    "locKey": "explore.loot.item.sealed_canopic_jar",
+    "iconPath": "/loot/sealed_canopic_jar.svg",
+    "sizeW": 2,
+    "sizeH": 2,
+    "convertOutputs": [
+      {
+        "resourceId": "ancient_coin",
+        "amount": 3
+      },
+      {
+        "resourceId": "mushroom",
+        "amount": 2
+      }
+    ]
+  },
+  {
+    "id": "pharaoh_ornament",
+    "locKey": "explore.loot.item.pharaoh_ornament",
+    "iconPath": "/loot/pharaoh_ornament.svg",
+    "sizeW": 1,
+    "sizeH": 3,
+    "convertOutputs": [
+      {
+        "resourceId": "ancient_coin",
+        "amount": 6
+      },
+      {
+        "resourceId": "gold_ore",
+        "amount": 2
+      }
+    ]
+  }
+]

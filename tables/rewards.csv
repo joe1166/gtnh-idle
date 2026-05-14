@@ -1,6 +1,6 @@
 id,fixed,pool
-1,log_wood:1,apple:1:10
-2,log_wood:2,apple:1:15
+1,log_wood:1,apple:1:10|golden_apple:0.1:1|nothing:1:89
+2,log_wood:2,apple:1:15|golden_apple:0.1:1|nothing:1:84
 3,cobblestone:1,
 4,flint:1,
 5,weeds:1,

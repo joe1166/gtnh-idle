@@ -31,17 +31,12 @@
     </svg>
 
     <!-- ── 自定义 Tooltip ── -->
-    <div
-      v-if="tooltip.visible"
-      class="world-tooltip"
-      :style="{ left: tooltip.x + 'px', top: tooltip.y + 'px' }"
-    >
-      <div
-        v-for="(line, i) in tooltip.lines"
-        :key="i"
-        :class="{ 'tooltip-meta': i > 0 }"
-      >{{ line }}</div>
-    </div>
+    <AppTooltip
+      :visible="tooltip.visible"
+      :x="tooltip.x"
+      :y="tooltip.y"
+      :lines="tooltip.lines"
+    />
 
     <!-- ── 节点按钮层 ── -->
     <template v-for="node in visibleNodes" :key="node.id">
@@ -63,7 +58,7 @@
           @mousemove="moveTooltip($event)"
           @mouseleave="hideTooltip()"
         >
-          {{ t(node.actionLocKey) }}
+          {{ t(node.locKey) }}
         </button>
 
         <!-- timed 节点：三态 -->
@@ -77,7 +72,7 @@
             @mousemove="moveTooltip($event)"
             @mouseleave="hideTooltip()"
           >
-            {{ t(node.actionLocKey) }}
+            {{ t(node.locKey) }}
           </button>
 
           <!-- 进行中 -->
@@ -119,7 +114,7 @@
           @mousemove="moveTooltip($event)"
           @mouseleave="hideTooltip()"
         >
-          🏛 {{ t(node.actionLocKey) }}
+          🏛 {{ t(node.locKey) }}
         </button>
 
         <!-- mine 节点：三态（与 timed 相同流程，完成后进入矿洞） -->
@@ -190,6 +185,7 @@ import { useToast } from '../../composables/useToast'
 import { t } from '../../data/i18n'
 import type { BiomeNodeDef } from '../../data/types'
 import BottomPanel from './BottomPanel.vue'
+import AppTooltip from '../common/AppTooltip.vue'
 
 const worldStore = useWorldStore()
 const toolStore = useToolStore()
@@ -211,7 +207,7 @@ function parseEntryCostLocal(raw: string): { resourceId: string; amount: number 
 }
 
 function onBtnHover(e: MouseEvent, node: BiomeNodeDef) {
-  const lines: string[] = [t(node.locKey)]
+  const lines: string[] = [t(node.actionLocKey)]
 
   if (node.entryCost) {
     const parts = parseEntryCostLocal(node.entryCost)

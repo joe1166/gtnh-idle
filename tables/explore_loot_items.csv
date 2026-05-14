@@ -1,0 +1,6 @@
+id,locKey,iconPath,sizeW,sizeH,convertOutputs
+relic_coin_stack,explore.loot.item.relic_coin_stack,/loot/relic_coin_stack.svg,1,1,ancient_coin:1
+dusty_scroll_bundle,explore.loot.item.dusty_scroll_bundle,/loot/dusty_scroll_bundle.svg,1,2,reed:8|weeds:6
+stone_relic_slab,explore.loot.item.stone_relic_slab,/loot/stone_relic_slab.svg,2,1,cobblestone:24|flint:4
+sealed_canopic_jar,explore.loot.item.sealed_canopic_jar,/loot/sealed_canopic_jar.svg,2,2,ancient_coin:3|mushroom:2
+pharaoh_ornament,explore.loot.item.pharaoh_ornament,/loot/pharaoh_ornament.svg,1,3,ancient_coin:6|gold_ore:2

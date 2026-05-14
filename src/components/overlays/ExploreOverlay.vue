@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="explore-overlay">
     <div class="explore-topbar">
       <div class="map-title">{{ mapName }}</div>
@@ -16,6 +16,21 @@
       <ExploreRoomPanel />
     </div>
 
+    <div
+      v-if="store.draggingLoot"
+      class="drag-ghost"
+      :style="dragGhostStyle"
+    >
+      <div class="drag-ghost-fit" :style="dragGhostFitStyle">
+        <img
+          v-if="draggingDef?.iconPath"
+          :src="draggingDef.iconPath"
+          alt=""
+          draggable="false"
+        />
+      </div>
+    </div>
+
     <Transition name="dialog-fade">
       <div v-if="store.exitDialogOpen" class="dialog-backdrop">
         <div class="exit-dialog">
@@ -31,11 +46,11 @@
             <div class="loot-title">{{ t('explore.loot.title') }}</div>
             <template v-if="store.hasLoot">
               <div
-                v-for="(amount, resId) in store.sessionLoot"
-                :key="resId"
+                v-for="(amount, resourceId) in store.bagResourceSummary"
+                :key="resourceId"
                 class="loot-row"
               >
-                <span class="loot-name">{{ t('res.' + resId) }}</span>
+                <span class="loot-name">{{ db.name('resources', resourceId) }}</span>
                 <span class="loot-amount">x{{ amount }}</span>
               </div>
             </template>
@@ -57,7 +72,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { useExploreStore } from '../../stores/exploreStore'
 import { db } from '../../data/db'
 import { t } from '../../data/i18n'
@@ -66,10 +81,65 @@ import ExploreRoomPanel from '../explore/ExploreRoomPanel.vue'
 import ExploreRolePanel from '../explore/ExploreRolePanel.vue'
 
 const store = useExploreStore()
+const mouseX = ref(0)
+const mouseY = ref(0)
 
 const mapName = computed(() => {
   const mapDef = db.get('explore_maps', store.mapId)
   return mapDef ? t(mapDef.locKey) : store.mapId
+})
+
+const draggingDef = computed(() => {
+  if (!store.draggingLoot) return undefined
+  return db.get('explore_loot_items', store.draggingLoot.item.itemId)
+})
+
+const dragGhostStyle = computed(() => {
+  const size = 34
+  const item = store.draggingLoot?.item
+  const drag = store.draggingLoot
+  if (!item || !drag) return {}
+  return {
+    left: `${mouseX.value - drag.grabOffsetX}px`,
+    top: `${mouseY.value - drag.grabOffsetY}px`,
+    width: `${item.width * size}px`,
+    height: `${item.height * size}px`,
+  }
+})
+
+const dragGhostFitStyle = computed(() => {
+  const item = store.draggingLoot?.item
+  if (!item?.rotated) return {}
+  const w = Math.max(1, item.width)
+  const h = Math.max(1, item.height)
+  return {
+    width: `${(h / w) * 100}%`,
+    height: `${(w / h) * 100}%`,
+    left: '50%',
+    top: '50%',
+    transform: 'translate(-50%, -50%) rotate(90deg)',
+    transformOrigin: 'center center',
+  }
+})
+
+function onWindowMouseMove(e: MouseEvent): void {
+  mouseX.value = e.clientX
+  mouseY.value = e.clientY
+}
+
+function onWindowMouseDown(e: MouseEvent): void {
+  mouseX.value = e.clientX
+  mouseY.value = e.clientY
+}
+
+onMounted(() => {
+  window.addEventListener('mousemove', onWindowMouseMove)
+  window.addEventListener('mousedown', onWindowMouseDown, true)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('mousemove', onWindowMouseMove)
+  window.removeEventListener('mousedown', onWindowMouseDown, true)
 })
 </script>
 
@@ -233,6 +303,26 @@ const mapName = computed(() => {
 .dialog-fade-enter-from,
 .dialog-fade-leave-to {
   opacity: 0;
+}
+
+.drag-ghost {
+  position: fixed;
+  pointer-events: none;
+  z-index: 1200;
+  border: 1px solid var(--accent);
+  background: rgba(40, 65, 40, 0.45);
+}
+
+.drag-ghost-fit {
+  position: absolute;
+  inset: 0;
+}
+
+.drag-ghost img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
 }
 
 @media (max-width: 1100px) {

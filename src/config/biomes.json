@@ -2,9 +2,10 @@
   {
     "id": "plains",
     "locKey": "biome.plains",
+    "cardImagePath": "/biomes/plains.png",
+    "imagePath": "/biomes/plains_world.png",
     "nodeIds": [
       "plains_oak_1",
-      "plains_oak_2",
       "plains_stone_rock",
       "plains_weeds_1",
       "plains_weeds_2",
@@ -16,6 +17,7 @@
   {
     "id": "forest",
     "locKey": "biome.forest",
+    "cardImagePath": "/biomes/forest.png",
     "nodeIds": [
       "forest_oak_1",
       "forest_oak_2",
@@ -26,6 +28,7 @@
   {
     "id": "desert",
     "locKey": "biome.desert",
+    "cardImagePath": "/biomes/desert.png",
     "nodeIds": [
       "desert_cactus_1",
       "desert_cactus_2",
@@ -37,6 +40,7 @@
   {
     "id": "swamp",
     "locKey": "biome.swamp",
+    "cardImagePath": "/biomes/swamp.png",
     "nodeIds": [
       "swamp_willow_1",
       "swamp_willow_2",
@@ -48,6 +52,7 @@
   {
     "id": "mountain",
     "locKey": "biome.mountain",
+    "cardImagePath": "/biomes/mountain.png",
     "nodeIds": [
       "mountain_coal_outcrop",
       "mountain_rock",

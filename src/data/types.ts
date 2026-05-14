@@ -314,6 +314,8 @@ export interface DimensionDef {
 export interface BiomeDef {
   id: string
   locKey: string
+  /** 群系卡片图片路径（相对 public/） */
+  cardImagePath?: string
   /** 背景图片路径（相对 public/，留空回退 CSS 渐变） */
   imagePath?: string
   /** CSS filter 色调调整（可选，如 "hue-rotate(30deg)"） */
@@ -377,7 +379,7 @@ export interface BiomeNodeDef {
 // ─── 工具系统 ─────────────────────────────────────────────────────────────────
 
 /** 采集能力属性ID */
-export type AbilityId = 'wood_ability' | 'mining_ability' | 'prospector_ability'
+export type AbilityId = 'wood_ability' | 'mining_ability' | 'prospector_ability' | 'bag_capacity'
 
 /** 工具定义（扁平结构，运行时按 type 分组） */
 export interface ToolDef {
@@ -405,6 +407,13 @@ export interface ToolDef {
 export interface PlayerToolState {
   /** toolType → 当前等级 */
   levels: Record<string, number>
+}
+
+export interface GlobalMiscDef {
+  id: string
+  k1?: string
+  k2?: string
+  k3?: string
 }
 
 // ─── 矿洞探索系统 ──────────────────────────────────────────────
@@ -631,6 +640,38 @@ export interface ExploreEnemyDef {
   defense: number
   speed: number
   rewardId: number
+}
+
+export interface ExploreLootItemDef {
+  id: string
+  locKey: string
+  iconPath: string
+  sizeW: number
+  sizeH: number
+  convertOutputs: ResourceAmount[]
+}
+
+export interface ExploreLootPoolDef {
+  id: string
+  sourceType: 'room' | 'enemy' | 'event'
+  sourceId: string
+  itemId: string
+  weight: number
+  minCount: number
+  maxCount: number
+}
+
+export interface ExploreLootInstance {
+  instanceId: string
+  itemId: string
+  width: number
+  height: number
+  rotated: boolean
+}
+
+export interface ExploreBagPlacedItem extends ExploreLootInstance {
+  x: number
+  y: number
 }
 
 export interface ExploreEventNodeDef {

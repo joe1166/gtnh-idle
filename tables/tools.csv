@@ -8,3 +8,7 @@ stone_pickaxe_2,pickaxe,2,mining_ability,3,,tool.stone_pickaxe.level_2,1,,
 prospector_1,prospector,1,prospector_ability,3,iron_plate:2|basic_circuit:1,tool.prospector.level_1,1,resource_ever,basic_circuit
 prospector_2,prospector,2,prospector_ability,5,iron_ingot:12|copper_wire:5,tool.prospector.level_2,1,tool,prospector:1
 prospector_3,prospector,3,prospector_ability,8,iron_ingot:25|basic_circuit:2,tool.prospector.level_3,1,tool,prospector:2
+field_pack_0,bag,0,bag_capacity,0,coarse_rope:5|log_wood:12,tool.bag.level_0,1,,
+field_pack_1,bag,1,bag_capacity,1,coarse_rope:8|copper_wire:4,tool.bag.level_1,1,tool,pickaxe:1
+field_pack_2,bag,2,bag_capacity,2,iron_plate:4|basic_circuit:1,tool.bag.level_2,1,tool,prospector:1
+field_pack_3,bag,3,bag_capacity,3,iron_plate:8|basic_circuit:2,tool.bag.level_3,1,tool,prospector:2

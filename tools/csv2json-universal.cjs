@@ -43,7 +43,8 @@ const path = require('path')
 // ─── CSV 解析 ────────────────────────────────────────────────────────────────
 
 function parseCSV(text) {
-  const lines = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n').split('\n').filter(l => l.trim())
+  const cleanText = text.replace(/^﻿/, '')
+  const lines = cleanText.replace(/\r\n/g, '\n').replace(/\r/g, '\n').split('\n').filter(l => l.trim())
   if (lines.length < 2) return []
   const headers = parseLine(lines[0]).map(h => h.trim())
   return lines.slice(1).map(line => {

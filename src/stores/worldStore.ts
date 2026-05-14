@@ -20,6 +20,12 @@ function parseEntryCost(raw?: string): ResourceAmount[] {
   }).filter(r => r.resourceId)
 }
 
+function calcGatherBonus(level: number): number {
+  const lv = Math.max(0, level)
+  if (lv <= 5) return 2 ** lv
+  return (2 ** 5) * (1.5 ** (lv - 5))
+}
+
 /** timed 节点的运行时状态 */
 export interface TimedNodeState {
   startAt: number   // 开始时间戳（ms）
@@ -125,15 +131,13 @@ export const useWorldStore = defineStore('world', {
       }
 
       // 计算能力加成（超出门槛的部分额外给固定产出 bonus）
-      let fixedBonus = 0
-      if (node.requiredAbility && node.requiredAbilityValue !== undefined) {
+      let bonus = 1
+      if (node.requiredAbility) {
         const playerAbility = toolStore.getAbility(node.requiredAbility)
-        if (playerAbility > node.requiredAbilityValue) {
-          fixedBonus = Math.floor((playerAbility - node.requiredAbilityValue) / 10)
-        }
+        bonus = calcGatherBonus(playerAbility)
       }
 
-      const gains = applyReward(node.rewardId, fixedBonus)
+      const gains = applyReward(node.rewardId, bonus)
       const inv = useInventoryStore()
       for (const [resId, amt] of Object.entries(gains)) inv.addItem(resId, amt)
       return gains

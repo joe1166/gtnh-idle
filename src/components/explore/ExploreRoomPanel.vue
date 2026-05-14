@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="room-panel">
     <div class="panel-title">
       {{ t('explore.panel.room') }}
@@ -23,18 +23,44 @@
             <div class="loot-progress-fill" :style="{ width: `${lootProgress}%` }" />
           </div>
         </div>
-        <div
-          v-if="roomLootEntries.length > 0"
-          class="loot-room-box"
-        >
-          <div class="loot-room-title">{{ t('explore.loot.room_title') }}</div>
+
+        <div class="ground-box">
+          <div class="ground-title">{{ t('explore.loot.ground_title') }}</div>
           <div
-            v-for="entry in roomLootEntries"
-            :key="entry.resourceId"
-            class="loot-room-row"
+            class="ground-grid"
+            :style="{
+              '--ground-cols': String(groundCols),
+              '--ground-rows': String(groundRows),
+            }"
           >
-            <span>{{ entry.name }}</span>
-            <span>+{{ entry.amount }}</span>
+            <div
+              v-for="cell in groundCells"
+              :key="cell.key"
+              class="ground-cell"
+            />
+
+            <div
+              v-for="placed in groundPlacements"
+              :key="placed.item.instanceId"
+              v-show="!isDraggingGroundSource(placed.item.instanceId)"
+              class="ground-item"
+              :style="groundItemStyle(placed.item, placed.x, placed.y)"
+              @mouseenter="onLootEnter($event, placed.item.itemId)"
+              @mousemove="onLootMove($event)"
+              @mouseleave="onLootLeave"
+              @mousedown.prevent="onStartDragFromGround($event, placed.item.instanceId)"
+            >
+              <div class="ground-item-fit" :style="lootFitBoxStyle(placed.item)">
+                <img
+                  v-if="lootItemDef(placed.item.itemId)?.iconPath"
+                  class="ground-item-icon"
+                  :src="lootItemDef(placed.item.itemId)?.iconPath"
+                  alt=""
+                  draggable="false"
+                />
+              </div>
+              <span class="ground-item-name">{{ t(lootItemDef(placed.item.itemId)?.locKey ?? placed.item.itemId) }}</span>
+            </div>
           </div>
         </div>
       </template>
@@ -80,6 +106,7 @@
         </div>
       </template>
     </div>
+    <AppTooltip :visible="tooltip.visible" :x="tooltip.x" :y="tooltip.y" :lines="tooltip.lines" />
 
     <button class="btn-exit" :disabled="store.mode === 'combat'" @click="store.openExitDialog()">
       {{ t('explore.action.exit') }}
@@ -92,12 +119,24 @@ import { computed, ref, onBeforeUnmount } from 'vue'
 import { useExploreStore } from '../../stores/exploreStore'
 import { db } from '../../data/db'
 import { t } from '../../data/i18n'
+import type { ExploreLootInstance, ExploreLootItemDef } from '../../data/types'
+import AppTooltip from '../common/AppTooltip.vue'
 
 const store = useExploreStore()
 const currentRoom = computed(() => store.currentRoom)
 const isLooting = ref(false)
 const lootProgress = ref(0)
 let lootTimer: number | null = null
+const tooltip = ref<{ visible: boolean; x: number; y: number; lines: string[] }>({
+  visible: false,
+  x: 0,
+  y: 0,
+  lines: [],
+})
+
+const groundCols = 6
+const groundRows = 4
+const CELL = 34
 
 const modeText = computed(() => {
   if (store.mode === 'event') return t('explore.mode.event')
@@ -124,8 +163,7 @@ const roomDesc = computed(() => {
 const canLoot = computed(() => {
   const room = currentRoom.value
   if (!room || room.looted || room.defId === 'entry') return false
-  const def = db.get('explore_rooms', room.defId)
-  return !!def && (def.rewardId ?? 0) > 0
+  return true
 })
 
 const eventText = computed(() => {
@@ -150,17 +188,131 @@ const aliveEnemies = computed(() => {
   return room.enemies.filter(e => e.hp > 0)
 })
 
-const roomLootEntries = computed(() => {
-  const room = currentRoom.value
-  if (!room?.roomLoot) return [] as Array<{ resourceId: string; name: string; amount: number }>
-  return Object.entries(room.roomLoot)
-    .map(([resourceId, amount]) => ({
-      resourceId,
-      amount,
-      name: db.name('resources', resourceId),
-    }))
-    .sort((a, b) => b.amount - a.amount)
+function lootItemDef(itemId: string): ExploreLootItemDef | undefined {
+  return db.get('explore_loot_items', itemId)
+}
+
+function lootGainLines(itemId: string): string[] {
+  const def = lootItemDef(itemId)
+  if (!def || def.convertOutputs.length === 0) return []
+  return ['可获得', ...def.convertOutputs.map(out => `${db.name('resources', out.resourceId)} x${out.amount}`)]
+}
+
+function onLootEnter(e: MouseEvent, itemId: string): void {
+  tooltip.value.lines = lootGainLines(itemId)
+  tooltip.value.visible = tooltip.value.lines.length > 0
+  onLootMove(e)
+}
+
+function onLootMove(e: MouseEvent): void {
+  const panel = (e.currentTarget as HTMLElement | null)?.closest('.room-panel') as HTMLElement | null
+  if (!panel) return
+  const rect = panel.getBoundingClientRect()
+  tooltip.value.x = e.clientX - rect.left + 12
+  tooltip.value.y = e.clientY - rect.top - 28
+}
+
+function onLootLeave(): void {
+  tooltip.value.visible = false
+}
+
+type GroundPlaced = { item: ExploreLootInstance; x: number; y: number }
+
+const groundPlacements = computed(() => {
+  const source = store.currentRoomGroundLoot
+  const rows = groundRows
+  const occupied = Array.from({ length: rows }, () => Array.from({ length: groundCols }, () => false))
+  const placed: GroundPlaced[] = []
+
+  const canPlace = (x: number, y: number, w: number, h: number): boolean => {
+    if (x < 0 || y < 0 || x + w > groundCols || y + h > rows) return false
+    for (let yy = y; yy < y + h; yy++) {
+      for (let xx = x; xx < x + w; xx++) {
+        if (occupied[yy][xx]) return false
+      }
+    }
+    return true
+  }
+
+  const mark = (x: number, y: number, w: number, h: number): void => {
+    for (let yy = y; yy < y + h; yy++) {
+      for (let xx = x; xx < x + w; xx++) {
+        occupied[yy][xx] = true
+      }
+    }
+  }
+
+  for (const item of source) {
+    let put = false
+    for (let y = 0; y < rows; y++) {
+      for (let x = 0; x < groundCols; x++) {
+        if (!canPlace(x, y, item.width, item.height)) continue
+        mark(x, y, item.width, item.height)
+        placed.push({ item, x, y })
+        put = true
+        break
+      }
+      if (put) break
+    }
+    if (!put) {
+      placed.push({ item, x: 0, y: 0 })
+    }
+  }
+  return placed
 })
+
+const groundCells = computed(() => {
+  const list: Array<{ key: string }> = []
+  for (let y = 0; y < groundRows; y++) {
+    for (let x = 0; x < groundCols; x++) {
+      list.push({ key: `${x}-${y}` })
+    }
+  }
+  return list
+})
+
+function groundItemStyle(item: ExploreLootInstance, x: number, y: number): Record<string, string> {
+  return {
+    left: `${x * CELL}px`,
+    top: `${y * CELL}px`,
+    width: `${item.width * CELL - 2}px`,
+    height: `${item.height * CELL - 2}px`,
+  }
+}
+
+function lootFitBoxStyle(item: { width: number; height: number; rotated?: boolean }): Record<string, string> {
+  if (!item.rotated) return {}
+  const w = Math.max(1, item.width)
+  const h = Math.max(1, item.height)
+  return {
+    width: `${(h / w) * 100}%`,
+    height: `${(w / h) * 100}%`,
+    left: '50%',
+    top: '50%',
+    transform: 'translate(-50%, -50%) rotate(90deg)',
+    transformOrigin: 'center center',
+  }
+}
+
+function onStartDragFromGround(e: MouseEvent, instanceId: string): void {
+  const el = e.currentTarget as HTMLElement | null
+  if (!el) {
+    store.beginDragFromGround(instanceId, 0, 0)
+    return
+  }
+  const rect = el.getBoundingClientRect()
+  const offsetX = Math.max(0, Math.min(rect.width, e.clientX - rect.left))
+  const offsetY = Math.max(0, Math.min(rect.height, e.clientY - rect.top))
+  store.beginDragFromGround(instanceId, offsetX, offsetY)
+}
+
+function isDraggingGroundSource(instanceId: string): boolean {
+  const drag = store.draggingLoot
+  if (!drag) return false
+  if (drag.from !== 'ground') return false
+  if (!store.currentRoomId || drag.sourceRoomId !== store.currentRoomId) return false
+  return drag.item.instanceId === instanceId
+}
 
 function clearLootTimer(): void {
   if (lootTimer != null) {
@@ -194,14 +346,16 @@ function startLoot(): void {
 
 onBeforeUnmount(() => {
   clearLootTimer()
+  tooltip.value.visible = false
 })
 </script>
 
 <style scoped>
 .room-panel {
-  width: 320px;
-  max-width: 320px;
-  min-width: 280px;
+  position: relative;
+  width: 360px;
+  max-width: 360px;
+  min-width: 320px;
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -364,24 +518,65 @@ onBeforeUnmount(() => {
   transition: width 0.06s linear;
 }
 
-.loot-room-box {
+.ground-box {
   margin-top: 10px;
   border: 1px solid var(--border-subtle);
   background: rgba(255, 255, 255, 0.02);
   padding: 8px;
 }
 
-.loot-room-title {
+.ground-title {
   font-size: 0.8rem;
   color: var(--text-secondary);
   margin-bottom: 6px;
 }
 
-.loot-room-row {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.82rem;
-  padding: 2px 0;
+.ground-grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(var(--ground-cols), 34px);
+  grid-template-rows: repeat(var(--ground-rows), 34px);
+  width: max-content;
+  margin-inline: auto;
+  border: 1px solid var(--border);
+  background: var(--bg-base);
+}
+
+.ground-cell {
+  width: 34px;
+  height: 34px;
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.ground-item {
+  position: absolute;
+  border: 1px solid rgba(188, 188, 188, 0.35);
+  background: rgba(45, 38, 27, 0.9);
+  overflow: hidden;
+  cursor: grab;
+}
+
+.ground-item-fit {
+  position: absolute;
+  inset: 0;
+}
+
+.ground-item-icon {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0.8;
+  display: block;
+}
+
+.ground-item-name {
+  position: absolute;
+  left: 4px;
+  bottom: 3px;
+  font-size: 10px;
+  color: #f3f3f3;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
 }
 
 .btn-exit {

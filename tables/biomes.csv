@@ -1,6 +1,6 @@
-id,locKey,imagePath,ambientColor,nodeIds
-plains,biome.plains,,,plains_oak_1|plains_oak_2|plains_stone_rock|plains_weeds_1|plains_weeds_2|plains_flint_patch|plains_cave_entrance|plains_mine_entrance
-forest,biome.forest,,,forest_oak_1|forest_oak_2|forest_stone_1|forest_weeds_1
-desert,biome.desert,,,desert_cactus_1|desert_cactus_2|desert_sand_pile|desert_ruins|desert_mine_entrance
-swamp,biome.swamp,,,swamp_willow_1|swamp_willow_2|swamp_mushroom|swamp_reeds|swamp_cave_entrance
-mountain,biome.mountain,,,mountain_coal_outcrop|mountain_rock|mountain_flint_vein|mountain_rubble|mountain_cave_entrance
+id,locKey,cardImagePath,imagePath,ambientColor,nodeIds
+plains,biome.plains,/biomes/plains.png,/biomes/plains_world.png,,plains_oak_1|plains_stone_rock|plains_weeds_1|plains_weeds_2|plains_flint_patch|plains_cave_entrance|plains_mine_entrance
+forest,biome.forest,/biomes/forest.png,,,forest_oak_1|forest_oak_2|forest_stone_1|forest_weeds_1
+desert,biome.desert,/biomes/desert.png,,,desert_cactus_1|desert_cactus_2|desert_sand_pile|desert_ruins|desert_mine_entrance
+swamp,biome.swamp,/biomes/swamp.png,,,swamp_willow_1|swamp_willow_2|swamp_mushroom|swamp_reeds|swamp_cave_entrance
+mountain,biome.mountain,/biomes/mountain.png,,,mountain_coal_outcrop|mountain_rock|mountain_flint_vein|mountain_rubble|mountain_cave_entrance
