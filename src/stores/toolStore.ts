@@ -9,6 +9,7 @@ export const useToolStore = defineStore('tool', {
       axe: 0,
       pickaxe: 0,
       bag: 0,
+      prospector: 1,
     },
   }),
 

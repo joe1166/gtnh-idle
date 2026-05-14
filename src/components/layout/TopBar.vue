@@ -53,9 +53,6 @@
 
     <div class="top-bar__right">
       <span class="chapter-name">{{ progressionStore.currentChapter?.locKey ? t(progressionStore.currentChapter.locKey) : '—' }}</span>
-      <button class="dev-btn" @click="toggleDevConsole" title="开发者后台">
-        &#9881;
-      </button>
     </div>
   </header>
 </template>
@@ -65,15 +62,12 @@ import { computed } from 'vue'
 import { usePowerStore } from '../../stores/powerStore'
 import { useSteamStore } from '../../stores/steamStore'
 import { useProgressionStore } from '../../stores/progressionStore'
-import { useDevConsole } from '../../composables/useDevConsole'
 import { t } from '../../data/i18n'
 import { fmt } from '../../utils/format'
 
 const powerStore = usePowerStore()
 const steamStore = useSteamStore()
 const progressionStore = useProgressionStore()
-const { toggle } = useDevConsole()
-function toggleDevConsole() { toggle() }
 
 const showPower = computed(() => progressionStore.era === 'lv')
 const showSteam = computed(() => progressionStore.era === 'steam')
@@ -192,31 +186,6 @@ const steamBarPct = computed(() => {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
-
-.dev-btn {
-  background: none;
-  border: 1px solid #333;
-  color: #555;
-  width: 26px;
-  height: 26px;
-  font-size: 14px;
-  line-height: 1;
-  cursor: pointer;
-  border-radius: 4px;
-  transition: color 0.15s, border-color 0.15s, background 0.15s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-}
-.dev-btn:hover {
-  color: #4a9eff;
-  border-color: #4a9eff;
-  background: var(--info-subtle);
-}
-.dev-btn:active {
-  background: var(--info-soft);
 }
 
 .save-btn {

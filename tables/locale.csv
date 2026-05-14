@@ -4,8 +4,8 @@ attr.combat_attack,战斗攻击,Combat Attack
 attr.combat_defense,战斗防御,Combat Defense
 attr.combat_hp,战斗生命,Combat HP
 attr.combat_speed,战斗速度,Combat Speed
-attr.mining_ability,Mining Ability,Mining Ability
-attr.wood_ability,Wood Ability,Wood Ability
+attr.mining_ability,采矿能力,Mining Ability
+attr.wood_ability,伐木能力,Wood Ability
 biome.desert,沙漠,Desert
 biome.forest,森林,Forest
 biome.mountain,山地,Mountains
@@ -177,6 +177,7 @@ mine.exit.loot_title,本次收获,Loot This Run
 mine.exit.no_loot,无战利品,No Loot
 mine.exit.title,离开矿洞,Leave Mine
 mine.hint.not_visible,未发现任何东西,Nothing found
+mine.hint.tool_required,工具等级不足,Tool level not enough
 mine.node.desert_cave,沙漠矿洞,Desert Cave
 mine.node.enter_cave,进入矿洞,Enter Cave
 mine.node.entrance,矿洞入口,Mine Entrance
@@ -184,11 +185,19 @@ mine.node.medium_cave,中型矿洞,Medium Cave
 mine.node.mountain_cave,山地矿洞,Mountain Cave
 mine.node.small_cave,小型矿洞,Small Cave
 mine.node.swamp_cave,沼泽矿洞,Swamp Cave
+mine.prospector.abundance.moderate,中等,Moderate
+mine.prospector.abundance.rich,丰富,Rich
+mine.prospector.abundance.scarce,稀少,Scarce
+mine.prospector.cooldown,冷却,Cooldown
 mine.prospector.no_tool,需要探矿仪,Prospector Required
+mine.prospector.result.none,未发现矿脉,No Vein Found
+mine.prospector.result.prefix,最近矿点,Nearest Vein
+mine.prospector.scan,扫描,Scan
 mine.prospector.title,探矿仪,Prospector
 mine.stamina.add,增加体力,Add Stamina
 mine.stamina.close,关闭,Close
 mine.stamina.eat,吃,Eat
+mine.stamina.empty,体力不足,No Stamina
 mine.stamina.food_modal_title,吃食物恢复体力,Eat to Restore Stamina
 mine.stamina.label,体力,Stamina
 nav.chapter,章节,Chapter
