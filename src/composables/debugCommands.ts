@@ -13,6 +13,7 @@
 
 import { useInventoryStore } from '../stores/inventoryStore'
 import { useMachineStore } from '../stores/machineStore'
+import { useWorldStore } from '../stores/worldStore'
 import { useTaskStore } from '../stores/taskStore'
 import { useProgressionStore } from '../stores/progressionStore'
 import { useToolStore } from '../stores/toolStore'
@@ -266,6 +267,23 @@ registerCommand({
       `  净产: ${net.toFixed(1)} EU/s`,
       `  电压: ${ps.globalMaxVoltage > 0 ? `Tier ${ps.globalMaxVoltage}` : '无发电机'}`,
     ].join('\n')
+  },
+})
+
+registerCommand({
+  name: 'timed',
+  description: '显示 timed 节点状态（调试存档用）',
+  execute() {
+    const ws = useWorldStore()
+    const entries = Object.entries(ws.timedNodes)
+    if (entries.length === 0) return '无 timed 节点'
+    const now = Date.now()
+    return entries.map(([id, s]) => {
+      const remaining = Math.max(0, Math.ceil((s.endAt - now) / 1000))
+      const elapsed = Math.floor((now - s.startAt) / 1000)
+      const total = Math.floor((s.endAt - s.startAt) / 1000)
+      return `  ${id.padEnd(25)} ${s.done ? '✓完成' : `倒计时${remaining}s`} (已过${elapsed}s/共${total}s)`
+    }).join('\n')
   },
 })
 

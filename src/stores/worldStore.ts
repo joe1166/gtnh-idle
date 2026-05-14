@@ -9,6 +9,7 @@ import { usePlayerAttrStore } from './playerAttrStore'
 import { useMineStore } from './mineStore'
 import { useExploreStore } from './exploreStore'
 import { applyReward } from '../utils/rewards'
+import { useSaveLoad } from '../composables/useSaveLoad'
 import type { DimensionDef, BiomeDef, BiomeNodeDef, ResourceAmount } from '../data/types'
 
 /** 解析 entryCost 字符串（格式 resourceId:amount|...） */
@@ -169,6 +170,7 @@ export const useWorldStore = defineStore('world', {
         endAt:   now + node.durationSec * 1000,
         done:    false,
       }
+      useSaveLoad().save()
       return true
     },
 

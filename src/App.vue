@@ -5,6 +5,7 @@ import { useGameLoop } from './composables/useGameLoop'
 import { useSaveLoad } from './composables/useSaveLoad'
 import { useOfflineProgress } from './composables/useOfflineProgress'
 import { useGameStore } from './stores/gameStore'
+import { useWorldStore } from './stores/worldStore'
 import { useMineStore } from './stores/mineStore'
 import { useExploreStore } from './stores/exploreStore'
 import { useDevConsole } from './composables/useDevConsole'
@@ -70,6 +71,9 @@ onMounted(async () => {
 
   // 2. 尝试加载存档
   const saveResult = load()
+
+  // 补一次 tick：追赶 timed 节点的完成状态（load 后 endAt 可能已过）
+  useWorldStore().tick()
 
   // 版本不兼容：显示提示弹窗，不启动游戏循环
   if (saveResult.incompatible) {
