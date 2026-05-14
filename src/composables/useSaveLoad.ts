@@ -9,6 +9,7 @@ import { useWorldStore } from '../stores/worldStore'
 import { useToolStore } from '../stores/toolStore'
 import { useMineStore } from '../stores/mineStore'
 import { useExploreStore } from '../stores/exploreStore'
+import { useEquipmentStore } from '../stores/equipmentStore'
 import { SAVE_VERSION } from '../data/version'
 
 const SAVE_KEY = 'gtnh_idle_save'
@@ -28,6 +29,7 @@ interface SaveData {
     tools?:      ReturnType<typeof useToolStore>['$state']
     mine?:       ReturnType<typeof useMineStore>['$state']
     explore?:    ReturnType<typeof useExploreStore>['$state']
+    equipment?:  ReturnType<typeof useEquipmentStore>['$state']
   }
 }
 
@@ -54,6 +56,7 @@ export function useSaveLoad() {
         tools:       JSON.parse(JSON.stringify(useToolStore().$state)),
         mine:        JSON.parse(JSON.stringify(useMineStore().$state)),
         explore:     JSON.parse(JSON.stringify(useExploreStore().$state)),
+        equipment:   JSON.parse(JSON.stringify(useEquipmentStore().$state)),
       },
     }
     localStorage.setItem(SAVE_KEY, JSON.stringify(data))
@@ -91,6 +94,7 @@ export function useSaveLoad() {
     if (data.state.tools)       useToolStore().$patch(data.state.tools)
     if (data.state.mine)        useMineStore().$patch(data.state.mine)
     if (data.state.explore)     useExploreStore().$patch(data.state.explore)
+    if (data.state.equipment)   useEquipmentStore().$patch(data.state.equipment)
 
     return { success: true, incompatible: false, offlineSeconds: (Date.now() - data.savedAt) / 1000 }
   }

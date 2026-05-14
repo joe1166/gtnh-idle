@@ -5,7 +5,7 @@
 import { defineStore } from 'pinia'
 import { db } from '../data/db'
 import { useInventoryStore } from './inventoryStore'
-import { useToolStore } from './toolStore'
+import { usePlayerAttrStore } from './playerAttrStore'
 import { useMineStore } from './mineStore'
 import { useExploreStore } from './exploreStore'
 import { applyReward } from '../utils/rewards'
@@ -122,18 +122,18 @@ export const useWorldStore = defineStore('world', {
 
       this.lastClickTime[nodeId] = now
 
-      const toolStore = useToolStore()
+      const attrStore = usePlayerAttrStore()
 
       // 检查能力门槛
       if (node.requiredAbility && node.requiredAbilityValue !== undefined) {
-        const playerAbility = toolStore.getAbility(node.requiredAbility)
+        const playerAbility = attrStore.getPlayerAttr(node.requiredAbility)
         if (playerAbility < node.requiredAbilityValue) return {}
       }
 
       // 计算能力加成（超出门槛的部分额外给固定产出 bonus）
       let bonus = 1
       if (node.requiredAbility) {
-        const playerAbility = toolStore.getAbility(node.requiredAbility)
+        const playerAbility = attrStore.getPlayerAttr(node.requiredAbility)
         bonus = calcGatherBonus(playerAbility)
       }
 

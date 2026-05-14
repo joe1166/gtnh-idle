@@ -1,0 +1,8 @@
+[
+  {
+    "id": "pathfinder",
+    "locKey": "equip.set.pathfinder",
+    "bonus2": "combat_defense:1|combat_speed:1",
+    "bonus4": "combat_attack:2|combat_hp:15"
+  }
+]

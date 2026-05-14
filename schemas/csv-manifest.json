@@ -22,6 +22,8 @@
   { "name": "explore_loot_items", "schema": "schemas/explore_loot_items.schema.json", "input": "tables/explore_loot_items.csv" },
   { "name": "explore_loot_pools", "schema": "schemas/explore_loot_pools.schema.json", "input": "tables/explore_loot_pools.csv" },
   { "name": "global_misc", "schema": "schemas/global_misc.schema.json", "input": "tables/global_misc.csv" },
+  { "name": "equip_items", "schema": "schemas/equip_items.schema.json", "input": "tables/equip_items.csv" },
+  { "name": "equip_sets", "schema": "schemas/equip_sets.schema.json", "input": "tables/equip_sets.csv" },
   { "name": "locale",      "schema": "schemas/locale.schema.json",       "input": "tables/locale.csv",
     "pre": "node tools/sort-locale.cjs" }
 ]

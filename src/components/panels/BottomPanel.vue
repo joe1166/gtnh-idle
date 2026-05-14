@@ -15,8 +15,7 @@
 
     <!-- ── 面板内容区（折叠时隐藏） ── -->
     <div v-show="!collapsed" class="panel-content">
-      <ToolPanel v-if="activeTab === 'tool'" />
-      <BiomeSwitchPanel v-else-if="activeTab === 'biome'" />
+      <BiomeSwitchPanel v-if="activeTab === 'biome'" />
     </div>
   </div>
 </template>
@@ -24,7 +23,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { t } from '../../data/i18n'
-import ToolPanel from './ToolPanel.vue'
 import BiomeSwitchPanel from './BiomeSwitchPanel.vue'
 
 interface Tab {
@@ -33,11 +31,10 @@ interface Tab {
 }
 
 const tabs: Tab[] = [
-  { id: 'tool', locKey: 'panel.tool.title' },
   { id: 'biome', locKey: 'panel.biome.title' },
 ]
 
-const activeTab  = ref('tool')
+const activeTab  = ref('biome')
 const collapsed  = ref(true)
 
 function handleTabClick(tabId: string) {
@@ -109,7 +106,6 @@ function handleTabClick(tabId: string) {
 }
 
 /* 让子面板内容填满宽度 */
-.panel-content :deep(.tool-panel-wrapper),
 .panel-content :deep(.biome-panel-wrapper) {
   position: static;
 }

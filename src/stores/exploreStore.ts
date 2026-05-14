@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { db } from '../data/db'
 import { useInventoryStore } from './inventoryStore'
 import { useToolStore } from './toolStore'
+import { usePlayerAttrStore } from './playerAttrStore'
 import { t } from '../data/i18n'
 import type {
   ExploreRoom,
@@ -121,6 +122,7 @@ export const useExploreStore = defineStore('explore', {
     combatTickMs: 1000,
     combatElapsedMs: 0,
     currentRoundLog: '' as string,
+    combatLogLines: [] as string[],
     previousRoomId: null as string | null,
     seed: 0,
     visitedRoomIds: [] as string[],
@@ -275,6 +277,11 @@ export const useExploreStore = defineStore('explore', {
     enter(mapId: string): void {
       const mapDef = db.get('explore_maps', mapId)
       if (!mapDef) return
+      const attrs = usePlayerAttrStore()
+      const combatHp = Math.max(1, Math.floor(attrs.getPlayerAttr('combat_hp')))
+      const combatAtk = Math.max(1, Math.floor(attrs.getPlayerAttr('combat_attack')))
+      const combatDef = Math.max(0, Math.floor(attrs.getPlayerAttr('combat_defense')))
+      const combatSpd = Math.max(0, Math.floor(attrs.getPlayerAttr('combat_speed')))
 
       roomCounter = 0
       this.mapId = mapId
@@ -287,9 +294,14 @@ export const useExploreStore = defineStore('explore', {
       this.currentRoomId = null
       this.entered = false
       this.mode = 'explore'
-      this.hp = this.maxHp
+      this.maxHp = combatHp
+      this.hp = combatHp
+      this.playerAttack = combatAtk
+      this.playerDefense = combatDef
+      this.playerSpeed = combatSpd
       this.combatElapsedMs = 0
       this.currentRoundLog = ''
+      this.combatLogLines = []
       this.previousRoomId = null
       this.visitedRoomIds = []
       this.initBagCapacity()
@@ -673,6 +685,13 @@ export const useExploreStore = defineStore('explore', {
     },
 
     startCombat(instanceId: string): void {
+      const attrs = usePlayerAttrStore()
+      this.playerAttack = Math.max(1, Math.floor(attrs.getPlayerAttr('combat_attack')))
+      this.playerDefense = Math.max(0, Math.floor(attrs.getPlayerAttr('combat_defense')))
+      this.playerSpeed = Math.max(0, Math.floor(attrs.getPlayerAttr('combat_speed')))
+      this.maxHp = Math.max(1, Math.floor(attrs.getPlayerAttr('combat_hp')))
+      this.hp = Math.max(0, Math.min(this.maxHp, this.hp))
+
       const room = this.rooms.find(r => r.instanceId === instanceId)
       if (!room) return
       const def = db.get('explore_rooms', room.defId)
@@ -714,6 +733,7 @@ export const useExploreStore = defineStore('explore', {
       this.mode = 'combat'
       this.combatElapsedMs = 0
       this.currentRoundLog = ''
+      this.combatLogLines = []
     },
 
     fleeCombat(): void {
@@ -735,9 +755,17 @@ export const useExploreStore = defineStore('explore', {
       this.mode = 'explore'
       this.combatElapsedMs = 0
       this.currentRoundLog = ''
+      this.combatLogLines = []
     },
 
     tickCombat(): void {
+      const attrs = usePlayerAttrStore()
+      this.playerAttack = Math.max(1, Math.floor(attrs.getPlayerAttr('combat_attack')))
+      this.playerDefense = Math.max(0, Math.floor(attrs.getPlayerAttr('combat_defense')))
+      this.playerSpeed = Math.max(0, Math.floor(attrs.getPlayerAttr('combat_speed')))
+      this.maxHp = Math.max(1, Math.floor(attrs.getPlayerAttr('combat_hp')))
+      this.hp = Math.max(0, Math.min(this.maxHp, this.hp))
+
       const room = this.currentRoom
       if (!room || !room.enemies || room.enemies.length === 0) return
       const enemies = room.enemies.filter(e => e.hp > 0)
@@ -774,6 +802,9 @@ export const useExploreStore = defineStore('explore', {
       }
 
       this.currentRoundLog = hits.join(' | ')
+      if (hits.length > 0) {
+        this.combatLogLines = [...this.combatLogLines, ...hits].slice(-60)
+      }
 
       if (this.hp <= 0) {
         this.handleDefeat()

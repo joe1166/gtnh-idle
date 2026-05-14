@@ -1,0 +1,7 @@
+id,slot,locKey,iconPath,rarity,setId,obtainType,craftCost,attrBonus
+wooden_sword,weapon,equip.item.wooden_sword,/equipment/wooden_sword.svg,common,,craft,log_wood:20|coarse_rope:6,combat_attack:2
+hide_cap,head,equip.item.hide_cap,/equipment/hide_cap.svg,common,pathfinder,craft,coarse_rope:8|weeds:20,combat_defense:1|combat_hp:6
+hide_tunic,chest,equip.item.hide_tunic,/equipment/hide_tunic.svg,common,pathfinder,craft,coarse_rope:12|log_wood:10,combat_defense:2|combat_hp:12
+hide_greaves,legs,equip.item.hide_greaves,/equipment/hide_greaves.svg,common,pathfinder,craft,coarse_rope:10|cobblestone:10,combat_defense:1|combat_hp:8
+wind_charm,accessory1,equip.item.wind_charm,/equipment/wind_charm.svg,uncommon,pathfinder,loot,,combat_speed:1
+stone_talisman,accessory2,equip.item.stone_talisman,/equipment/stone_talisman.svg,uncommon,,craft,cobblestone:30|copper_wire:4,combat_defense:2

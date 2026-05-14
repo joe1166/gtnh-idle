@@ -1,0 +1,111 @@
+[
+  {
+    "id": "wooden_sword",
+    "slot": "weapon",
+    "locKey": "equip.item.wooden_sword",
+    "iconPath": "/equipment/wooden_sword.svg",
+    "rarity": "common",
+    "obtainType": "craft",
+    "craftCost": [
+      {
+        "resourceId": "log_wood",
+        "amount": 20
+      },
+      {
+        "resourceId": "coarse_rope",
+        "amount": 6
+      }
+    ],
+    "attrBonus": "combat_attack:2"
+  },
+  {
+    "id": "hide_cap",
+    "slot": "head",
+    "locKey": "equip.item.hide_cap",
+    "iconPath": "/equipment/hide_cap.svg",
+    "rarity": "common",
+    "setId": "pathfinder",
+    "obtainType": "craft",
+    "craftCost": [
+      {
+        "resourceId": "coarse_rope",
+        "amount": 8
+      },
+      {
+        "resourceId": "weeds",
+        "amount": 20
+      }
+    ],
+    "attrBonus": "combat_defense:1|combat_hp:6"
+  },
+  {
+    "id": "hide_tunic",
+    "slot": "chest",
+    "locKey": "equip.item.hide_tunic",
+    "iconPath": "/equipment/hide_tunic.svg",
+    "rarity": "common",
+    "setId": "pathfinder",
+    "obtainType": "craft",
+    "craftCost": [
+      {
+        "resourceId": "coarse_rope",
+        "amount": 12
+      },
+      {
+        "resourceId": "log_wood",
+        "amount": 10
+      }
+    ],
+    "attrBonus": "combat_defense:2|combat_hp:12"
+  },
+  {
+    "id": "hide_greaves",
+    "slot": "legs",
+    "locKey": "equip.item.hide_greaves",
+    "iconPath": "/equipment/hide_greaves.svg",
+    "rarity": "common",
+    "setId": "pathfinder",
+    "obtainType": "craft",
+    "craftCost": [
+      {
+        "resourceId": "coarse_rope",
+        "amount": 10
+      },
+      {
+        "resourceId": "cobblestone",
+        "amount": 10
+      }
+    ],
+    "attrBonus": "combat_defense:1|combat_hp:8"
+  },
+  {
+    "id": "wind_charm",
+    "slot": "accessory1",
+    "locKey": "equip.item.wind_charm",
+    "iconPath": "/equipment/wind_charm.svg",
+    "rarity": "uncommon",
+    "setId": "pathfinder",
+    "obtainType": "loot",
+    "craftCost": [],
+    "attrBonus": "combat_speed:1"
+  },
+  {
+    "id": "stone_talisman",
+    "slot": "accessory2",
+    "locKey": "equip.item.stone_talisman",
+    "iconPath": "/equipment/stone_talisman.svg",
+    "rarity": "uncommon",
+    "obtainType": "craft",
+    "craftCost": [
+      {
+        "resourceId": "cobblestone",
+        "amount": 30
+      },
+      {
+        "resourceId": "copper_wire",
+        "amount": 4
+      }
+    ],
+    "attrBonus": "combat_defense:2"
+  }
+]

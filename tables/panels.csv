@@ -1,9 +1,10 @@
 id,order,icon,labelKey,showCondType,showCondPara,hideCondType,hideCondPara
 world,0,🌍,nav.world,,,,
-chapter,1,📋,nav.chapter,,,,
+chapter,1,📜,nav.chapter,,,,
 steam,2,♨,nav.steam,task,13,tech,electric_age
 power,3,⚡,nav.power,tech,electric_age,,
 mining,4,⛏️,nav.mining,task,14,,
 crafting,5,🔨,nav.crafting,resource_ever,weeds,,
 inventory,6,📦,nav.inventory,resource_ever,*,,
-tech,7,🔬,nav.tech,task,12,,
+role,7,🧑,nav.role,resource_ever,*,,
+tech,8,⚗️,nav.tech,task,12,,

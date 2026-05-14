@@ -8,7 +8,7 @@
   {
     "id": "chapter",
     "order": 1,
-    "icon": "📋",
+    "icon": "📜",
     "labelKey": "nav.chapter"
   },
   {
@@ -54,9 +54,17 @@
     "showCondPara": "*"
   },
   {
-    "id": "tech",
+    "id": "role",
     "order": 7,
-    "icon": "🔬",
+    "icon": "🧑",
+    "labelKey": "nav.role",
+    "showCondType": "resource_ever",
+    "showCondPara": "*"
+  },
+  {
+    "id": "tech",
+    "order": 8,
+    "icon": "⚗️",
     "labelKey": "nav.tech",
     "showCondType": "task",
     "showCondPara": "12"

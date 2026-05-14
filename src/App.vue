@@ -22,6 +22,7 @@ import CraftingPanel from './components/panels/CraftingPanel.vue'
 import InventoryPanel from './components/panels/InventoryPanel.vue'
 import ChapterPanel from './components/panels/ChapterPanel.vue'
 import TechPanel from './components/panels/TechPanel.vue'
+import RolePanel from './components/panels/RolePanel.vue'
 import OfflineModal from './components/modals/OfflineModal.vue'
 import SaveModal from './components/modals/SaveModal.vue'
 import StatsModal from './components/modals/StatsModal.vue'
@@ -111,6 +112,7 @@ onUnmounted(() => {
         <MiningPanel v-if="activePanel === 'mining'" />
         <CraftingPanel v-if="activePanel === 'crafting'" />
         <InventoryPanel v-if="activePanel === 'inventory'" />
+        <RolePanel v-if="activePanel === 'role'" />
         <ChapterPanel v-if="activePanel === 'chapter'" />
         <TechPanel v-if="activePanel === 'tech'" />
       </main>

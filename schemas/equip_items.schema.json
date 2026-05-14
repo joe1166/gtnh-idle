@@ -1,0 +1,26 @@
+{
+  "root": "array",
+  "output": "src/config/equip_items.json",
+  "fields": {
+    "id": "string",
+    "slot": "string",
+    "locKey": "string",
+    "iconPath": "string",
+    "rarity": "string",
+    "setId": "string",
+    "obtainType": "string",
+    "craftCost": {
+      "type": "array",
+      "sep": "|",
+      "item": {
+        "type": "object",
+        "sep": ":",
+        "fields": [
+          { "name": "resourceId", "type": "string" },
+          { "name": "amount", "type": "number" }
+        ]
+      }
+    },
+    "attrBonus": "string"
+  }
+}

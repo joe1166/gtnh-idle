@@ -1,0 +1,10 @@
+{
+  "root": "array",
+  "output": "src/config/equip_sets.json",
+  "fields": {
+    "id": "string",
+    "locKey": "string",
+    "bonus2": "string",
+    "bonus4": "string"
+  }
+}

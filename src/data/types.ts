@@ -379,7 +379,17 @@ export interface BiomeNodeDef {
 // ─── 工具系统 ─────────────────────────────────────────────────────────────────
 
 /** 采集能力属性ID */
-export type AbilityId = 'wood_ability' | 'mining_ability' | 'prospector_ability' | 'bag_capacity'
+export type PlayerAttrId =
+  | 'wood_ability'
+  | 'mining_ability'
+  | 'prospector_ability'
+  | 'bag_capacity'
+  | 'combat_attack'
+  | 'combat_defense'
+  | 'combat_hp'
+  | 'combat_speed'
+
+export type AbilityId = PlayerAttrId
 
 /** 工具定义（扁平结构，运行时按 type 分组） */
 export interface ToolDef {
@@ -414,6 +424,32 @@ export interface GlobalMiscDef {
   k1?: string
   k2?: string
   k3?: string
+}
+
+export type EquipSlot = 'weapon' | 'head' | 'chest' | 'legs' | 'accessory1' | 'accessory2'
+
+export interface EquipItemDef {
+  id: string
+  slot: EquipSlot
+  locKey: string
+  iconPath: string
+  rarity: 'common' | 'uncommon' | 'rare' | 'epic' | 'legendary'
+  setId?: string
+  obtainType: 'craft' | 'loot'
+  craftCost: ResourceAmount[]
+  attrBonus: string
+}
+
+export interface EquipSetDef {
+  id: string
+  locKey: string
+  bonus2: string
+  bonus4: string
+}
+
+export interface PlayerEquipState {
+  owned: Record<string, number>
+  equipped: Record<EquipSlot, string | null>
 }
 
 // ─── 矿洞探索系统 ──────────────────────────────────────────────

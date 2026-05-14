@@ -42,6 +42,8 @@ import type {
   MineCaveDef,
   MineVeinDef,
   GlobalMiscDef,
+  EquipItemDef,
+  EquipSetDef,
   RewardDef,
   ExploreMapDef,
   ExploreRoomDef,
@@ -73,6 +75,8 @@ import exploreEventsData from '../config/explore_events.json'
 import exploreLootItemsData from '../config/explore_loot_items.json'
 import exploreLootPoolsData from '../config/explore_loot_pools.json'
 import globalMiscData from '../config/global_misc.json'
+import equipItemsData from '../config/equip_items.json'
+import equipSetsData from '../config/equip_sets.json'
 
 /** 将 showCondType + showCondPara 合并为 Condition 对象 */
 function buildShowCond(raw: { showCondType?: string; showCondPara?: string }): Condition | undefined {
@@ -96,6 +100,8 @@ interface TableMap {
   mine_veins:    MineVeinDef
   mine_caves:    MineCaveDef
   global_misc:   GlobalMiscDef
+  equip_items:   EquipItemDef
+  equip_sets:    EquipSetDef
   rewards:       RewardDef
   explore_maps:  ExploreMapDef
   explore_rooms: ExploreRoomDef
@@ -149,6 +155,8 @@ const RAW: Record<TableName, unknown[]> = {
   mine_veins:  mineVeinsData  as MineVeinDef[],
   mine_caves:  mineCavesData  as MineCaveDef[],
   global_misc: globalMiscData as GlobalMiscDef[],
+  equip_items: equipItemsData as EquipItemDef[],
+  equip_sets: equipSetsData as EquipSetDef[],
   rewards:       rewardsData      as RewardDef[],
   explore_maps:  exploreMapsData  as ExploreMapDef[],
   explore_rooms: exploreRoomsData as ExploreRoomDef[],
